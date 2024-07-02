@@ -1,4 +1,4 @@
-package com.poly.quanlybanhang.controller.entity;
+package com.poly.quanlybanhang.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,7 +6,6 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -15,27 +14,21 @@ import java.util.Set;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class Products{
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    String name;
-    String description;
-    Double price;
-
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    Categories categories;
+    @JoinColumn(name = "userId")
+    Users user;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "order")
     List<OrderDetails> orderDetails;
 
+    Integer totalAmount;
+    String status;
 
     @Column(name = "createDate")
     LocalDate createDate;
-
-    @Column(name = "updateDate")
-    LocalDate updateDate;
-
 }

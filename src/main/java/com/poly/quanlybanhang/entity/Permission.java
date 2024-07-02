@@ -1,4 +1,4 @@
-package com.poly.quanlybanhang.controller.entity;
+package com.poly.quanlybanhang.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,9 +1,8 @@
-package com.poly.quanlybanhang.controller.entity;
+package com.poly.quanlybanhang.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.AccessType;
 
 import java.time.LocalDate;
 import java.util.List;
