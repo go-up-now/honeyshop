@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tổng hợp chi phí và nguyên liệu</title>
+</head>
+
+<body>
+    <div id="main">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex">
+                <div class="col-md-12">
+                    <h3 class="m-0 font-weight-bold text-primary">Danh sách chi phí và nguyên liệu</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên nguyên liệu</th>
+                                <th>Giá tiền</th>
+                                <th>Số lượng</th>
+                                <th>Đơn vị</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Sữa đậu nành</td>
+                                <td>2500 đ</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Cốt bí đao</td>
+                                <td>150.000 đ</td>
+                                <td>1</td>
+                                <td>chai</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Đường</td>
+                                <td>31.000 đ</td>
+                                <td>1</td>
+                                <td>kilogram</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Sương xáo</td>
+                                <td>16.000 đ</td>
+                                <td>2</td>
+                                <td>gói</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Xoài</td>
+                                <td>30.000 đ</td>
+                                <td>30</td>
+                                <td>kilogram</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Bánh tráng chấm</td>
+                                <td>6.500 đ</td>
+                                <td>20</td>
+                                <td>gói</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Snack mèo yêu cá</td>
+                                <td>40.000 đ</td>
+                                <td>30</td>
+                                <td>gói</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Ly nhựa + nắp</td>
+                                <td>33.000 đ</td>
+                                <td>30</td>
+                                <td>ly</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Ống hút</td>
+                                <td>5.000 đ</td>
+                                <td>1</td>
+                                <td>bịch</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Bì đựng ly</td>
+                                <td>3.600 đ</td>
+                                <td>1</td>
+                                <td>bịch</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>Bì đựng hộp</td>
+                                <td>7.000 đ</td>
+                                <td>200</td>
+                                <td>gram</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Bì đựng muối</td>
+                                <td>6.000 đ</td>
+                                <td>100</td>
+                                <td>gram</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>Hộp đựng xoài</td>
+                                <td>5.000 đ</td>
+                                <td>20</td>
+                                <td>hộp</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>Muối chấm</td>
+                                <td>13.000 đ</td>
+                                <td>2</td>
+                                <td>hũ</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>15</td>
+                                <td>Standee</td>
+                                <td>100.000 đ</td>
+                                <td>1</td>
+                                <td></td>
+                                <td>Chưa có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>16</td>
+                                <td>Tem logo</td>
+                                <td>20.000 đ</td>
+                                <td>100</td>
+                                <td>tem</td>
+                                <td>Có hàng</td>
+                            </tr>
+                            <tr>
+                                <td>17</td>
+                                <td>Chai nhựa</td>
+                                <td>750 đ</td>
+                                <td>20</td>
+                                <td>chai</td>
+                                <td>Có hàng</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="total-price" style="text-align: left;">
+                    <p><strong>Tổng tiền: <span id="totalPrice">469.350 đ</span></strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form add user-->
+        <div id="addUserPanel" class="hidden">
+            <div class="panel-content">
+                <span id="closePanelBtn">&times;</span>
+                <div class="form-title">Thêm Sản phẩm</div>
+                <div class="d-flex justify-content-center">
+                    <div class="col-lg-12">
+                        <form role="form" method="post" id="form_create_user" enctype="multipart/form-data">
+                            <div class="panel-body row">
+                                <div class="col-md-6">
+
+                                    <input type="hidden" name="id" id="id" readonly="readonly"
+                                        style="width: 100%; height: auto;">
+
+                                    <label for="name" class="col-md-4">Tên sản phẩm: </label>
+                                    <input type="text" name="name" id="name" placeholder="Tên sản phẩm" class="col-md-6"
+                                        style="width: 100%; height: auto;">
+                                    <br><br>
+                                    <label for="price" class="col-md-4">Giá tiền: </label>
+                                    <input type="number" name="price" id="price" min="0" style="width: 100%;"
+                                        placeholder="Giá tiền" class="col-md-6">
+                                    <br><br>
+
+                                    <label for="img" class="col-md-4">Chọn hình: </label>
+                                    <input type="file" name="image" id="img" style="width: 100%;" class="col-md-6">
+
+                                    <div class="images ms-5" id="chon-anh">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="address" class="col-md-4">Mô tả: </label>
+                                    <textarea rows="4" cols="12" class="col-md-6" name="address" id="address"
+                                        style="width: 100%;"></textarea>
+                                    <br><br>
+
+                                    <label class="col-md-4">Loại sản phẩm</label>
+                                    <select class=" col-md-6" id="roles">
+                                        <option value="1">Nước uống</option>
+                                        <option value="2">Trái cây</option>
+                                        <option value="3">Đồ ăn vặt</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="panel-footer text-right">
+                                <button type="submit" class="btn btn-success create" onclick="createUser()"
+                                    id="create">Thêm
+                                    mới</button>
+                                <button type="submit" class="btn btn-success update" onclick="updateUser()"
+                                    id="update">Cập
+                                    nhật</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End Form add user-->
+
+        </div>
+</body>
+
+</html>
