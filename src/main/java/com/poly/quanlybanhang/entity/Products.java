@@ -1,5 +1,6 @@
 package com.poly.quanlybanhang.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,23 +19,21 @@ public class Products{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-
     String name;
     String description;
     Double price;
+    LocalDate createAt;
+    LocalDate updateAt;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     Categories categories;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     List<OrderDetails> orderDetails;
 
-
-    @Column(name = "createDate")
-    LocalDate createDate;
-
-    @Column(name = "updateDate")
-    LocalDate updateDate;
-
+    @OneToMany(mappedBy = "products")
+    @JsonIgnore
+    List<Inventory> inventories;
 }

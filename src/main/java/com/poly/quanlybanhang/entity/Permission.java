@@ -16,9 +16,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Permission {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-
     String name;
     String description;
 }

@@ -2,7 +2,7 @@ create database shop_manager;
 use shop_manager;
 
 create table Users(
-	Id varchar(50) not null,
+	id varchar(50) not null,
     fullname nvarchar(50),
     email varchar(50),
     password varchar(100),
@@ -11,44 +11,41 @@ create table Users(
     thumbnail  varchar(100),
     phone varchar(10),
     gender bit,
-    roleId tinyint,
-    createDate datetime,
-    updateDate datetime,
+    create_at datetime,
+    update_at datetime,
     primary key (Id)
 );
 
 create table Inventory(
 	id varchar(50) not null,
-    productID varchar(50),
+    product_id varchar(50),
     quantity int,
-    changeType varchar(20),
+    change_type varchar(20),
     reason text,
-    changedBy varchar(50),
-    updateDate datetime,
+    changed_by varchar(50),
+    update_at datetime,
     primary key(id)
 );
 
-create table Roles(
-	id tinyint not null,
-    name nvarchar(50),
+create table Role(
+    name varchar(50),
     description text,
-    primary key (id)
+    primary key (name)
 );
 create table Permission(
-	id tinyint not null,
-    name nvarchar(50),
+    name varchar(50),
     description text,
-    primary key(id)
+    primary key(name)
 );
 
 create table Products(
 	id varchar(50) not null,
     name nvarchar(50),
     description text,
-    price decimal,
-    categoryID varchar(50),
-    createDate datetime,
-    updateDate datetime,
+    price double,
+    category_id varchar(50),
+    create_at datetime,
+    update_at datetime,
     primary key(id)
 );
 
@@ -56,44 +53,57 @@ create table Categories(
 	id varchar(50) not null,
     name nvarchar(50),
     description text,
-    createDate datetime,
-    updateDate datetime,
     primary key(id)
 );
 
 create table Orders(
 	id varchar(50) not null,
-    userId varchar(50),
-    totalAmount decimal,
+    user_id varchar(50),
+    total_amount double,
     status varchar(50),
-    createDate datetime,
+    create_at datetime,
     primary key(id)
 );
 
 create table OrderDetails(
 	id varchar(50) not null,
-    orderID varchar(50),
-    productID varchar(50),
+    order_id varchar(50),
+    product_id varchar(50),
     quantity int,
-    price decimal,
-    createDate datetime,
-    updateDate datetime,
+    price double,
+    create_at datetime,
     primary key(id)
 );
 
+create table role_permissions(
+	role_name varchar(50),
+    permissions_name varchar(50),
+    primary key(role_name, permissions_name)
+);
+
+create table users_roles(
+	users_id varchar(50),
+    roles_name varchar(50),
+    primary key(users_id, roles_name)
+);
+
 ALTER TABLE Orders
-ADD CONSTRAINT fk_orders_users FOREIGN KEY (userId) REFERENCES Users(Id);
+ADD CONSTRAINT fk_orders_users FOREIGN KEY (user_id) REFERENCES Users(id);
 
 ALTER TABLE Inventory
-ADD CONSTRAINT fk_inventory_users FOREIGN KEY (changedBy) REFERENCES Users(Id),
-ADD CONSTRAINT fk_inventory_products FOREIGN KEY (productID) REFERENCES Products(id);
+ADD CONSTRAINT fk_inventory_users FOREIGN KEY (changed_by) REFERENCES Users(id),
+ADD CONSTRAINT fk_inventory_products FOREIGN KEY (product_id) REFERENCES Products(id);
 
 ALTER TABLE Products
-ADD CONSTRAINT fk_products_categories FOREIGN KEY (categoryID) REFERENCES Categories(id);
+ADD CONSTRAINT fk_products_categories FOREIGN KEY (category_id) REFERENCES Categories(id);
 
 ALTER TABLE OrderDetails
-ADD CONSTRAINT fk_orderdetails_orders FOREIGN KEY (orderID) REFERENCES Orders(id),
-ADD CONSTRAINT fk_orderdetails_products FOREIGN KEY (productID) REFERENCES Products(id);
+ADD CONSTRAINT fk_orderdetails_orders FOREIGN KEY (order_id) REFERENCES Orders(id),
+ADD CONSTRAINT fk_orderdetails_products FOREIGN KEY (product_id) REFERENCES Products(id);
+
+ALTER TABLE role_permissions
+ADD CONSTRAINT fk_rp_role FOREIGN KEY (role_name) REFERENCES role(name),
+ADD CONSTRAINT fk_rp_permission FOREIGN KEY (permissions_name) REFERENCES permission(name);
 
 
 

@@ -1,5 +1,6 @@
 package com.poly.quanlybanhang.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +20,6 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-
     String fullname;
     String email;
     String password;
@@ -28,17 +28,14 @@ public class Users {
     String thumbnail;
     String phone;
     boolean gender;
+    LocalDate createAt;
+    LocalDate updateAt;
 
     @ManyToMany
     Set<Role> roles;
 
-    @Column(name = "createDate")
-    LocalDate createDate;
-
-    @Column(name = "updateDate")
-    LocalDate updateDate;
-
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     List<Inventory> inventories;
 
     @OneToMany(mappedBy = "user")

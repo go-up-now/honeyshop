@@ -18,6 +18,9 @@ public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
+    Integer quantity;
+    Double price;
+    LocalDate createAt;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -26,13 +29,4 @@ public class OrderDetails {
     @ManyToOne
     @JoinColumn(name = "product_id")
     Products product;
-
-    Integer quantity;
-    Double price;
-
-    @Column(name = "createDate")
-    LocalDate createDate;
-
-    @Column(name = "updateDate")
-    LocalDate updateDate;
 }

@@ -17,16 +17,16 @@ public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
+    Integer quantity;
+    String changeType;
+    String reason;
+    LocalDate updateAt;
 
     @ManyToOne
     @JoinColumn(name = "changed_by")
     Users user;
 
-
-    Integer quantity;
-    String changeType;
-
-    @Column(name = "updateDate")
-    LocalDate updateDate;
-
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    Products products;
 }
