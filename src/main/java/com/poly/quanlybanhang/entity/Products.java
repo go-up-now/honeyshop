@@ -23,6 +23,7 @@ public class Products{
     String name;
     String description;
     Double price;
+    String thumbnail;
     LocalDateTime createAt;
     LocalDateTime updateAt;
 

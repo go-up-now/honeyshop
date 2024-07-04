@@ -20,8 +20,10 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
+    String fullname;
+    String phone;
     Double totalAmount;
-    String status;
+    String status = "Đã thanh toán";
     LocalDateTime createAt;
 
     @ManyToOne

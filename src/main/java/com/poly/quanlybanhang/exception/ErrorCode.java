@@ -17,8 +17,10 @@ public enum ErrorCode {
     EMAIL_INVALID(1003, "Email not empty"),
     PASSWORD_INVALID(1004, "Password must be at least 5 characters"),
     INVALID_KEY(1005, "Invalid message key"),
-    USER_NOT_EXISTS(1005, "User not exists"),
-    UNAUTHENTICATED(1005, "Unauthenticated"),
+    USER_NOT_EXISTS(1006, "User not exists"),
+    UNAUTHENTICATED(1007, "Unauthenticated"),
+    PRODUCT_NOT_FOUND(1008, "Product not found"),
+    CATEGORY_NOT_FOUND(1008, "Category not found"),
     ;
 
     int code;
