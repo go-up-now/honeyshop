@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class Inventory {
     Integer quantity;
     String changeType;
     String reason;
-    LocalDate updateAt;
+    LocalDateTime updateAt;
 
     @ManyToOne
     @JoinColumn(name = "changed_by")

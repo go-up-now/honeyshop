@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class OrderDetails {
     String id;
     Integer quantity;
     Double price;
-    LocalDate createAt;
+    LocalDateTime createAt;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

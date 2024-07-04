@@ -1,6 +1,9 @@
-package com.poly.quanlybanhang.entity;
+package com.poly.quanlybanhang.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.poly.quanlybanhang.entity.Inventory;
+import com.poly.quanlybanhang.entity.Orders;
+import com.poly.quanlybanhang.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,20 +13,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Builder
-public class Users {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+public class UserResponse {
     String id;
     String fullname;
     String email;
-    String password;
+//    String password;
     LocalDate dob;
     String address;
     String thumbnail;
@@ -31,14 +30,5 @@ public class Users {
     boolean gender;
     LocalDateTime createAt;
     LocalDateTime updateAt;
-
-    @ManyToMany
-    Set<Role> roles;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    List<Inventory> inventories;
-
-    @OneToMany(mappedBy = "user")
-    List<Orders> orders;
+    Set<RoleResponse> roles;
 }

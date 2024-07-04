@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Orders {
     String id;
     Double totalAmount;
     String status;
-    LocalDate createAt;
+    LocalDateTime createAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

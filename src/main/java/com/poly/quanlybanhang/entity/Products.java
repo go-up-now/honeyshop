@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,8 +23,8 @@ public class Products{
     String name;
     String description;
     Double price;
-    LocalDate createAt;
-    LocalDate updateAt;
+    LocalDateTime createAt;
+    LocalDateTime updateAt;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
