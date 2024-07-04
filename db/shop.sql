@@ -105,6 +105,10 @@ ALTER TABLE role_permissions
 ADD CONSTRAINT fk_rp_role FOREIGN KEY (role_name) REFERENCES role(name),
 ADD CONSTRAINT fk_rp_permission FOREIGN KEY (permissions_name) REFERENCES permission(name);
 
+ALTER TABLE users_roles
+ADD CONSTRAINT fk_ur_users FOREIGN KEY (users_id) REFERENCES Users(id),
+ADD CONSTRAINT fk_ur_role FOREIGN KEY (roles_name) REFERENCES role(name);
+
 
 
 
