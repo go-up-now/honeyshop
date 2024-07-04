@@ -5,11 +5,13 @@ import com.poly.quanlybanhang.dto.request.UserUpdationRequest;
 import com.poly.quanlybanhang.dto.response.ApiResponse;
 import com.poly.quanlybanhang.dto.response.UserResponse;
 import com.poly.quanlybanhang.service.UserService;
+import com.poly.quanlybanhang.utils.Ximages;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,7 +23,14 @@ public class UserControllerApi {
     UserService userService;
 
     @PostMapping
-    public ApiResponse<UserResponse> create(@Valid @RequestBody UserCreationRequest request){
+    public ApiResponse<UserResponse> create(
+            @RequestPart("data") @Valid UserCreationRequest request,
+            @RequestPart( value = "img", required = false)
+            MultipartFile img) {
+        if(img != null && !img.isEmpty()){
+            String imagePath = Ximages.saveImage(img);
+            request.setThumbnail(imagePath);
+        }
         return ApiResponse.<UserResponse>builder()
                 .code(1000)
                 .data(userService.create(request))
