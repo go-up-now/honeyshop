@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, main)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, main, jquery)">
 <head>
     <meta charset="UTF-8">
     <th:block th:replace="~{/admin/fragments/head::head}"></th:block>
@@ -49,5 +49,7 @@
 <!--JavaScript-->
 <th:block th:replace="~{/admin/fragments/script::script}"></th:block>
 
+<!--jquery-->
+<div th:replace="${jquery}"></div>
 </body>
 </html>
