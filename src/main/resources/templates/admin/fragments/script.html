@@ -1,5 +1,5 @@
 <div th:fragment="script">
-    <!-- Bootstrap core JavaScript-->
+<!--     Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
@@ -41,13 +41,14 @@
         // Chọn hình
         $("#img").change((event) => {
             var file = event.target.files[0]; // Chọn file đầu tiên trong các file đã chọn
+            console.log(event)
             if (file) {
                 var reader = new FileReader(); // Tạo 1 đối tượng reader để đọc nội dung của tệp
                 reader.onload = (e) => {
                     $('#chon-anh').html('<img src = "' + e.target.result + '" alt="Ảnh đã chọn" style="width: 100%; height: 100%">');
                 }
                 reader.readAsDataURL(file); // Đọc tệp dưới dạng URL data
-                console.log('hinh')
+
             }
             // event.target.value = null;
         })
