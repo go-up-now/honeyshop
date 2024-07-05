@@ -43,6 +43,7 @@ create table Products(
     name nvarchar(50),
     description text,
     price double,
+    thumbnail  varchar(100),
     category_id varchar(50),
     create_at datetime,
     update_at datetime,
@@ -58,6 +59,8 @@ create table Categories(
 
 create table Orders(
 	id varchar(50) not null,
+    fullname nvarchar(50),
+    phone varchar(10),
     user_id varchar(50),
     total_amount double,
     status varchar(50),
