@@ -4,6 +4,7 @@ import com.poly.quanlybanhang.dto.request.UserCreationRequest;
 import com.poly.quanlybanhang.dto.request.UserUpdationRequest;
 import com.poly.quanlybanhang.dto.response.ApiResponse;
 import com.poly.quanlybanhang.dto.response.UserResponse;
+import com.poly.quanlybanhang.entity.Users;
 import com.poly.quanlybanhang.service.UserService;
 import com.poly.quanlybanhang.utils.Ximages;
 import jakarta.validation.Valid;
@@ -27,23 +28,50 @@ public class UserControllerApi {
             @RequestPart("data") @Valid UserCreationRequest request,
             @RequestPart( value = "img", required = false)
             MultipartFile img) {
+
         if(img != null && !img.isEmpty()){
             String imagePath = Ximages.saveImage(img);
             request.setThumbnail(imagePath);
         }
+
         return ApiResponse.<UserResponse>builder()
                 .code(1000)
                 .data(userService.create(request))
                 .build();
+
     }
 
+
+
     @PutMapping("/{id}")
-    public ApiResponse<UserResponse> update(@Valid @RequestBody UserUpdationRequest request, @PathVariable String id){
-        return ApiResponse.<UserResponse>builder()
-                .code(1000)
-                .data(userService.update(request, id))
-                .build();
+    public ApiResponse<UserResponse> update(
+            @PathVariable String id, @RequestPart("data") UserUpdationRequest request,
+            @RequestPart(value = "img", required = false) MultipartFile img) {
+
+        try {
+
+            Users existingUser = userService.getOne(id);
+            if (img != null && !img.isEmpty()) {
+                String imagePath = Ximages.saveImage(img);
+                request.setThumbnail(imagePath);
+            } else {
+                request.setThumbnail(existingUser.getThumbnail());
+            }
+
+            UserResponse updatedUser = userService.update(request, id);
+
+            return ApiResponse.<UserResponse>builder()
+                    .code(1000)
+                    .data(updatedUser)
+                    .build();
+        } catch (Exception e) {
+            return ApiResponse.<UserResponse>builder()
+                    .code(9999)
+                    .message("Lỗi khi cập nhật người dùng: " + e.getMessage())
+                    .build();
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public ApiResponse<?> delete(@PathVariable String id){
