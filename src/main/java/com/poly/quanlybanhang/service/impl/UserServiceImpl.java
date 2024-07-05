@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse create(UserCreationRequest request) {
         if(userRepository.existsByEmail(request.getEmail()))
             throw new AppException(ErrorCode.EMAIL_EXISTS);
-
+        System.out.println("Call Service successfully");
         Set<Role> roles = new HashSet<>();
         Role role = new Role();
 
@@ -60,18 +60,26 @@ public class UserServiceImpl implements UserService {
     public UserResponse update(UserUpdationRequest request, String id) {
         Users user = this.getOne(id);
 
-        var roles = roleRepository.findAllById(request.getRoles());
+        Set<Role> roles;
+        if (request.getRoles() == null || request.getRoles().isEmpty()) {
+            roles = user.getRoles();
+        } else {
+            roles = new HashSet<>(roleRepository.findAllById(request.getRoles()));
+            if (roles.isEmpty()) {
+                throw new IllegalArgumentException("No roles found for the provided role IDs");
+            }
+        }
 
         userMapper.updateUser(user, request);
 
-        user.setRoles(new HashSet<>(roles));
+        user.setRoles(roles);
         user.setUpdateAt(LocalDateTime.now());
 
-        if(request.getPassword().isEmpty())
-            user.setPassword(user.getPassword());
-        else
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
 
+        // Lưu người dùng và trả về response
         return userMapper.toUserResponse(userRepository.save(user));
     }
 

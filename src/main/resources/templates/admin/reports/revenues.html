@@ -1,189 +1,99 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main}, ~{::#jquery})}">
+      th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main}, ~{::#jquery})}">
 
 <head>
     <meta charset="UTF-8">
     <title>Doanh thu</title>
+
 </head>
 
 <body>
-    <div id="main">
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header d-flex">
-                <div class="col-md-12">
-                    <h3 class="m-0 font-weight-bold text-primary">Danh sách doanh thu</h3>
-                </div>
+<div id="main">
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex">
+            <div class="col-md-12">
+                <h3 class="m-0 font-weight-bold text-primary">Thống kê doanh thu</h3>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Thời gian</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Số lượng bán ra</th>
-                                <th>Đơn giá</th>
-                                <th>Doanh thu</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Sữa đậu nành</td>
-                                <td>2500 đ</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Cốt bí đao</td>
-                                <td>150.000 đ</td>
-                                <td>1</td>
-                                <td>chai</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Đường</td>
-                                <td>31.000 đ</td>
-                                <td>1</td>
-                                <td>kilogram</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Sương xáo</td>
-                                <td>16.000 đ</td>
-                                <td>2</td>
-                                <td>gói</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Xoài</td>
-                                <td>30.000 đ</td>
-                                <td>30</td>
-                                <td>kilogram</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Bánh tráng chấm</td>
-                                <td>6.500 đ</td>
-                                <td>20</td>
-                                <td>gói</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>Snack mèo yêu cá</td>
-                                <td>40.000 đ</td>
-                                <td>30</td>
-                                <td>gói</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>Ly nhựa + nắp</td>
-                                <td>33.000 đ</td>
-                                <td>30</td>
-                                <td>ly</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td>Ống hút</td>
-                                <td>5.000 đ</td>
-                                <td>1</td>
-                                <td>bịch</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>Bì đựng ly</td>
-                                <td>3.600 đ</td>
-                                <td>1</td>
-                                <td>bịch</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>11</td>
-                                <td>Bì đựng hộp</td>
-                                <td>7.000 đ</td>
-                                <td>200</td>
-                                <td>gram</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>12</td>
-                                <td>Bì đựng muối</td>
-                                <td>6.000 đ</td>
-                                <td>100</td>
-                                <td>gram</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>13</td>
-                                <td>Hộp đựng xoài</td>
-                                <td>5.000 đ</td>
-                                <td>20</td>
-                                <td>hộp</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>14</td>
-                                <td>Muối chấm</td>
-                                <td>13.000 đ</td>
-                                <td>2</td>
-                                <td>hũ</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>15</td>
-                                <td>Standee</td>
-                                <td>100.000 đ</td>
-                                <td>1</td>
-                                <td></td>
-                                <td>Chưa có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>16</td>
-                                <td>Tem logo</td>
-                                <td>20.000 đ</td>
-                                <td>100</td>
-                                <td>tem</td>
-                                <td>Có hàng</td>
-                            </tr>
-                            <tr>
-                                <td>17</td>
-                                <td>Chai nhựa</td>
-                                <td>750 đ</td>
-                                <td>20</td>
-                                <td>chai</td>
-                                <td>Có hàng</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Khách hàng</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Doanh thu</th>
+                        <th>Thời gian</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableRevenue">
+                    <!-- Dữ liệu sẽ được thêm vào đây bởi JavaScript -->
+                    </tbody>
+                </table>
             </div>
-            <div class="card-footer">
-                <div class="total-price" style="text-align: left;">
-                    <p><strong>Tổng doanh thu: <span id="totalPrice">469.350 đ</span></strong>
-                    </p>
-                </div>
+        </div>
+        <div class="card-footer">
+            <div class="total-price" style="text-align: left;">
+                <p><strong>Tổng doanh thu: <span id="totalPrice">0 đ</span></strong>
+                </p>
             </div>
         </div>
     </div>
+</div>
 
-    <div id="jquery">
-        <script>
+<div id="jquery">
+    <script>
+        $(document).ready(function() {
+            loadRevenueData(); // Gọi hàm khi tài liệu đã sẵn sàng
 
-        </script>
-    </div>
+            function loadRevenueData() {
+                $.ajax({
+                    url: '/honeyshop/api/report',
+                    method: 'GET',
+                    success: function (data) {
+                        var tableRows = '';
+                        var totalRevenue = 0;
+                        $.each(data, function (index, item) {
+                            tableRows += '<tr>' +
+                                '<td>' + (index + 1) + '</td>' +
+                                '<td>' + item.userFullName + '</td>' +
+                                '<td>' + item.productName + '</td>' +
+                                '<td>' + item.quantity + '</td>' +
+                                '<td>' + formatCurrency(item.price) + '</td>' +
+                                '<td>' + formatCurrency(item.revenue) + '</td>' +
+                                '<td>' + formatDate(item.day) + '</td>' +
+                                '</tr>';
+                            totalRevenue += item.revenue;
+                        });
+                        $('#tableRevenue').html(tableRows);
+                        $('#totalPrice').text(formatCurrency(totalRevenue));
+                    },
+                    error: function () {
+                        console.error('Lỗi khi tải dữ liệu doanh thu');
+                    }
+                });
+            }
+
+            // Hàm định dạng tiền tệ
+            function formatCurrency(amount) {
+                if (amount === null || amount === undefined) {
+                    return '0 đ';
+                }
+                return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+            }
+
+            // Hàm định dạng ngày tháng
+            function formatDate(dateString) {
+                const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                return new Date(dateString).toLocaleDateString('vi-VN', options);
+            }
+        });
+    </script>
+</div>
 </body>
-
 </html>
