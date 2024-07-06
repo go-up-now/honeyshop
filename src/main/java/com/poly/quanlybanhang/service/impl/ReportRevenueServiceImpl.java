@@ -1,5 +1,7 @@
 package com.poly.quanlybanhang.service.impl;
 
+import com.poly.quanlybanhang.report.CustomerStatistics;
+import com.poly.quanlybanhang.report.EmployeePerformance;
 import com.poly.quanlybanhang.report.ReportRevenue;
 import com.poly.quanlybanhang.repository.OrderDetailRepository;
 import com.poly.quanlybanhang.service.ReportRevenuService;
@@ -19,6 +21,23 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
 
     @Override
     public List<ReportRevenue> getAllRevenueReport() {
-        return orderDetailRepository.findRevenueSummary();
+
+        return orderDetailRepository.findRevenueReport();
+    }
+
+    @Override
+    public List<CustomerStatistics> getTopCustomersByOrderValue() {
+        return orderDetailRepository.findTopCustomersByOrderValue();
+    }
+
+    @Override
+    public List<CustomerStatistics> getTopCustomersByOrderCount() {
+        return orderDetailRepository.findTopCustomersByOrderCount();
+    }
+
+    @Override
+    public List<EmployeePerformance> getEmployeePerformanceSummary() {
+
+        return orderDetailRepository.getEmployeePerformanceSummary();
     }
 }

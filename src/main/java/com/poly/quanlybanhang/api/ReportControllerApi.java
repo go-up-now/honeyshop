@@ -1,5 +1,7 @@
 package com.poly.quanlybanhang.api;
 
+import com.poly.quanlybanhang.report.CustomerStatistics;
+import com.poly.quanlybanhang.report.EmployeePerformance;
 import com.poly.quanlybanhang.report.ReportRevenue;
 import com.poly.quanlybanhang.service.ReportRevenuService;
 
@@ -20,6 +22,23 @@ public class ReportControllerApi {
 
     @GetMapping
     public List<ReportRevenue> getRevenueByProduct() {
+
         return reportService.getAllRevenueReport();
+
+    }
+
+    @GetMapping("/top-by-value")
+    public List<CustomerStatistics> getTopCustomersByOrderValue() {
+        return reportService.getTopCustomersByOrderValue();
+    }
+
+    @GetMapping("/top-by-count")
+    public List<CustomerStatistics> getTopCustomersByOrderCount() {
+        return reportService.getTopCustomersByOrderCount();
+    }
+
+    @GetMapping("/employee-performance")
+    public List<EmployeePerformance> getEmployeePerformanceSummary() {
+        return reportService.getEmployeePerformanceSummary();
     }
 }
