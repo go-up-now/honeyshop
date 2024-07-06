@@ -1,6 +1,8 @@
 package com.poly.quanlybanhang.repository;
 
 import com.poly.quanlybanhang.entity.OrderDetails;
+import com.poly.quanlybanhang.report.CustomerStatistics;
+import com.poly.quanlybanhang.report.EmployeePerformance;
 import com.poly.quanlybanhang.report.ReportRevenue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +12,19 @@ import java.util.List;
 
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetails, String> {
+
+    @Query("SELECT new com.poly.quanlybanhang.report.ReportRevenue(" +
+            "o.fullname, " +
+            "p.name, " +
+            "od.price, " +
+            "SUM(od.quantity * od.price), " +
+            "SUM(od.quantity), " +
+            "od.createAt) " +
+            "FROM OrderDetails od " +
+            "JOIN od.order o " +
+            "JOIN od.product p " +
+            "GROUP BY o.fullname, p.name, od.price, od.createAt")
+    List<ReportRevenue> findRevenueReport();
     @Query("SELECT new com.poly.quanlybanhang.report.ReportRevenue(" +
             "u.fullname AS userFullName, " +
             "p.name AS productName, " +
@@ -23,5 +38,42 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
             "GROUP BY u.fullname, p.name, p.price, od.order.createAt " +
             "ORDER BY od.order.createAt DESC")
     List<ReportRevenue> findRevenueSummary();
+
+    @Query("SELECT new com.poly.quanlybanhang.report.CustomerStatistics(" +
+            "o.fullname, " +
+            "COUNT(o), " +
+            "SUM(od.quantity), " +
+            "SUM(od.price*od.quantity), " +
+            "(SELECT p.name FROM OrderDetails od2 JOIN od2.product p WHERE od2.order.phone = o.phone GROUP BY p.name ORDER BY SUM(od2.quantity) DESC LIMIT 1), " +
+            "MAX(o.createAt)) " +
+            "FROM Orders o JOIN o.orderDetails od " +
+            "GROUP BY o.fullname, o.phone " +
+            "ORDER BY SUM(od.price) DESC")
+    List<CustomerStatistics> findTopCustomersByOrderValue();
+
+    @Query("SELECT new com.poly.quanlybanhang.report.CustomerStatistics(" +
+            "o.fullname, " +
+            "COUNT(o), " +
+            "SUM(od.quantity), " +
+            "SUM(od.price), " +
+            "(SELECT p.name FROM OrderDetails od2 JOIN od2.product p WHERE od2.order.phone = o.phone GROUP BY p.name ORDER BY SUM(od2.quantity) DESC LIMIT 1), " +
+            "MAX(o.createAt)) " +
+            "FROM Orders o JOIN o.orderDetails od " +
+            "GROUP BY o.fullname, o.phone " +
+            "ORDER BY COUNT(o) DESC")
+    List<CustomerStatistics> findTopCustomersByOrderCount();
+
+
+    @Query("SELECT new com.poly.quanlybanhang.report.EmployeePerformance(" +
+            "u.fullname, " +
+            "COUNT(DISTINCT o.id), " +
+            "SUM(od.price * od.quantity), " +
+            "MAX(o.createAt)) " +
+            "FROM Orders o " +
+            "JOIN o.user u " +
+            "JOIN o.orderDetails od " +
+            "GROUP BY u.id, u.fullname " +
+            "ORDER BY COUNT(DISTINCT o.id) DESC")
+    List<EmployeePerformance> getEmployeePerformanceSummary();
 
 }

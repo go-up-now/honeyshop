@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Doanh thu</title>
-
 </head>
 
 <body>
@@ -32,15 +31,14 @@
                     </tr>
                     </thead>
                     <tbody id="tableRevenue">
-                    <!-- Dữ liệu sẽ được thêm vào đây bởi JavaScript -->
+                    <!-- Dữ liệu sẽ được thêm vào đây bởi DataTables -->
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="card-footer">
             <div class="total-price" style="text-align: left;">
-                <p><strong>Tổng doanh thu: <span id="totalPrice">0 đ</span></strong>
-                </p>
+                <p><strong>Tổng doanh thu: <span id="totalPrice">0 đ</span></strong></p>
             </div>
         </div>
     </div>
@@ -49,35 +47,54 @@
 <div id="jquery">
     <script>
         $(document).ready(function() {
-            loadRevenueData(); // Gọi hàm khi tài liệu đã sẵn sàng
-
-            function loadRevenueData() {
-                $.ajax({
-                    url: '/honeyshop/api/report',
-                    method: 'GET',
-                    success: function (data) {
-                        var tableRows = '';
-                        var totalRevenue = 0;
-                        $.each(data, function (index, item) {
-                            tableRows += '<tr>' +
-                                '<td>' + (index + 1) + '</td>' +
-                                '<td>' + item.userFullName + '</td>' +
-                                '<td>' + item.productName + '</td>' +
-                                '<td>' + item.quantity + '</td>' +
-                                '<td>' + formatCurrency(item.price) + '</td>' +
-                                '<td>' + formatCurrency(item.revenue) + '</td>' +
-                                '<td>' + formatDate(item.day) + '</td>' +
-                                '</tr>';
-                            totalRevenue += item.revenue;
-                        });
-                        $('#tableRevenue').html(tableRows);
-                        $('#totalPrice').text(formatCurrency(totalRevenue));
-                    },
-                    error: function () {
-                        console.error('Lỗi khi tải dữ liệu doanh thu');
-                    }
-                });
+            // Nếu DataTable đã được khởi tạo, hãy hủy khởi tạo trước khi tiếp tục
+            if ($.fn.DataTable.isDataTable('#dataTable')) {
+                $('#dataTable').DataTable().clear().destroy();
             }
+
+            // Khởi tạo DataTable
+            const table = $('#dataTable').DataTable({
+                "ajax": {
+                    "url": "/honeyshop/api/report", // URL của API để lấy dữ liệu
+                    "type": "GET",
+                    "dataSrc": function (json) {
+                        let totalRevenue = 0;
+
+                        const data = json.map((item, index) => {
+                            totalRevenue += item.revenue;
+                            return [
+                                index + 1, // STT
+                                item.userFullName,
+                                item.productName,
+                                item.quantity,
+                                formatCurrency(item.price),
+                                formatCurrency(item.revenue),
+                                formatDate(item.day)
+                            ];
+                        });
+
+                        // Cập nhật tổng doanh thu
+                        $('#totalPrice').text(formatCurrency(totalRevenue));
+
+                        return data;
+                    }
+                },
+                "columns": [
+                    { "title": "STT" },
+                    { "title": "Khách hàng" },
+                    { "title": "Tên sản phẩm" },
+                    { "title": "Số lượng" },
+                    { "title": "Đơn giá" },
+                    { "title": "Doanh thu" },
+                    { "title": "Thời gian" }
+                ],
+                processing: true,
+                serverSide: false,
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true
+            });
 
             // Hàm định dạng tiền tệ
             function formatCurrency(amount) {

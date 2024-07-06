@@ -14,4 +14,5 @@ public interface OrderDetailMapper {
     @Mapping(target = "product", ignore = true)
     OrderDetails toOrderDetail(OrderDetailRequest request);
     OrderDetailResponse toOrderDetailResponse(OrderDetails orderDetails);
+
 }
