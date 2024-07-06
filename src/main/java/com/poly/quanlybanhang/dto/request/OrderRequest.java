@@ -3,6 +3,8 @@ package com.poly.quanlybanhang.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -13,4 +15,6 @@ public class OrderRequest {
     String fullname;
     String phone;
     Double totalAmount;
+    String status = "Đã thanh toán";
+    private List<OrderDetailRequest> orderDetails;
 }

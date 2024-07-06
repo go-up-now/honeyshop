@@ -23,10 +23,10 @@ public class Orders {
     String fullname;
     String phone;
     Double totalAmount;
-    String status = "Đã thanh toán";
+    String status;
     LocalDateTime createAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     Users user;
 

@@ -21,6 +21,8 @@ public enum ErrorCode {
     UNAUTHENTICATED(1007, "Unauthenticated"),
     PRODUCT_NOT_FOUND(1008, "Product not found"),
     CATEGORY_NOT_FOUND(1008, "Category not found"),
+    ORDER_NOT_FOUND(1008, "Order not found"),
+    ORDER_DETAIL_NOT_FOUND(1008, "Order detail not found"),
     ;
 
     int code;

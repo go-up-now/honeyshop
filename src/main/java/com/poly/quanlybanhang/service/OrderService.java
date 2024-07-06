@@ -15,5 +15,6 @@ public interface OrderService {
     void delete(String id);
     List<OrderResponse> getAll();
     Orders getOne(String id);
-    OrderResponse getProduct(String id);
+    OrderResponse getOrder(String id);
+    Orders getOrderByPhone(String phone);
 }

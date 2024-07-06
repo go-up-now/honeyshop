@@ -19,8 +19,8 @@ public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-    Integer quantity;
-    Double price;
+    int quantity;
+    Double price; // khi có khuyến mãi thì giá sẽ khác so với product
     LocalDateTime createAt;
 
     @ManyToOne
