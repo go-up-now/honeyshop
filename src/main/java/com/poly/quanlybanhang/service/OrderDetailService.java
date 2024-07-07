@@ -13,4 +13,8 @@ public interface OrderDetailService {
     List<OrderDetailResponse> getAll();
     OrderDetails getOne(String id);
     OrderDetailResponse getOrderDetail(String id);
+
+    public Double getTotalRevenue();
+    public Long getTotalQuantityProduct();
+    public Long getTotalCustomers();
 }

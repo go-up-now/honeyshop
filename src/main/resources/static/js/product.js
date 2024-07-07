@@ -117,7 +117,8 @@ function loadData() {
                         item.thumbnail ? `<img src="/honeyshop/images/${item.thumbnail}" alt="${item.name}" style="width:50px;height:50px;">` : 'N/A',
                         item.price ? item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'N/A',
                         item.categories && item.categories.name ? item.categories.name : 'N/A',
-                        `<button type="button" class="btn btn-info" onclick="eidtProduct('${item.id}')"> <i class="fa fa-edit"></i> </button> <button type="button" class="btn btn-danger" onclick="removeProduct('${item.id}')"> <i class="fa fa-trash"></i> </button>`
+                        `<button type="button" class="btn btn-info" onclick="eidtProduct('${item.id}')"> <i class="fa fa-edit"></i> </button> 
+                        <button type="button" class="btn btn-danger" onclick="removeProduct('${item.id}')"> <i class="fa fa-trash"></i> </button>`
                     ];
                 });
                 return data;

@@ -80,4 +80,19 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         return orderDetailMapper.toOrderDetailResponse(orderDetailRepository.findById(id).orElseThrow(() ->
                 new AppException(ErrorCode.ORDER_DETAIL_NOT_FOUND)));
     }
+
+    @Override
+    public Double getTotalRevenue() {
+        return orderDetailRepository.findTotalRevenue();
+    }
+
+    @Override
+    public Long getTotalQuantityProduct() {
+        return orderDetailRepository.findTotalQuantityProduct();
+    }
+
+    @Override
+    public Long getTotalCustomers() {
+        return orderDetailRepository.findTotalCustomers();
+    }
 }
