@@ -1,4 +1,5 @@
 let productsApiUrl = "/honeyshop/api/products";
+let total = 0;
 
 $(document).ready(function () {
     loadCart();
@@ -6,6 +7,7 @@ $(document).ready(function () {
 
     $("#dat-hang").click(function () {
         $("#formPay").fadeIn(); // Show the panel
+        loadPay();
     });
 
     $("#closePanel").click(function () {
@@ -65,48 +67,103 @@ function formatCurrencyVND(amount) {
     }).format(amount);
 }
 
+// function loadData() {
+//     $.ajax({
+//         url: productsApiUrl,
+//         method: "GET",
+//         contentType: "application/json",
+//         dataType: "json",
+//         // headers: {
+//         //     'Authorization': 'Bearer ' + getToken()
+//         // },
+//         success: function (response) {
+//             let products = response.data; // Lấy danh sách data
+//             let row = '';
+//             if (Array.isArray(products)) {
+//                 products.forEach(function (product, index) {
+//                     row += `
+//                         <tr id = 'row_${product.id}' class="odd">
+//                             <td class="sorting_1">${index + 1}</td>
+//                             <td>${product.name}</td>
+//                             <td>
+//                                 <img src = "/honeyshop/images/${product.thumbnail}" alt="Hình ảnh"
+//                                 style="width: 50px; height: 50px" data-product-img="${product.thumbnail}">
+//                             </td>
+//                             <td data-product-price="${product.price}">
+//                                 ${formatCurrencyVND(product.price)}
+//                             </td>
+//                             <td>${product.categories.name}</td>
+//                             <td style="text-align: center; width: 30px; height: 30px">
+//                                 <input type="checkbox" class="productCheckbox" data-product-id="${product.id}">
+//                             </td>
+//                         </tr>
+//                             `;
+//                     $("#dssp").html(row);
+//                 })
+//             } else {
+//                 console.error("Expected an array but got:", typeof products);
+//                 alert('The response is not an array.');
+//             }
+//         },
+//         error: function (e) {
+//             console.log("Error: ", e);
+//         }
+//     })
+// }
+
 function loadData() {
-    $.ajax({
-        url: productsApiUrl,
-        method: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        // headers: {
-        //     'Authorization': 'Bearer ' + getToken()
-        // },
-        success: function (response) {
-            let products = response.data; // Lấy danh sách data
-            let row = '';
-            if (Array.isArray(products)) {
-                products.forEach(function (product, index) {
-                    row += `
-                        <tr id = 'row_${product.id}' class="odd">
-                            <td class="sorting_1">${index + 1}</td>
-                            <td>${product.name}</td>
-                            <td>
-                                <img src = "/honeyshop/images/${product.thumbnail}" alt="Hình ảnh"
-                                style="width: 50px; height: 50px" data-product-img="${product.thumbnail}">
-                            </td>
-                            <td data-product-price="${product.price}">
-                                ${formatCurrencyVND(product.price)}
-                            </td>
-                            <td>${product.categories.name}</td>
-                            <td style="text-align: center; width: 30px; height: 30px">
-                                <input type="checkbox" class="productCheckbox" data-product-id="${product.id}">
-                            </td>
-                        </tr>
-                            `;
-                    $("#dssp").html(row);
-                })
-            } else {
-                console.error("Expected an array but got:", typeof products);
-                alert('The response is not an array.');
+    // Nếu DataTable đã được khởi tạo, hãy hủy khởi tạo trước khi tiếp tục
+    if ($.fn.DataTable.isDataTable('#dataTable')) {
+        $('#dataTable').DataTable().clear().destroy();
+    }
+
+    // Khởi tạo DataTable
+    const table = $('#dataTable').DataTable({
+        "ajax": {
+            "url": productsApiUrl, // URL của API để lấy dữ liệu
+            "type": "GET",
+            "dataSrc": function (json) {
+                // In ra dữ liệu trả về từ API để kiểm tra
+                console.log("API response:", json);
+
+                // Kiểm tra nếu dữ liệu trả về không phải là mảng
+                if (!Array.isArray(json)) {
+                    if (json.data && Array.isArray(json.data)) {
+                        json = json.data;
+                    } else {
+                        console.error("API response is not an array:", json);
+                        return [];
+                    }
+                }
+
+                const data = json.map((item, index) => {
+                    return [
+                        index + 1, // STT
+                        item.name || 'N/A',
+                        item.thumbnail ? `<img src="/honeyshop/images/${item.thumbnail}" data-product-img="${item.thumbnail}" alt="${item.name}" style="width:50px;height:50px;">` : 'N/A',
+                        item.price ? formatCurrencyVND(item.price) : 'N/A',
+                        item.categories && item.categories.name ? item.categories.name : 'N/A',
+                        `<input type="checkbox" class="productCheckbox" data-product-id="${item.id}">`
+                    ];
+                });
+                return data;
             }
         },
-        error: function (e) {
-            console.log("Error: ", e);
-        }
-    })
+        "columns": [
+            { "title": "STT" },
+            { "title": "Tên sản phẩm" },
+            { "title": "Hình ảnh", "orderable": false },
+            { "title": "Đơn giá" },
+            { "title": "Loại sản phẩm" },
+            { "title": "Thao tác", "orderable": false }
+        ],
+        processing: true,
+        serverSide: false,
+        paging: true,
+        searching: true,
+        ordering: true,
+        info: true
+    });
 }
 
 // add to cart
@@ -121,11 +178,19 @@ $('#addToCart').click(function () {
 
     // Loop through each checkbox to check if it's checked
     $('.productCheckbox:checked').each(function () {
+        // var productId = $(this).data('product-id');
+        // var productName = $(this).closest('tr').find('td:eq(1)').text();
+        // var productImg = $(this).closest('tr').find('img').data('product-img');
+        // var productPrice = parseFloat($(this).closest('tr').find('td[data-product-price]').data('product-price'));
+        // var productQuantity = 1;
+        // var productTotal = productPrice * productQuantity;
+
+        var $row = $(this).closest('tr'); // Lấy hàng chứa checkbox này
         var productId = $(this).data('product-id');
-        var productName = $(this).closest('tr').find('td:eq(1)').text();
-        var productImg = $(this).closest('tr').find('img').data('product-img');
-        var productPrice = parseFloat($(this).closest('tr').find('td[data-product-price]').data('product-price'));
-        var productQuantity = 1;
+        var productName = $row.find('td:eq(1)').text();
+        var productImg = $(this).closest('tr').find('img').data('product-img'); // Sử dụng data-product-img để lấy đường dẫn hình ảnh
+        var productPrice = parseFloat($row.find('td:eq(3)').text().replace(/[^\d.-]/g, '')) * 1000; // Lấy giá từ cột thứ 4 và loại bỏ ký hiệu tiền tệ
+        var productQuantity = 1; // Số lượng sản phẩm mặc định là 1
         var productTotal = productPrice * productQuantity;
 
         // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
@@ -168,8 +233,8 @@ $('#addToCart').click(function () {
 // Load cart
 function loadCart() {
     let carts = JSON.parse(localStorage.getItem("cart")); // Lấy danh sách data
-    let total = 0;
     let row = '';
+    let total = 0;
 
     if (Array.isArray(carts) && carts.length > 0) {
         carts.forEach(function (cart) {
@@ -305,4 +370,103 @@ function removeFromCart(productId) {
             swal("Xóa sản phẩm thành công!", "", "success");
         }
     });
+}
+
+// Load pay
+function loadPay() {
+    let carts = JSON.parse(localStorage.getItem("cart")); // Lấy danh sách data
+    let total = 0;
+    let row = '';
+
+    if (Array.isArray(carts) && carts.length > 0) {
+        carts.forEach(function (cart) {
+            let rowTotal = cart.quantity * cart.price; // Tính tổng tiền của từng hàng
+            total += rowTotal; // Cộng vào tổng tiền chung
+
+            row += `
+                <tr id="row_${cart.id}" class="odd">
+                    <td>${cart.name}</td>
+                    <td>
+                        <img src="/honeyshop/images/${cart.thumbnail}" alt="Hình ảnh"
+                            style="width: 50px; height: 50px" data-product-img-cart="${cart.thumbnail}">
+                    </td>
+                    <td data-product-price-cart="${cart.price}">
+                        ${formatCurrencyVND(cart.price)}
+                    </td>
+                    <td >
+                        ${cart.quantity}
+                    </td>
+                    <td data-product-price-total="${rowTotal}">
+                        ${formatCurrencyVND(rowTotal)}
+                    </td>
+                </tr>
+            `;
+        });
+
+        //Load hóa đơn
+        $("#dsdh").html(row);
+        $("#total").html(formatCurrencyVND(total));
+    } else {
+        //Load hóa đơn
+        $("#dsdh").html('<p>Giỏ hàng của bạn trống.</p>');
+        $("#total").html(formatCurrencyVND(total));
+    }
+}
+
+// create and cancel the bill
+function createAndCancelOfTheBill(status, messages) {
+    // Gỡ bỏ các sự kiện submit đã gán trước đó
+    $("#huy-hon-hang").off('submit');
+    $("#thanh-toan").off('submit');
+    var selectedProducts = [];
+    let carts = JSON.parse(localStorage.getItem("cart")); // Lấy danh sách data
+
+    if (Array.isArray(carts) && carts.length > 0) {
+        carts.forEach(function (cart) {
+            let rowTotal = cart.quantity * cart.price; // Tính tổng tiền của từng hàng
+            total += rowTotal; // Cộng vào tổng tiền chung
+
+            var product = {
+                productId: cart.id,
+                quantity: cart.quantity,
+                price: cart.price
+            }
+            selectedProducts.push(product);
+        });
+    }
+
+    let order = {
+        fullname: $("#fullname").val(),
+        phone: $("#phone").val(),
+        totalAmount: total,
+        status: status,
+        orderDetails: selectedProducts
+    }
+
+    $.ajax({
+        url: '/honeyshop/api/orders',
+        method: 'POST',
+        data: JSON.stringify(order),
+        dataType: 'json',
+        contentType: 'application/json',
+        // headers: {
+        //     'Authorization': 'Bearer ' + token
+        // },
+        success: function (response) {
+            console.log(response)
+            if (response.code === 1000) {
+                swal(messages + " thành công", "", "success");
+                localStorage.removeItem('cart');
+                loadCart();
+                loadPay();
+                $("#form_order")[0].reset();
+            } else {
+                swal(messages + " thất bại", response.messages, "error");
+            }
+        },
+        error: function (e) {
+            swal(messages + " thất bại", "", "error");
+            console.log("error: ", e);
+        }
+    })
 }

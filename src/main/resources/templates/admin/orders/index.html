@@ -19,11 +19,11 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <div class="col-lg-12">
-                        <form role="form" method="post" id="form_create_user" enctype="multipart/form-data">
+                        <form role="form" method="post" id="form_order" enctype="multipart/form-data">
                             <div class="panel-body row">
                                 <div class="col-md-6">
                                     <label for="fullname" class="col-md-4">Tên người nhận: </label>
-                                    <input type="text" name="lastName" id="fullname" placeholder="Họ và tên"
+                                    <input type="text" name="fullname" id="fullname" placeholder="Họ và tên"
                                         class="col-md-6" style="width: 100%; height: auto;">
                                 </div>
                                 <div class="col-md-5">
@@ -84,7 +84,7 @@
 
         <!-- Form add user-->
         <div id="addUserPanel" class="hidden">
-            <div class="panel-content">
+            <div class="panel-content" style="margin: 0 auto !important;">
                 <span id="closePanelBtn">&times;</span>
                 <div class="form-title">Danh sách sản phẩm</div>
                 <div class="d-flex justify-content-center">
@@ -158,8 +158,10 @@
                 <div class="total-price" style="text-align: left;">
                     <div><strong>Tổng tiền: <span id="total">0 ₫</span></strong>
                         <div style="float: right; margin-right: 50px">
-                            <button href="" class="btn btn-danger me-3" id="huy-hon-hang">HỦY ĐƠN HÀNG</button>
-                            <button href="" class="btn btn-info" id="thanh-toan">THANH TOÁN</button>
+                            <button href="" class="btn btn-danger me-3" id="huy-hon-hang"
+                                onclick="createAndCancelOfTheBill('Đã hủy', 'Hủy')">HỦY ĐƠN HÀNG</button>
+                            <button href="" class="btn btn-info" id="thanh-toan"
+                                onclick="createAndCancelOfTheBill('Đã thanh toán', 'Thanh toán')">THANH TOÁN</button>
                         </div>
 
                     </div>
