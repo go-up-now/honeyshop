@@ -58,14 +58,15 @@
                     url: '/honeyshop/api/report/top-by-value',
                     dataSrc: function (json) {
                         let totalPrice = 0;
-                        json.forEach(item => totalPrice += item.totalOrderValue || 0);
-                        $('#totalPrice').text(totalPrice.toFixed(2) + ' đ');
+                        json.forEach(item => totalPrice += parseFloat(item.totalOrderValue) || 0);
+                        $('#totalPrice').text(totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+
                         return json.map((item, index) => [
                             index + 1,
                             item.customerName || 'N/A',
                             item.orderCount || 0,
                             item.totalQuantity || 0,
-                            item.totalOrderValue ? item.totalOrderValue.toFixed(2) + ' đ' : '0 đ',
+                            item.totalOrderValue ? item.totalOrderValue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'N/A',
                             item.mostPurchasedProduct || 'N/A',
                             item.lastOrderDate ? new Date(item.lastOrderDate).toLocaleDateString('vi-VN') : 'N/A'
                         ]);

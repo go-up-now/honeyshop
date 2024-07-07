@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin/bao-cao")
 public class ReportController {
-    @GetMapping("/doanh-thu")
+    @GetMapping("/ls-ban-hang")
     public String getRevenues(){
-        return "/admin/reports/revenues";
+        return "/admin/reports/sell-history";
     }
 
     @GetMapping("/hieu-suat-ban-hang")
