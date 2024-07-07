@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main}, ~{::#jquery})}">
+    th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main}, ~{::#jquery})}">
 
 <head>
     <meta charset="UTF-8">
@@ -9,192 +9,196 @@
         .hidden {
             display: none;
         }
+
         .disabled {
-            pointer-events: none; /* Ngăn chặn sự kiện nhấp chuột */
-            opacity: 0.5; /* Giảm độ sáng để hiển thị rằng nó bị tắt */
+            pointer-events: none;
+            /* Ngăn chặn sự kiện nhấp chuột */
+            opacity: 0.5;
+            /* Giảm độ sáng để hiển thị rằng nó bị tắt */
         }
     </style>
 </head>
 
 <body>
-<div id="main">
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header d-flex">
-            <div class="col-md-9">
-                <h3 class="m-0 font-weight-bold text-primary">Danh sách tài khoản</h3>
+    <div id="main">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex">
+                <div class="col-md-9">
+                    <h3 class="m-0 font-weight-bold text-primary">Danh sách tài khoản</h3>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-success" id="addUser">Thêm tài khoản</button>
+                </div>
             </div>
-            <div class="col-md-3">
-                <button class="btn btn-success" id="addUser">Thêm tài khoản</button>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Họ và tên</th>
-                        <th>Avatar</th>
-                        <th>Giới tính</th>
-                        <th>Vai trò</th>
-                        <th>Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody id="userTableBody">
-                    <tr style="display: none">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Form add user-->
-    <div id="addUserPanel" class="hidden">
-        <div class="panel-content">
-            <span id="closePanelBtn">&times;</span>
-            <div class="form-title">Thêm Người Dùng</div>
-            <div class="d-flex justify-content-center">
-                <div class="col-lg-12">
-                    <form role="form" method="post" id="form_create_user"  enctype="multipart/form-data">
-                        <div class="panel-body row">
-                            <div class="col-md-6">
-
-                                <label for="fullname" class="col-md-4">Họ và tên: </label>
-                                <input type="text" name="lastName" id="fullname" placeholder="Họ và tên"
-                                       class="col-md-6" style="width: 100%; height: auto;">
-                                <br><br>
-                                <label for="email" class="col-md-4">Email: </label>
-                                <input type="email" name="email" id="email" style="width: 100%;"
-                                       placeholder="Email của bạn" class="col-md-6">
-                                <br><br>
-
-                                <label for="password" class="col-md-4">Mật khẩu: </label>
-                                <input type="password" name="password" id="password" placeholder="Mật khẩu"
-                                       style="width: 100%;" class="col-md-6">
-                                <br><br>
-
-                                <label for="img" class="col-md-4">Chọn hình: </label>
-                                <input type="file" name="image" id="img" style="width: 100%;" class="col-md-6">
-
-                                <div class="images ms-5" id="chon-anh">
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="address" class="col-md-4">Địa chỉ: </label>
-                                <input type="text" name="address" id="address" style="width: 100%;"
-                                       placeholder="Địa chỉ của bạn" class="col-md-6">
-                                <br><br>
-
-                                <label for="phone" class="col-md-4">Số điện thoại: </label>
-                                <input type="number" name="phone" id="phone" placeholder="Số điện thoại"
-                                       style="width: 100%;" class="col-md-6" min="0">
-                                <br><br>
-
-                                <label class="col-md-4">Ngày sinh</label>
-                                <input type="date" name="birthday" id="birthday" style="width: 100%;"
-                                       class="col-md-6">
-                                <br><br>
-
-
-                                <label class="col-md-4">Vai trò</label>
-                                <select class="col-md-6" id="roles" name="roles" disabled>
-                                    <option value="STAFF" selected>STAFF</option>
-                                    <option value="ADMIN">ADMIN</option>
-                                    <option value="CUSTOMER">CUSTOMER</option>
-                                </select>
-<!--                                <input type="hidden" name="roles" value="NHÂN VIÊN">-->
-
-                                <br><br>
-
-                                <div class="row">
-                                    <label class="col-md-6">Giới tính: </label>
-                                    <div class="col-md-4">
-                                        <input type="radio" name="gender" id="male" value="true" checked>
-                                        <label for="male">Nam</label>
-                                        <input type="radio" name="gender" id="female" value="false">
-                                        <label for="female">Nữ</label> <br>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <!--                                            </div>-->
-                        </div>
-<!--                        <div class="panel-footer text-right">-->
-<!--                            <button type="submit" class="btn btn-success create"  onclick="createUser()"-->
-<!--                                    id="create">Thêm-->
-<!--                                mới</button>-->
-<!--                            <button type="submit" class="btn btn-success update"  onclick="updateUser()"-->
-<!--                                    id="update">Cập-->
-<!--                                nhật</button>-->
-<!--                            <button type="reset" class="btn btn-danger">Reset</button>-->
-<!--                        </div>-->
-                        <div class="panel-footer text-right">
-                            <button type="submit" class="btn btn-success" id="save">Lưu</button>
-                            <button type="reset" class="btn btn-danger">Reset</button>
-                        </div>
-                    </form>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Họ và tên</th>
+                                <th>Avatar</th>
+                                <th>Giới tính</th>
+                                <th>Vai trò</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <tr style="display: none">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <!-- End Form add user-->
+
+        <!-- Form add user-->
+        <div id="addUserPanel" class="hidden">
+            <div class="panel-content">
+                <span id="closePanelBtn">&times;</span>
+                <div class="form-title create">Thêm Người Dùng</div>
+                <div class="form-title update">Cập nhật Người Dùng</div>
+                <div class="d-flex justify-content-center">
+                    <div class="col-lg-12">
+                        <form role="form" method="post" id="form_create_user" enctype="multipart/form-data">
+                            <div class="panel-body row">
+                                <div class="col-md-6">
+
+                                    <label for="fullname" class="col-md-4">Họ và tên: </label>
+                                    <input type="text" name="lastName" id="fullname" placeholder="Họ và tên"
+                                        class="col-md-6" style="width: 100%; height: auto;">
+                                    <br><br>
+                                    <label for="email" class="col-md-4">Email: </label>
+                                    <input type="email" name="email" id="email" style="width: 100%;"
+                                        placeholder="Email của bạn" class="col-md-6">
+                                    <br><br>
+
+                                    <label for="password" class="col-md-4">Mật khẩu: </label>
+                                    <input type="password" name="password" id="password" placeholder="Mật khẩu"
+                                        style="width: 100%;" class="col-md-6">
+                                    <br><br>
+
+                                    <label for="img" class="col-md-4">Chọn hình: </label>
+                                    <input type="file" name="image" id="img" style="width: 100%;" class="col-md-6">
+
+                                    <div class="images ms-5" id="chon-anh">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="address" class="col-md-4">Địa chỉ: </label>
+                                    <input type="text" name="address" id="address" style="width: 100%;"
+                                        placeholder="Địa chỉ của bạn" class="col-md-6">
+                                    <br><br>
+
+                                    <label for="phone" class="col-md-4">Số điện thoại: </label>
+                                    <input type="number" name="phone" id="phone" placeholder="Số điện thoại"
+                                        style="width: 100%;" class="col-md-6" min="0">
+                                    <br><br>
+
+                                    <label class="col-md-4">Ngày sinh</label>
+                                    <input type="date" name="birthday" id="birthday" style="width: 100%;"
+                                        class="col-md-6">
+                                    <br><br>
+
+
+                                    <label class="col-md-4">Vai trò</label>
+                                    <select class="col-md-6" id="roles" name="roles" disabled>
+                                        <option value="STAFF" selected>Nhân viên</option>
+                                        <option value="ADMIN">ADMIN</option>
+                                        <option value="CUSTOMER">Khách hàng</option>
+                                    </select>
+                                    <!--                                <input type="hidden" name="roles" value="NHÂN VIÊN">-->
+
+                                    <br><br>
+
+                                    <div class="row">
+                                        <label class="col-md-6">Giới tính: </label>
+                                        <div class="col-md-4">
+                                            <input type="radio" name="gender" id="male" value="true" checked>
+                                            <label for="male">Nam</label>
+                                            <input type="radio" name="gender" id="female" value="false">
+                                            <label for="female">Nữ</label> <br>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <!--                                            </div>-->
+                            </div>
+                            <!--                        <div class="panel-footer text-right">-->
+                            <!--                            <button type="submit" class="btn btn-success create"  onclick="createUser()"-->
+                            <!--                                    id="create">Thêm-->
+                            <!--                                mới</button>-->
+                            <!--                            <button type="submit" class="btn btn-success update"  onclick="updateUser()"-->
+                            <!--                                    id="update">Cập-->
+                            <!--                                nhật</button>-->
+                            <!--                            <button type="reset" class="btn btn-danger">Reset</button>-->
+                            <!--                        </div>-->
+                            <div class="panel-footer text-right">
+                                <button type="submit" class="btn btn-success" id="save">Lưu</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End Form add user-->
+        </div>
     </div>
-</div>
 
-<div id="jquery">
-    <script>
-        var ApigetUser = "/honeyshop/api/users";
-        var ApideleteUser ="/honeyshop/api/users/"
-        $(document).ready(function() {
-            loadUser();
-            $("#addUser").click(function () {
-                resetForm(); // Reset form khi thêm mới người dùng
-                $('#addUserPanel').show();
+    <div id="jquery">
+        <script>
+            var ApigetUser = "/honeyshop/api/users";
+            var ApideleteUser = "/honeyshop/api/users/"
+            $(document).ready(function () {
+                loadUser();
+                $("#addUser").click(function () {
+                    resetForm(); // Reset form khi thêm mới người dùng
+                    $('#addUserPanel').show();
+                });
+
+                // Cập nhật form submit để xử lý cả insert và update
+                $("#form_create_user").submit(function (event) {
+                    event.preventDefault();
+                    saveUser();
+                });
             });
+            function resetForm() {
+                $('#form_create_user')[0].reset();
+                $('#email').prop('disabled', false);
+                $('#save').data('user-id', null);
+                $('#save').data('old-password', null);
+                $('#roles').prop('disabled', true); // Vô hiệu hóa trường roles
+                $('#chon-anh').empty();
+                $('#img').val('');  // Xóa ảnh đã chọn trong input file
+            }
 
-            // Cập nhật form submit để xử lý cả insert và update
-            $("#form_create_user").submit(function (event) {
-                event.preventDefault();
-                saveUser();
-            });
-        });
-        function resetForm() {
-            $('#form_create_user')[0].reset();
-            $('#email').prop('disabled', false);
-            $('#save').data('user-id', null);
-            $('#save').data('old-password', null);
-            $('#roles').prop('disabled', true); // Vô hiệu hóa trường roles
-            $('#chon-anh').empty();
-            $('#img').val('');  // Xóa ảnh đã chọn trong input file
-        }
+            function loadUser() {
+                $.ajax({
+                    url: ApigetUser,
+                    method: "GET",
+                    contentType: "application/json",
+                    dataType: "json",
 
-        function loadUser() {
-            $.ajax({
-                url: ApigetUser,
-                method: "GET",
-                contentType: "application/json",
-                dataType: "json",
+                    success: function (response) {
 
-                success: function(response) {
+                        let users = response.data;
+                        $("#userTableBody").empty();
+                        let userRow = '';
+                        if (Array.isArray(users)) {
+                            users.forEach(function (user, index) {
+                                var roleName = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles[0].name : "N/A";
 
-                    let users = response.data;
-                    $("#userTableBody").empty();
-                    let userRow='';
-                    if (Array.isArray(users)) {
-                        users.forEach(function(user, index) {
-                            var roleName = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles[0].name : "N/A";
-
-                            var userRow = `
+                                var userRow = `
                               <tr id = 'userrow_${user.id}'>
                                 <td>${index + 1}</td>
                                 <td>${user.fullname}</td>
@@ -218,165 +222,168 @@
 
                                 </td>
                             </tr>`;
-                            $("#userTableBody").append(userRow);
-                        });
-                    } else {
-                        console.error("Response không phải là một mảng");
-                    }
-                },
-                error: function(error) {
-                    console.error("There was an error loading the user data: ", error);
-                }
-            });
-        }
-
-        function removeUser(id) {
-            console.log(`removeUser function called with ID ${id}`);
-            swal({
-                title: "Bạn có chắc muốn xóa không?",
-                text: "",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            url: ApideleteUser + id,
-                            method: "DELETE",
-                            contentType: "application/json",
-                            dataType: "json",
-                            // headers: {
-                            //     'Authorization': 'Bearer ' + getToken()
-                            // },
-                            success: function () {
-                                $("#userrow_" + id).remove();
-                                swal("Xóa người dùng thành công!", {
-                                    icon: "success",
-                                });
-                            },
-                            error: function () {
-                                swal("Xóa người dùng thất bại!", {
-                                    icon: "error",
-                                });
-                            }
-                        })
-                    }
-                });
-        }
-
-
-        function editUser(id) {
-            $.ajax({
-                url: "/honeyshop/api/users/" + id,
-                method: "GET",
-                contentType: "application/json",
-                dataType: "json",
-                success: function(response) {
-                    let user = response.data;
-
-                    $('#fullname').val(user.fullname);
-                    $('#email').val(user.email).prop('disabled', true);
-                    $('#phone').val(user.phone);
-                    $('#address').val(user.address);
-                    $('#birthday').val(user.dob);
-                    $('input[name="gender"][value="' + (user.gender ? 'true' : 'false') + '"]').prop('checked', true);
-                    $('#roles').val(user.roles[0].name);
-                    $('#roles').prop('disabled', false);
-                    if (user.thumbnail) {
-                        $('#chon-anh').html(`<img src="/honeyshop/images/${user.thumbnail}" alt="Avatar" width="100" height="100">`); // Hiển thị ảnh nếu có
-                    } else {
-                        $('#chon-anh').empty(); // Xóa ảnh nếu không có
-                    }
-
-                    $('#save').data('user-id', id);
-                    $('#save').data('old-password', user.password);
-
-                    $('#addUserPanel').show(); // Hiển thị form nếu nó bị ẩn
-                },
-                error: function(error) {
-                    console.error("Có lỗi xảy ra khi tải dữ liệu người dùng: ", error);
-                }
-            });
-        }
-        function saveUser() {
-            let formData = new FormData(document.getElementById('form_create_user'));
-            let user = {
-                fullname: $("#fullname").val(),
-                // email: $("#email").val(),
-                password:$('#password').val(),
-                phone: $("#phone").val(),
-                dob: $("#birthday").val(),
-                address: $("#address").val(),
-                gender: $('input[name="gender"]:checked').val(),
-                roles: $('#roles').val()
-            };
-
-            if (user.roles && !Array.isArray(user.roles)) {
-                user.roles = [user.roles];
-            }
-
-            // Thêm email nếu là thêm mới người dùng
-            let userId = $('#save').data('user-id');
-            if (!userId) {
-                user.email = $("#email").val();
-            }
-
-            formData.append('data', new Blob([JSON.stringify(user)], { type: 'application/json' }));
-
-            let fileInput = document.getElementById('img');
-            if (fileInput.files.length > 0) {
-                formData.append('img', fileInput.files[0]);
-            }
-
-            if (userId) {
-                $.ajax({
-                    url: ApideleteUser + userId,
-                    method: "PUT",
-                    data: formData,
-
-                    processData: false, // Prevent jQuery from automatically transforming the data into a query string
-                    contentType: false,  // Chuyển đổi dữ liệu người dùng thành JSON
-                    success: function(response) {
-                        swal("Cập nhật người dùng thành công", "", "success");
-                        loadUser();
+                                $("#userTableBody").append(userRow);
+                            });
+                        } else {
+                            console.error("Response không phải là một mảng");
+                        }
                     },
-                    error: function(e) {
-                        console.error("Lỗi khi cập nhật người dùng: ", e);
-                        swal("Cập nhật người dùng thất bại", "", "error");
-                    }
-                });
-            } else {
-                $.ajax({
-                    url: ApigetUser,
-                    method: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        swal("Thêm người dùng thành công", "", "success");
-                        $("#form_create_user")[0].reset();
-                        loadUser();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Lỗi khi thêm người dùng: ", {
-                            status: status,
-                            error: error,
-                            responseText: xhr.responseText,
-                            responseJSON: xhr.responseJSON
-                        });
-                        swal("Thêm người dùng thất bại", `Lỗi: ${xhr.responseJSON.message}`, "error");
+                    error: function (error) {
+                        console.error("There was an error loading the user data: ", error);
                     }
                 });
             }
-        }
+
+            function removeUser(id) {
+                console.log(`removeUser function called with ID ${id}`);
+                swal({
+                    title: "Bạn có chắc muốn xóa không?",
+                    text: "",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: ApideleteUser + id,
+                                method: "DELETE",
+                                contentType: "application/json",
+                                dataType: "json",
+                                // headers: {
+                                //     'Authorization': 'Bearer ' + getToken()
+                                // },
+                                success: function () {
+                                    $("#userrow_" + id).remove();
+                                    swal("Xóa người dùng thành công!", {
+                                        icon: "success",
+                                    });
+                                },
+                                error: function () {
+                                    swal("Xóa người dùng thất bại!", {
+                                        icon: "error",
+                                    });
+                                }
+                            })
+                        }
+                    });
+            }
+
+
+            function editUser(id) {
+                $(".create").hide();
+                $(".update").show();
+
+                $.ajax({
+                    url: "/honeyshop/api/users/" + id,
+                    method: "GET",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+                        let user = response.data;
+
+                        $('#fullname').val(user.fullname);
+                        $('#email').val(user.email).prop('disabled', true);
+                        $('#phone').val(user.phone);
+                        $('#address').val(user.address);
+                        $('#birthday').val(user.dob);
+                        $('input[name="gender"][value="' + (user.gender ? 'true' : 'false') + '"]').prop('checked', true);
+                        $('#roles').val(user.roles[0].name);
+                        $('#roles').prop('disabled', false);
+                        if (user.thumbnail) {
+                            $('#chon-anh').html(`<img src="/honeyshop/images/${user.thumbnail}" alt="Avatar" width="100" height="100">`); // Hiển thị ảnh nếu có
+                        } else {
+                            $('#chon-anh').empty(); // Xóa ảnh nếu không có
+                        }
+
+                        $('#save').data('user-id', id);
+                        $('#save').data('old-password', user.password);
+
+                        $('#addUserPanel').show(); // Hiển thị form nếu nó bị ẩn
+                    },
+                    error: function (error) {
+                        console.error("Có lỗi xảy ra khi tải dữ liệu người dùng: ", error);
+                    }
+                });
+            }
+            function saveUser() {
+                let formData = new FormData(document.getElementById('form_create_user'));
+                let user = {
+                    fullname: $("#fullname").val(),
+                    // email: $("#email").val(),
+                    password: $('#password').val(),
+                    phone: $("#phone").val(),
+                    dob: $("#birthday").val(),
+                    address: $("#address").val(),
+                    gender: $('input[name="gender"]:checked').val(),
+                    roles: $('#roles').val()
+                };
+
+                if (user.roles && !Array.isArray(user.roles)) {
+                    user.roles = [user.roles];
+                }
+
+                // Thêm email nếu là thêm mới người dùng
+                let userId = $('#save').data('user-id');
+                if (!userId) {
+                    user.email = $("#email").val();
+                }
+
+                formData.append('data', new Blob([JSON.stringify(user)], { type: 'application/json' }));
+
+                let fileInput = document.getElementById('img');
+                if (fileInput.files.length > 0) {
+                    formData.append('img', fileInput.files[0]);
+                }
+
+                if (userId) {
+                    $.ajax({
+                        url: ApideleteUser + userId,
+                        method: "PUT",
+                        data: formData,
+
+                        processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                        contentType: false,  // Chuyển đổi dữ liệu người dùng thành JSON
+                        success: function (response) {
+                            swal("Cập nhật người dùng thành công", "", "success");
+                            loadUser();
+                        },
+                        error: function (e) {
+                            console.error("Lỗi khi cập nhật người dùng: ", e);
+                            swal("Cập nhật người dùng thất bại", "", "error");
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: ApigetUser,
+                        method: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            swal("Thêm người dùng thành công", "", "success");
+                            $("#form_create_user")[0].reset();
+                            loadUser();
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi khi thêm người dùng: ", {
+                                status: status,
+                                error: error,
+                                responseText: xhr.responseText,
+                                responseJSON: xhr.responseJSON
+                            });
+                            swal("Thêm người dùng thất bại", `Lỗi: ${xhr.responseJSON.message}`, "error");
+                        }
+                    });
+                }
+            }
 
 
 
 
 
-    </script>
-</div>
+        </script>
+    </div>
 
 </body>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main}, ~{::#jquery})}">
+    th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main}, ~{::#jquery})}">
 
 <head>
     <meta charset="UTF-8">
@@ -8,89 +8,89 @@
 </head>
 
 <body>
-<div id="main">
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header d-flex">
-            <div class="col-md-12">
-                <h3 class="m-0 font-weight-bold text-primary">Danh sách khách hàng mua nhiều</h3>
+    <div id="main">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex">
+                <div class="col-md-12">
+                    <h3 class="m-0 font-weight-bold text-primary">Danh sách khách hàng mua nhiều</h3>
+                </div>
             </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên khách hàng</th>
-                        <th>Số lượng đơn hàng</th>
-                        <th>Tổng số lượng sản phẩm</th>
-                        <th>Tổng giá trị đơn hàng</th>
-                        <th>Sản phẩm mua nhiều nhất</th>
-                        <th>Ngày mua hàng gần nhất</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- Data will be populated here by DataTables -->
-                    </tbody>
-                </table>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên khách hàng</th>
+                                <th>Số lượng đơn hàng</th>
+                                <th>Tổng số lượng sản phẩm</th>
+                                <th>Tổng giá trị đơn hàng</th>
+                                <th>Sản phẩm mua nhiều nhất</th>
+                                <th>Ngày mua hàng gần nhất</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated here by DataTables -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="card-footer">
-            <div class="total-price" style="text-align: left;">
-                <p><strong>Tổng doanh thu: <span id="totalPrice">0 đ</span></strong></p>
+            <div class="card-footer">
+                <div class="total-price" style="text-align: left;">
+                    <p><strong>Tổng doanh thu: <span id="totalPrice">0 đ</span></strong></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="jquery">
-    <script>
-        $(document).ready(function() {
-            // Nếu DataTable đã được khởi tạo, hãy hủy khởi tạo trước khi tiếp tục
-            if ($.fn.DataTable.isDataTable('#dataTable')) {
-                $('#dataTable').DataTable().clear().destroy();
-            }
+    <div id="jquery">
+        <script>
+            $(document).ready(function () {
+                // Nếu DataTable đã được khởi tạo, hãy hủy khởi tạo trước khi tiếp tục
+                if ($.fn.DataTable.isDataTable('#dataTable')) {
+                    $('#dataTable').DataTable().clear().destroy();
+                }
 
-            // Khởi tạo DataTable
-            const table = $('#dataTable').DataTable({
-                ajax: {
-                    url: '/honeyshop/api/report/top-by-value',
-                    dataSrc: function (json) {
-                        let totalPrice = 0;
-                        json.forEach(item => totalPrice += item.totalOrderValue || 0);
-                        $('#totalPrice').text(totalPrice.toFixed(2) + ' đ');
-                        return json.map((item, index) => [
-                            index + 1,
-                            item.customerName || 'N/A',
-                            item.orderCount || 0,
-                            item.totalQuantity || 0,
-                            item.totalOrderValue ? item.totalOrderValue.toFixed(2) + ' đ' : '0 đ',
-                            item.mostPurchasedProduct || 'N/A',
-                            item.lastOrderDate ? new Date(item.lastOrderDate).toLocaleDateString('vi-VN') : 'N/A'
-                        ]);
-                    }
-                },
-                columns: [
-                    { title: 'STT' },
-                    { title: 'Tên khách hàng' },
-                    { title: 'Số lượng đơn hàng' },
-                    { title: 'Tổng số lượng sản phẩm' },
-                    { title: 'Tổng giá trị đơn hàng' },
-                    { title: 'Sản phẩm mua nhiều nhất' },
-                    { title: 'Ngày mua hàng gần nhất' }
-                ],
-                processing: true,
-                serverSide: false,
-                paging: true,
-                searching: true,
-                ordering: true,
-                info: true
+                // Khởi tạo DataTable
+                const table = $('#dataTable').DataTable({
+                    ajax: {
+                        url: '/honeyshop/api/report/top-by-value',
+                        dataSrc: function (json) {
+                            let totalPrice = 0;
+                            json.forEach(item => totalPrice += item.totalOrderValue || 0);
+                            $('#totalPrice').text(totalPrice.toFixed(2) + ' đ');
+                            return json.map((item, index) => [
+                                index + 1,
+                                item.customerName || 'N/A',
+                                item.orderCount || 0,
+                                item.totalQuantity || 0,
+                                item.totalOrderValue ? item.totalOrderValue.toFixed(2) + ' đ' : '0 đ',
+                                item.mostPurchasedProduct || 'N/A',
+                                item.lastOrderDate ? new Date(item.lastOrderDate).toLocaleDateString('vi-VN') : 'N/A'
+                            ]);
+                        }
+                    },
+                    columns: [
+                        { title: 'STT' },
+                        { title: 'Tên khách hàng' },
+                        { title: 'Số lượng đơn hàng' },
+                        { title: 'Tổng số lượng sản phẩm' },
+                        { title: 'Tổng giá trị đơn hàng' },
+                        { title: 'Sản phẩm mua nhiều nhất' },
+                        { title: 'Ngày mua hàng gần nhất' }
+                    ],
+                    processing: true,
+                    serverSide: false,
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    info: true
+                });
+
             });
-
-        });
-    </script>
-</div>
+        </script>
+    </div>
 </body>
 
 </html>
