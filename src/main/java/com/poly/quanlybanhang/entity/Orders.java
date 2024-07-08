@@ -18,8 +18,8 @@ import java.util.List;
 @Builder
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
     String fullname;
     String phone;
     Double totalAmount;

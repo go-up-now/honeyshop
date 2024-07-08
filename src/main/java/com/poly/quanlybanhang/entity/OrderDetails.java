@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Table(name = "orderdetails")
 public class OrderDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
     int quantity;
     Double price; // khi có khuyến mãi thì giá sẽ khác so với product
     LocalDateTime createAt;

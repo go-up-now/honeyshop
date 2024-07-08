@@ -58,7 +58,7 @@ create table Categories(
 );
 
 create table Orders(
-	id varchar(50) not null,
+	id int AUTO_INCREMENT,
     fullname nvarchar(50),
     phone varchar(10),
     user_id varchar(50),
@@ -69,7 +69,7 @@ create table Orders(
 );
 
 create table OrderDetails(
-	id varchar(50) not null,
+	id int AUTO_INCREMENT,
     order_id varchar(50),
     product_id varchar(50),
     quantity int,
@@ -91,7 +91,7 @@ create table users_roles(
 );
 
 ALTER TABLE Orders
-ADD CONSTRAINT fk_orders_users FOREIGN KEY (user_id) REFERENCES Users(id);
+ADD CONSTRAINT fk_orders_users FOREIGN KEY (user_id) REFERENCES Users(id) ;
 
 ALTER TABLE Inventory
 ADD CONSTRAINT fk_inventory_users FOREIGN KEY (changed_by) REFERENCES Users(id),

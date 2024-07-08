@@ -1,5 +1,4 @@
 let productsApiUrl = "/honeyshop/api/products";
-let total = 0;
 
 $(document).ready(function () {
     loadCart();
@@ -417,6 +416,7 @@ function loadPay() {
 function createAndCancelOfTheBill(status, messages) {
     // Gỡ bỏ các sự kiện submit đã gán trước đó
     $("#thanh-toan").off('submit');
+    let total = 0;
     var selectedProducts = [];
     let carts = JSON.parse(localStorage.getItem("cart")); // Lấy danh sách data
 
@@ -458,6 +458,7 @@ function createAndCancelOfTheBill(status, messages) {
                 localStorage.removeItem('cart');
                 loadCart();
                 loadPay();
+                $("#formPay").fadeOut();
                 $("#form_order")[0].reset();
             } else {
                 swal(messages + " thất bại", response.messages, "error");
