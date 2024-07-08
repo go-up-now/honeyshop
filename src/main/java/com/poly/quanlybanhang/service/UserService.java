@@ -14,4 +14,5 @@ public interface UserService {
     List<UserResponse> getAll();
     Users getOne(String id);
     UserResponse getUser(String id);
+    boolean checkEmail(String email);
 }

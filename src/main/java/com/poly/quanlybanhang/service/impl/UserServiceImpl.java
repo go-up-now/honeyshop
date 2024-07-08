@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse update(UserUpdationRequest request, String id) {
         Users user = this.getOne(id);
+        var password = user.getPassword();
 
         Set<Role> roles;
         if (request.getRoles() == null || request.getRoles().isEmpty()) {
@@ -74,9 +75,10 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(roles);
         user.setUpdateAt(LocalDateTime.now());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        if (request.getPassword().equals("password")) {
+            user.setPassword(password);
         }
 
         // Lưu người dùng và trả về response
@@ -105,5 +107,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getUser(String id) {
         return userMapper.toUserResponse(this.getOne(id));
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

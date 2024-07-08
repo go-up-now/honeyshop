@@ -416,7 +416,6 @@ function loadPay() {
 // create and cancel the bill
 function createAndCancelOfTheBill(status, messages) {
     // Gỡ bỏ các sự kiện submit đã gán trước đó
-    $("#huy-hon-hang").off('submit');
     $("#thanh-toan").off('submit');
     var selectedProducts = [];
     let carts = JSON.parse(localStorage.getItem("cart")); // Lấy danh sách data
@@ -469,4 +468,21 @@ function createAndCancelOfTheBill(status, messages) {
             console.log("error: ", e);
         }
     })
+}
+
+function removeTheCart() {
+    swal({
+        title: "Bạn có chắc muốn xóa không?",
+        text: "",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            swal("Xóa giỏ hàng thành công", "", "success");
+            localStorage.removeItem('cart');
+            loadCart();
+            loadPay();
+        }
+    });
 }

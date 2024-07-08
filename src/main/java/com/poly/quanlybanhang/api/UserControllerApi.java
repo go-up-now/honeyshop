@@ -97,4 +97,12 @@ public class UserControllerApi {
                 .data(userService.getUser(id))
                 .build();
     }
+
+    @GetMapping("/check-email/{email}")
+    public ApiResponse<?> checkEmail(@PathVariable String email){
+        return ApiResponse.<Boolean>builder()
+                .code(1000)
+                .data(userService.checkEmail(email))
+                .build();
+    }
 }

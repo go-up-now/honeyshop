@@ -16,7 +16,7 @@ import java.util.Set;
 public class UserUpdationRequest {
     String fullname;
 
-    @Size(min = 6, message = "Password must be at least 5 characters")
+    @Size(min = 5, message = "Password must be at least 5 characters")
     String password;
     LocalDate dob;
     String address;

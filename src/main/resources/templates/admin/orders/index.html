@@ -73,9 +73,13 @@
                     </div>
                 </div>
                 <div class="total-price" style="text-align: left;">
-                    <p><strong>Tổng tiền: <span id="totalPrice">0 ₫</span></strong>
-                        <button href="" class="btn btn-info" style="float: right; margin-right: 50px" id="dat-hang">ĐẶT
-                            HÀNG</button>
+                    <p><strong style="font-size: x-large">Tổng tiền: <span id="totalPrice">0 ₫</span></strong>
+                        <div style="float: right; margin-right: 50px">
+                            <button href="" class="btn btn-danger me-3" id="huy-hon-hang"
+                                    onclick="removeTheCart()">XÓA TẤT CẢ</button>
+                            <button href="" class="btn btn-info"
+                                    id="dat-hang">ĐẶT HÀNG</button>
+                        </div>
                     </p>
                 </div>
             </div>
@@ -156,10 +160,8 @@
                     </div>
                 </div>
                 <div class="total-price" style="text-align: left;">
-                    <div><strong>Tổng tiền: <span id="total">0 ₫</span></strong>
+                    <div><strong style="font-size: x-large;">Tổng tiền: <span id="total">0 ₫</span></strong>
                         <div style="float: right; margin-right: 50px">
-                            <button href="" class="btn btn-danger me-3" id="huy-hon-hang"
-                                onclick="createAndCancelOfTheBill('Đã hủy', 'Hủy')">HỦY ĐƠN HÀNG</button>
                             <button href="" class="btn btn-info" id="thanh-toan"
                                 onclick="createAndCancelOfTheBill('Đã thanh toán', 'Thanh toán')">THANH TOÁN</button>
                         </div>
