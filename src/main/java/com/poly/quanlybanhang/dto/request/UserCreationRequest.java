@@ -26,7 +26,7 @@ public class UserCreationRequest {
     @NotEmpty(message = "EMAIL_INVALID")
     String email;
 
-    @Size(min = 6, message = "PASSWORD_INVALID")
+    @Size(min = 5, message = "PASSWORD_INVALID")
     String password;
     LocalDate dob;
     String address;

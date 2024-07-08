@@ -24,57 +24,121 @@ function resetForm() {
     $('#img').val('');  // Xóa ảnh đã chọn trong input file
 }
 
+// function loadUser() {
+//     $.ajax({
+//         url: ApigetUser,
+//         method: "GET",
+//         contentType: "application/json",
+//         dataType: "json",
+//
+//         success: function (response) {
+//
+//             let users = response.data;
+//             $("#userTableBody").empty();
+//             let userRow = '';
+//             if (Array.isArray(users)) {
+//                 users.forEach(function (user, index) {
+//                     var roleName = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles[0].name : "N/A";
+//
+//                     var userRow = `
+//                               <tr id = 'userrow_${user.id}'>
+//                                 <td>${index + 1}</td>
+//                                 <td>${user.fullname}</td>
+//                                 <td><img src="/honeyshop/images/${user.thumbnail}" alt="Avatar" width="60" height="60"></td>
+//                                 <td>${user.gender ? 'Nam' : 'Nữ'}</td>
+//                                 <td>
+//                                     ${(roleName === 'ADMIN') ? 'ADMIN' : ((roleName === 'STAFF') ? 'Nhân viên' : 'Khách hàng')}
+//                                 </td>
+//                                 <td>
+//                                     <button
+//                                         type="button" id="editUser"
+//                                         class="btn btn-info"
+//                                         onclick="editUser('${user.id}')">
+//                                         <i class="fa fa-edit"></i>
+//                                     </button>
+//                                     <button
+//                                         type="button"
+//                                         class="btn btn-danger"
+//                                         data-toggle="modal"
+//                                         onclick="removeUser('${user.id}')">
+//                                         <i class="fa fa-trash"></i>
+//                                     </button>
+//
+//                                 </td>
+//                             </tr>`;
+//                     $("#userTableBody").append(userRow);
+//                 });
+//             } else {
+//                 console.error("Response không phải là một mảng");
+//             }
+//         },
+//         error: function (error) {
+//             console.error("There was an error loading the user data: ", error);
+//         }
+//     });
+// }
+
 function loadUser() {
-    $.ajax({
-        url: ApigetUser,
-        method: "GET",
-        contentType: "application/json",
-        dataType: "json",
+    // Xóa DataTable cũ nếu tồn tại
+    if ($.fn.DataTable.isDataTable('#dataTable')) {
+        $('#dataTable').DataTable().destroy();
+        $('#userTableBody').empty();
+    }
+    $('#dataTable').DataTable({
+        "ajax": {
+            "url": ApigetUser,
+            "type": "GET",
+            "dataType": "json",
+            "dataSrc": function(json) {
+                // Log dữ liệu để kiểm tra
+                console.log("Dữ liệu phản hồi từ API:", json);
 
-        success: function (response) {
+                // Kiểm tra cấu trúc dữ liệu trả về
+                if (!json.data || !Array.isArray(json.data)) {
+                    console.error("Dữ liệu API không có thuộc tính 'data' hoặc không phải là một mảng.");
+                    return [];
+                }
 
-            let users = response.data;
-            $("#userTableBody").empty();
-            let userRow = '';
-            if (Array.isArray(users)) {
-                users.forEach(function (user, index) {
+                let users = json.data;
+
+                // Xử lý dữ liệu cho DataTable
+                return users.map(function(user, index) {
                     var roleName = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles[0].name : "N/A";
-
-                    var userRow = `
-                              <tr id = 'userrow_${user.id}'>
-                                <td>${index + 1}</td>
-                                <td>${user.fullname}</td>
-                                <td><img src="/honeyshop/images/${user.thumbnail}" alt="Avatar" width="60" height="60"></td>
-                                <td>${user.gender ? 'Nam' : 'Nữ'}</td>
-                                <td>
-                                    ${(roleName === 'ADMIN') ? 'ADMIN' : ((roleName === 'STAFF') ? 'Nhân viên' : 'Khách hàng')}
-                                </td>
-                                <td>
-                                    <button
-                                        type="button" id="editUser"
-                                        class="btn btn-info"
-                                        onclick="editUser('${user.id}')">
-                                        Sửa
-                                    </button>
-                                    <button
-                                        type="button"
-                                        class="btn btn-danger"
-                                        data-toggle="modal"
-                                        onclick="removeUser('${user.id}')">
-                                        Xoá
-                                    </button>
-
-                                </td>
-                            </tr>`;
-                    $("#userTableBody").append(userRow);
+                    // if (roleName === "STAFF") {
+                    //     roleName = "Nhân viên";
+                    // } else if (roleName === "CUSTOMER") {
+                    //     roleName = "Khách hàng";
+                    // }
+                    // else  roleName = "ADMIN";
+                    return [
+                        index + 1,
+                        user.fullname,
+                        `<img src="/honeyshop/images/${user.thumbnail}" alt="Avatar" width="60" height="60">`,
+                        user.gender ? 'Nam' : 'Nữ',
+                        (roleName === 'ADMIN') ? 'ADMIN' : ((roleName === 'STAFF') ? 'Nhân viên' : 'Khách hàng'),
+                        `<button type="button" class="btn btn-info" onclick="editUser('${user.id}')"><i class="fa fa-edit"></i></button>
+                                 <button type="button" class="btn btn-danger" data-toggle="modal" onclick="removeUser('${user.id}')"><i class="fa fa-trash"></button>` // Actions
+                    ];
                 });
-            } else {
-                console.error("Response không phải là một mảng");
+            },
+            error: function(xhr, status, error) {
+                console.error("Có lỗi xảy ra khi gọi API:", status, error);
             }
         },
-        error: function (error) {
-            console.error("There was an error loading the user data: ", error);
-        }
+        "columns": [
+            { "title": "STT" },
+            { "title": "Họ và tên" },
+            { "title": "Avatar" },
+            { "title": "Giới tính" },
+            { "title": "Vai trò" },
+            { "title": "Thao tác" }
+        ],
+        processing: true,
+        serverSide: false,
+        paging: true,
+        searching: true,
+        ordering: true,
+        info: true
     });
 }
 
@@ -102,6 +166,7 @@ function removeUser(id) {
                         swal("Xóa người dùng thành công!", {
                             icon: "success",
                         });
+                        loadUser();
                     },
                     error: function () {
                         swal("Xóa người dùng thất bại!", {
@@ -153,83 +218,83 @@ function editUser(id) {
 }
 function saveUser() {
 
-        let formData = new FormData(document.getElementById('form_create_user'));
-        let user = {
-            fullname: $("#fullname").val(),
-            // email: $("#email").val(),
-            password: $('#password').val(),
-            phone: $("#phone").val(),
-            dob: $("#birthday").val(),
-            address: $("#address").val(),
-            gender: $('input[name="gender"]:checked').val(),
-            roles: $('#roles').val()
-        };
+    let formData = new FormData(document.getElementById('form_create_user'));
+    let user = {
+        fullname: $("#fullname").val(),
+        // email: $("#email").val(),
+        password: $('#password').val(),
+        phone: $("#phone").val(),
+        dob: $("#birthday").val(),
+        address: $("#address").val(),
+        gender: $('input[name="gender"]:checked').val(),
+        roles: $('#roles').val()
+    };
 
-        if (user.roles && !Array.isArray(user.roles)) {
-            user.roles = [user.roles];
+    if (user.roles && !Array.isArray(user.roles)) {
+        user.roles = [user.roles];
+    }
+
+    // Thêm email nếu là thêm mới người dùng
+    let userId = $('#save').data('user-id');
+    if (!userId) {
+        user.email = $("#email").val();
+    }
+
+    formData.append('data', new Blob([JSON.stringify(user)], { type: 'application/json' }));
+
+    let fileInput = document.getElementById('img');
+    if (fileInput.files.length > 0) {
+        formData.append('img', fileInput.files[0]);
+    }
+
+    if (userId) {
+        if (validationPassword()) {
+            $.ajax({
+                url: ApideleteUser + userId,
+                method: "PUT",
+                data: formData,
+
+                processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                contentType: false,  // Chuyển đổi dữ liệu người dùng thành JSON
+                success: function (response) {
+                    swal("Cập nhật người dùng thành công", "", "success");
+                    loadUser();
+                },
+                error: function (e) {
+                    console.error("Lỗi khi cập nhật người dùng: ", e);
+                    swal("Cập nhật người dùng thất bại", "", "error");
+                }
+            });
         }
-
-        // Thêm email nếu là thêm mới người dùng
-        let userId = $('#save').data('user-id');
-        if (!userId) {
-            user.email = $("#email").val();
+        else
+            console.log("error: bị lỗi");
+    } else {
+        if (validationEmail() && validationPassword()) {
+            $.ajax({
+                url: ApigetUser,
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    swal("Thêm người dùng thành công", "", "success");
+                    $("#form_create_user")[0].reset();
+                    loadUser();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi khi thêm người dùng: ", {
+                        status: status,
+                        error: error,
+                        responseText: xhr.responseText,
+                        responseJSON: xhr.responseJSON
+                    });
+                    swal("Thêm người dùng thất bại", `Lỗi: ${xhr.responseJSON.message}`, "error");
+                }
+            });
         }
-
-        formData.append('data', new Blob([JSON.stringify(user)], { type: 'application/json' }));
-
-        let fileInput = document.getElementById('img');
-        if (fileInput.files.length > 0) {
-            formData.append('img', fileInput.files[0]);
-        }
-
-        if (userId) {
-            if (validationPassword()) {
-                $.ajax({
-                    url: ApideleteUser + userId,
-                    method: "PUT",
-                    data: formData,
-
-                    processData: false, // Prevent jQuery from automatically transforming the data into a query string
-                    contentType: false,  // Chuyển đổi dữ liệu người dùng thành JSON
-                    success: function (response) {
-                        swal("Cập nhật người dùng thành công", "", "success");
-                        loadUser();
-                    },
-                    error: function (e) {
-                        console.error("Lỗi khi cập nhật người dùng: ", e);
-                        swal("Cập nhật người dùng thất bại", "", "error");
-                    }
-                });
-            }
-            else
-                console.log("error: bị lỗi");
-        } else {
-            if (validationEmail() && validationPassword()) {
-                $.ajax({
-                    url: ApigetUser,
-                    method: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        swal("Thêm người dùng thành công", "", "success");
-                        $("#form_create_user")[0].reset();
-                        loadUser();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Lỗi khi thêm người dùng: ", {
-                            status: status,
-                            error: error,
-                            responseText: xhr.responseText,
-                            responseJSON: xhr.responseJSON
-                        });
-                        swal("Thêm người dùng thất bại", `Lỗi: ${xhr.responseJSON.message}`, "error");
-                    }
-                });
-            }
-            else
-                console.log("error: bị lỗi");
-        }
+        else
+            console.log("error: bị lỗi");
+    }
 
 }
 

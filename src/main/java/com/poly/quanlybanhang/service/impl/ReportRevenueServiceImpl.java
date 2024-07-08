@@ -2,13 +2,14 @@ package com.poly.quanlybanhang.service.impl;
 
 import com.poly.quanlybanhang.report.CustomerStatistics;
 import com.poly.quanlybanhang.report.EmployeePerformance;
-import com.poly.quanlybanhang.report.ReportRevenue;
+import com.poly.quanlybanhang.report.ProductRevenueStatistics;
+
+import com.poly.quanlybanhang.report.SellHistory;
 import com.poly.quanlybanhang.repository.OrderDetailRepository;
 import com.poly.quanlybanhang.service.ReportRevenuService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
     OrderDetailRepository orderDetailRepository;
 
     @Override
-    public List<ReportRevenue> getAllRevenueReport() {
+    public List<SellHistory> getAllRevenueReport() {
 
         return orderDetailRepository.findRevenueReport();
     }
@@ -40,4 +41,10 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
 
         return orderDetailRepository.getEmployeePerformanceSummary();
     }
+
+    @Override
+    public List<ProductRevenueStatistics> getProductRevenueByAllDates() {
+        return orderDetailRepository.findProductRevenueByAllDates();
+    }
+
 }

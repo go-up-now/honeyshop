@@ -22,6 +22,7 @@
                     <thead>
                     <tr>
                         <th>STT</th>
+                        <th>Nhân viên</th>
                         <th>Số lượng đơn hàng</th>
                         <th>Doanh thu</th>
                         <th>Lần tạo đơn gần nhất</th>
@@ -54,6 +55,7 @@
                         return json.map(function (item, index) {
                             return [
                                 index + 1, // STT
+                                item.employeeName,
                                 item.totalOrders,
                                 item.totalRevenue.toLocaleString('vi-VN') + ' đ',
                                 item.lastOrderDate ? new Date(item.lastOrderDate).toLocaleString('vi-VN') : '' // Lần tạo đơn gần nhất
@@ -62,10 +64,11 @@
                     }
                 },
                 "columns": [
-                    { "title": "STT" }, // STT
-                    { "title": "Số lượng đơn hàng" }, // Số lượng đơn hàng
-                    { "title": "Doanh thu" }, // Doanh thu
-                    { "title": "Lần tạo đơn gần nhất" } // Lần tạo đơn gần nhất
+                    { "title": "STT" },
+                    { "title": "Nhân viên" },
+                    { "title": "Số lượng đơn hàng" },
+                    { "title": "Doanh thu" },
+                    { "title": "Lần tạo đơn gần nhất" }
                 ],
                 processing: true,
                 serverSide: false,

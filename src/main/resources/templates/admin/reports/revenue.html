@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main}, ~{::#jquery})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Danh thu</title>
+</head>
+
+<body>
+<div id="main">
+    <!-- DataTables Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex">
+            <div class="col-md-12">
+                <h3 class="m-0 font-weight-bold text-primary">Doanh thu theo sản phẩm</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Doanh thu</th>
+                        <th>Thời gian</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Data will be populated here by DataTables -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="total-revenue" style="text-align: left;">
+                <p><strong>Tổng doanh thu: <span id="totalRevenue">0 đ</span></strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="jquery">
+    <script>
+        $(document).ready(function() {
+            // Nếu DataTable đã được khởi tạo, hãy hủy khởi tạo trước khi tiếp tục
+            if ($.fn.DataTable.isDataTable('#dataTable')) {
+                $('#dataTable').DataTable().clear().destroy();
+            }
+
+            // Khởi tạo DataTable
+            const table = $('#dataTable').DataTable({
+                ajax: {
+                    url: '/honeyshop/api/report/product-revenue',
+                    dataSrc: function (json) {
+                        let totalRevenue = 0;
+                        json.forEach(item => totalRevenue += parseFloat(item.revenue) || 0);
+                        $('#totalRevenue').text(totalRevenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+
+                        return json.map((item, index) => [
+                            index + 1,
+                            item.productName || 'N/A',
+                            item.quantity || 0,
+                            item.price ? item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'N/A',
+                            item.revenue ? item.revenue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'N/A',
+                            item.date ? new Date(item.date).toLocaleDateString('vi-VN') : 'N/A'
+                        ]);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Lỗi khi tải dữ liệu:', status, error);
+                    }
+                },
+                columns: [
+                    { title: 'STT' },
+                    { title: 'Tên sản phẩm' },
+                    { title: 'Số lượng' },
+                    { title: 'Đơn giá' },
+                    { title: 'Doanh thu' },
+                    { title: 'Thời gian' }
+                ],
+                processing: true,
+                serverSide: false,
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true
+            });
+
+        });
+    </script>
+</div>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Doanh thu</title>
+    <title>Lịch sử mua hàng</title>
 </head>
 
 <body>
@@ -13,7 +13,7 @@
     <div class="card shadow mb-4">
         <div class="card-header d-flex">
             <div class="col-md-12">
-                <h3 class="m-0 font-weight-bold text-primary">Thống kê doanh thu</h3>
+                <h3 class="m-0 font-weight-bold text-primary">Lịch sử bán hàng</h3>
             </div>
         </div>
         <div class="card-body">
@@ -101,12 +101,21 @@
                 if (amount === null || amount === undefined) {
                     return '0 đ';
                 }
-                return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                return amount.toLocaleString('vi-VN', {
+                    style: 'currency', currency: 'VND' });
             }
 
             // Hàm định dạng ngày tháng
             function formatDate(dateString) {
-                const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                const options = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    // hour: '2-digit',
+                    // minute: '2-digit',
+                    // second: '2-digit',
+                    // hour12: false
+                };
                 return new Date(dateString).toLocaleDateString('vi-VN', options);
             }
         });
