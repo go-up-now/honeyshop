@@ -25,7 +25,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
             "u.fullname, " +
             "o.createAt) " +
             "FROM Orders o JOIN o.user u " +
-            "GROUP BY o.fullname " +
+            "GROUP BY o.fullname, o.createAt " +
             "ORDER BY o.id DESC")
     List<SellHistory> findRevenueReport();
 

@@ -24,7 +24,6 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
 
     @Override
     public List<SellHistory> getAllRevenueReport() {
-
         return orderDetailRepository.findRevenueReport();
     }
 
