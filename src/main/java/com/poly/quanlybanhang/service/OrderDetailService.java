@@ -18,5 +18,7 @@ public interface OrderDetailService {
     public Long getTotalQuantityProduct();
     public Long getTotalCustomers();
 
+    public Long getTotalProfit();
+
     public List<OrderDetails> getOrderDetailsByOrderId(Integer orderId);
 }

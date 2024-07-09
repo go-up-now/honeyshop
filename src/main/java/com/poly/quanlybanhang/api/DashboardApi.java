@@ -26,6 +26,7 @@ public class DashboardApi {
         Double totalRevenue = orderDetailServiceService.getTotalRevenue();
         Long totalQuantity = orderDetailServiceService.getTotalQuantityProduct();
         Long totalCustomers = orderDetailServiceService.getTotalCustomers();
-        return new DashboardStatistics(totalRevenue, totalQuantity, totalCustomers);
+        Long totalProfits = orderDetailServiceService.getTotalProfit();
+        return new DashboardStatistics(totalRevenue, totalQuantity, totalCustomers,totalProfits);
     }
 }

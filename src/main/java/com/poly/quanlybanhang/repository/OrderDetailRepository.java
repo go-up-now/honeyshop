@@ -25,7 +25,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
             "u.fullname, " +
             "o.createAt) " +
             "FROM Orders o JOIN o.user u " +
-            "GROUP BY o.fullname, o.createAt " +
+//            "GROUP BY o.fullname, o.createAt " +
             "ORDER BY o.id DESC")
     List<SellHistory> findRevenueReport();
 
@@ -86,6 +86,11 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 
     @Query("SELECT COUNT(DISTINCT o.fullname) FROM Orders o")
     Long findTotalCustomers();
+
+    @Query("SELECT SUM((p.price - p.costs) * od.quantity) " +
+            "FROM OrderDetails od " +
+            "JOIN od.product p")
+    Long findTotalProfit();
 
     @Query("SELECT od FROM OrderDetails od WHERE od.order.id = :orderId")
     List<OrderDetails> findOrderDetailsByOrderId(@Param("orderId") Integer orderId);

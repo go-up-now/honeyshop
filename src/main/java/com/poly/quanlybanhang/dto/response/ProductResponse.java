@@ -17,4 +17,5 @@ public class ProductResponse {
     Double price;
     Categories categories;
     String thumbnail;
+    Double costs;
 }

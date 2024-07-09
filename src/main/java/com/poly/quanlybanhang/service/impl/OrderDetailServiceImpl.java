@@ -97,6 +97,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
+    public Long getTotalProfit() {
+        return orderDetailRepository.findTotalProfit();
+    }
+
+    @Override
     public List<OrderDetails> getOrderDetailsByOrderId(Integer orderId) {
         return orderDetailRepository.findOrderDetailsByOrderId(orderId);
     }

@@ -16,4 +16,5 @@ public class ProductRequest {
     Double price;
     String categories;
     String thumbnail;
+    Double costs;
 }
