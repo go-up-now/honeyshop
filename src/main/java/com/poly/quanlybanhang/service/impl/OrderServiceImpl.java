@@ -13,6 +13,7 @@ import com.poly.quanlybanhang.mapper.OrderMapper;
 import com.poly.quanlybanhang.repository.OrderDetailRepository;
 import com.poly.quanlybanhang.repository.OrderRepository;
 import com.poly.quanlybanhang.repository.ProductRepository;
+import com.poly.quanlybanhang.repository.UserRepository;
 import com.poly.quanlybanhang.service.OrderService;
 import com.poly.quanlybanhang.service.UserService;
 import lombok.AccessLevel;
@@ -30,6 +31,7 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     OrderMapper orderMapper;
     OrderRepository orderRepository;
+    UserRepository userRepository;
     UserService userService;
     private final ProductRepository productRepository;
     private final OrderDetailRepository orderDetailRepository;
@@ -45,7 +47,11 @@ public class OrderServiceImpl implements OrderService {
 //
 //        return orderMapper.toOrderResponse(orderRepository.save(orders));
 
+        String userId = "05b97912-0b39-487c-9260-b1372afe0d82";
+        Users user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
         Orders order = new Orders();
+        order.setUser(user);
         order.setFullname(request.getFullname());
         order.setPhone(request.getPhone());
         order.setTotalAmount(request.getTotalAmount());
@@ -78,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void delete(String id) {
-
+        orderDetailRepository.deleteById(id);
     }
 
     @Override

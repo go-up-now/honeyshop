@@ -5,6 +5,7 @@ import com.poly.quanlybanhang.dto.request.OrderRequest;
 import com.poly.quanlybanhang.dto.response.ApiResponse;
 import com.poly.quanlybanhang.dto.response.OrderDetailResponse;
 import com.poly.quanlybanhang.dto.response.OrderResponse;
+import com.poly.quanlybanhang.entity.OrderDetails;
 import com.poly.quanlybanhang.entity.Orders;
 import com.poly.quanlybanhang.service.OrderDetailService;
 import com.poly.quanlybanhang.service.OrderService;
@@ -44,5 +45,10 @@ public class OrderDetailControllerApi {
                 .code(1000)
                 .data(orderDetailService.getOrderDetail(id))
                 .build();
+    }
+
+    @GetMapping("/{orderId}/details")
+    public List<OrderDetails> getOrderDetailsByOrderId(@PathVariable Integer orderId) {
+        return orderDetailService.getOrderDetailsByOrderId(orderId);
     }
 }

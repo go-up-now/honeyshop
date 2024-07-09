@@ -13,11 +13,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SellHistory {
+     int id;
      String userFullName;
-     String productName;
-     Double price;
+     String phone;
      Double revenue;
-     Long quantity;
+     String status;
+     String nameEmployee;
      LocalDateTime day;
 
 }

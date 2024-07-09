@@ -28,6 +28,7 @@ public class Orders {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     Users user;
 
     @OneToMany(mappedBy = "order")

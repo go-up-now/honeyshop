@@ -1,5 +1,6 @@
 package com.poly.quanlybanhang.repository;
 
+import com.poly.quanlybanhang.dto.response.OrderDetailResponse;
 import com.poly.quanlybanhang.entity.OrderDetails;
 import com.poly.quanlybanhang.report.CustomerStatistics;
 import com.poly.quanlybanhang.report.EmployeePerformance;
@@ -7,6 +8,7 @@ import com.poly.quanlybanhang.report.ProductRevenueStatistics;
 import com.poly.quanlybanhang.report.SellHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,30 +17,18 @@ import java.util.List;
 public interface OrderDetailRepository extends JpaRepository<OrderDetails, String> {
 
     @Query("SELECT new com.poly.quanlybanhang.report.SellHistory(" +
+            "o.id, " +
             "o.fullname, " +
-            "p.name, " +
-            "od.price, " +
-            "SUM(od.quantity * od.price), " +
-            "SUM(od.quantity), " +
-            "od.createAt) " +
-            "FROM OrderDetails od " +
-            "JOIN od.order o " +
-            "JOIN od.product p " +
-            "GROUP BY o.fullname, p.name, od.price, od.createAt")
+            "o.phone, " +
+            "o.totalAmount, " +
+            "o.status, " +
+            "u.fullname, " +
+            "o.createAt) " +
+            "FROM Orders o JOIN o.user u " +
+            "GROUP BY o.fullname " +
+            "ORDER BY o.id DESC")
     List<SellHistory> findRevenueReport();
-    @Query("SELECT new com.poly.quanlybanhang.report.SellHistory(" +
-            "u.fullname AS userFullName, " +
-            "p.name AS productName, " +
-            "p.price AS price, " +
-            "SUM(od.quantity * p.price) AS revenue, " +
-            "SUM(od.quantity) AS quantity, " +
-            "od.order.createAt AS day) " +
-            "FROM OrderDetails od " +
-            "JOIN od.product p " +
-            "JOIN od.order.user u " +
-            "GROUP BY u.fullname, p.name, p.price, od.order.createAt " +
-            "ORDER BY od.order.createAt DESC")
-    List<SellHistory> findRevenueSummary();
+
 
     @Query("SELECT new com.poly.quanlybanhang.report.CustomerStatistics(" +
             "o.fullname, " +
@@ -96,5 +86,9 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 
     @Query("SELECT COUNT(DISTINCT o.fullname) FROM Orders o")
     Long findTotalCustomers();
+
+    @Query("SELECT od FROM OrderDetails od WHERE od.order.id = :orderId")
+    List<OrderDetails> findOrderDetailsByOrderId(@Param("orderId") Integer orderId);
+
 
 }
