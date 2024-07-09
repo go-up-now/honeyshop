@@ -38,4 +38,6 @@ public class Products{
     @OneToMany(mappedBy = "products")
     @JsonIgnore
     List<Inventory> inventories;
+
+    Double costs;
 }

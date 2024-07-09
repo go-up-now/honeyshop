@@ -224,9 +224,11 @@ $('#addToCart').click(function () {
 
     // Reset lại tất cả các checkbox
     $('.productCheckbox').prop('checked', false);
-
     // Optionally, display a confirmation or update UI
+    $("#addUserPanel").fadeOut();
+
     swal("Thêm vào giỏ thành công", "", "success");
+
 });
 
 // Load cart

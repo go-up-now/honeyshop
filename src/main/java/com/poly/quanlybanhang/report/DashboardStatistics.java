@@ -14,4 +14,5 @@ public class DashboardStatistics {
     Double totalRevenue;
      Long totalQuantityProduct;
      Long totalCustomers;
+    Long totalProfits;
 }
