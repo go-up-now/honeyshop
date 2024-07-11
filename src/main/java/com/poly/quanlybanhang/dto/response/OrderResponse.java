@@ -14,6 +14,8 @@ public class OrderResponse {
     String id;
     String fullname;
     String phone;
+    boolean gender;
+    int age;
     Double totalAmount;
     String status;
 }

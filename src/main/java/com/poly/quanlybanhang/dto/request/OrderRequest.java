@@ -14,6 +14,8 @@ import java.util.List;
 public class OrderRequest {
     String fullname;
     String phone;
+    boolean gender;
+    int age;
     Double totalAmount;
     String status = "Đã thanh toán";
     private List<OrderDetailRequest> orderDetails;

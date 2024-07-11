@@ -51,4 +51,5 @@ public class OrderDetailControllerApi {
     public List<OrderDetails> getOrderDetailsByOrderId(@PathVariable Integer orderId) {
         return orderDetailService.getOrderDetailsByOrderId(orderId);
     }
+
 }

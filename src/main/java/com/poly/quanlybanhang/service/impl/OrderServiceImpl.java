@@ -16,14 +16,19 @@ import com.poly.quanlybanhang.repository.ProductRepository;
 import com.poly.quanlybanhang.repository.UserRepository;
 import com.poly.quanlybanhang.service.OrderService;
 import com.poly.quanlybanhang.service.UserService;
+import com.poly.quanlybanhang.statistical.AgeOfProductConsumption;
+import com.poly.quanlybanhang.statistical.GenderOfProductConsumption;
+import com.poly.quanlybanhang.statistical.SalesTimeFrame;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -41,21 +46,19 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse create(OrderRequest request) {
 //        Users user = userService.getOne("b8d9c186-7201-4641-8f1e-f249504238e1");
 //
-//        Orders orders = orderMapper.toOrder(request);
+
 //        orders.setUser(user);
 //        orders.setCreateAt(LocalDateTime.now());
 //
 //        return orderMapper.toOrderResponse(orderRepository.save(orders));
 
         String userId = "05b97912-0b39-487c-9260-b1372afe0d82";
-        Users user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Users user = userRepository.findById(userId).orElseThrow(() ->
+                new AppException(ErrorCode.USER_NOT_FOUND));
 
-        Orders order = new Orders();
+        Orders order = orderMapper.toOrder(request);
+
         order.setUser(user);
-        order.setFullname(request.getFullname());
-        order.setPhone(request.getPhone());
-        order.setTotalAmount(request.getTotalAmount());
-        order.setStatus(request.getStatus());
         order.setCreateAt(LocalDateTime.now());
 
         List<OrderDetails> orderDetails = new ArrayList<>();
@@ -110,5 +113,20 @@ public class OrderServiceImpl implements OrderService {
     public Orders getOrderByPhone(String phone) {
         return orderRepository.findTopByPhoneOrderByCreateAtDesc(phone).orElseThrow(() ->
                 new AppException(ErrorCode.ORDER_NOT_FOUND));
+    }
+
+    @Override
+    public List<AgeOfProductConsumption> getAgeOfProductConsumption() {
+        return orderRepository.getAgeOfProductConsumption();
+    }
+
+    @Override
+    public List<GenderOfProductConsumption> getGenderOfProductConsumption() {
+        return orderRepository.getGenderOfProductConsumption();
+    }
+
+    @Override
+    public List<SalesTimeFrame> getSalesTimeFrame() {
+        return orderRepository.getSalesTimeFrame();
     }
 }

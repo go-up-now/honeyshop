@@ -26,10 +26,27 @@
                                     <input type="text" name="fullname" id="fullname" placeholder="Họ và tên"
                                         class="col-md-6" style="width: 100%; height: auto;">
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <label for="phone" class="col-md-4">Số điện thoại: </label>
                                     <input type="number" name="phone" id="phone" placeholder="Số điện thoại"
                                         style="width: 100%;" class="col-md-6" min="0">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row" style="margin-left: 2px">
+                                        <label class="col-md-4">Giới tính: </label>
+                                        <div class="col-md-6">
+                                            <input type="radio" name="gender" id="male" value="true" checked>
+                                            <label for="male">Nam</label>
+                                            <input type="radio" name="gender" id="female" value="false">
+                                            <label for="female">Nữ</label> <br>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="age" class="col-md-4">Tuổi: </label>
+                                    <input type="number" name="age" id="age" placeholder="Tuổi ?"
+                                           class="col-md-6" style="width: 100%; height: auto;">
                                 </div>
                             </div>
                         </form>
@@ -163,7 +180,7 @@
                     <div><strong style="font-size: x-large;">Tổng tiền: <span id="total">0 ₫</span></strong>
                         <div style="float: right; margin-right: 50px">
                             <button href="" class="btn btn-info" id="thanh-toan"
-                                onclick="createAndCancelOfTheBill('Đang xử lý', 'Đặt hàng')">ĐẶT HÀNG</button>
+                                onclick="createTheBill('Đang xử lý', 'Đặt hàng')">ĐẶT HÀNG</button>
                         </div>
 
                     </div>

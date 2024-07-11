@@ -6,6 +6,7 @@ import com.poly.quanlybanhang.report.CustomerStatistics;
 import com.poly.quanlybanhang.report.EmployeePerformance;
 import com.poly.quanlybanhang.report.ProductRevenueStatistics;
 import com.poly.quanlybanhang.report.SellHistory;
+import com.poly.quanlybanhang.statistical.AgeOfProductConsumption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,7 +26,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
             "u.fullname, " +
             "o.createAt) " +
             "FROM Orders o JOIN o.user u " +
-//            "GROUP BY o.fullname, o.createAt " +
+            "GROUP BY o.id, o.fullname, o.phone, o.totalAmount, o.status, u.fullname, o.createAt " +
             "ORDER BY o.id DESC")
     List<SellHistory> findRevenueReport();
 
@@ -94,6 +95,4 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 
     @Query("SELECT od FROM OrderDetails od WHERE od.order.id = :orderId")
     List<OrderDetails> findOrderDetailsByOrderId(@Param("orderId") Integer orderId);
-
-
 }

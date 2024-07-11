@@ -16,4 +16,14 @@ public class StatisticalController {
     public String getCostAndPrice(){
         return "/admin/statistical/cost-price";
     }
+
+    @GetMapping("/do-tuoi-tieu-thu-san-pham")
+    public String getAgeOfProductConsumption(){
+        return "/admin/statistical/ageOfProductConsumption";
+    }
+
+    @GetMapping("/gioi-tinh-tieu-thu-san-pham")
+    public String getGenderOfProductConsumption(){
+        return "/admin/statistical/genderOfProductConsumption";
+    }
 }

@@ -55,6 +55,14 @@
             // event.target.value = null;
         })
 
+        // Định dạng tiền tệ
+        function formatCurrencyVND(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(amount);
+        }
+
 
         // function loadPage(urls, method){
         //     // var token = localStorage.getItem('token');

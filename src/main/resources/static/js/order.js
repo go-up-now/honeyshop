@@ -58,14 +58,6 @@ function updateTotalAndLocalStorage(productId, newQuantity) {
     updateLocalStorage();
 }
 
-// Định dạng tiền tệ
-function formatCurrencyVND(amount) {
-    return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND'
-    }).format(amount);
-}
-
 // function loadData() {
 //     $.ajax({
 //         url: productsApiUrl,
@@ -415,7 +407,7 @@ function loadPay() {
 }
 
 // create and cancel the bill
-function createAndCancelOfTheBill(status, messages) {
+function createTheBill(status, messages) {
     // Gỡ bỏ các sự kiện submit đã gán trước đó
     $("#thanh-toan").off('submit');
     let total = 0;
@@ -439,6 +431,8 @@ function createAndCancelOfTheBill(status, messages) {
     let order = {
         fullname: $("#fullname").val(),
         phone: $("#phone").val(),
+        gender: $('input[name="gender"]:checked').val(),
+        age: Number.parseInt($("#age").val()),
         totalAmount: total,
         status: status,
         orderDetails: selectedProducts

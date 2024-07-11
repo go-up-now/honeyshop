@@ -22,6 +22,8 @@ public class Orders {
     int id;
     String fullname;
     String phone;
+    boolean gender;
+    int age;
     Double totalAmount;
     String status;
     LocalDateTime createAt;
