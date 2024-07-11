@@ -1,4 +1,4 @@
-let productsApiUrl = "/honeyshop/api/products";
+let productsApiUrl = "/honeyshop/api/products" ;
 
 $(document).ready(function () {
     loadCart();

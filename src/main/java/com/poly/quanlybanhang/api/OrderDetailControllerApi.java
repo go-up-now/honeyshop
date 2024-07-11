@@ -51,4 +51,14 @@ public class OrderDetailControllerApi {
     public List<OrderDetails> getOrderDetailsByOrderId(@PathVariable Integer orderId) {
         return orderDetailService.getOrderDetailsByOrderId(orderId);
     }
+
+
+    @DeleteMapping("/{id}")
+    public  ApiResponse<?> delOrderDetailById(@PathVariable String id){
+        orderDetailService.delete(id);
+        return ApiResponse.builder()
+                .code(1000)
+                .data("OrderDetail has been deleted")
+                .build();
+    }
 }

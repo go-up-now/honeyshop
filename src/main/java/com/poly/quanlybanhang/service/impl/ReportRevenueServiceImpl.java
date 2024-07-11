@@ -32,10 +32,10 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
         return orderDetailRepository.findTopCustomersByOrderValue();
     }
 
-    @Override
-    public List<CustomerStatistics> getTopCustomersByOrderCount() {
-        return orderDetailRepository.findTopCustomersByOrderCount();
-    }
+//    @Override
+//    public List<CustomerStatistics> getTopCustomersByOrderCount() {
+//        return orderDetailRepository.findTopCustomersByOrderCount();
+//    }
 
     @Override
     public List<EmployeePerformance> getEmployeePerformanceSummary() {

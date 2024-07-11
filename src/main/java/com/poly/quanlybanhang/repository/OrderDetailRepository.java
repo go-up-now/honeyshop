@@ -32,27 +32,27 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 
     @Query("SELECT new com.poly.quanlybanhang.report.CustomerStatistics(" +
             "o.fullname, " +
-            "COUNT(o), " +
+            "COUNT(DISTINCT(o.id)), " +
             "SUM(od.quantity), " +
-            "SUM(od.price*od.quantity), " +
-            "(SELECT p.name FROM OrderDetails od2 JOIN od2.product p WHERE od2.order.phone = o.phone GROUP BY p.name ORDER BY SUM(od2.quantity) DESC LIMIT 1), " +
-            "MAX(o.createAt)) " +
+            "SUM(CAST(od.price * od.quantity AS double)), " +
+            "o.createAt) " +
             "FROM Orders o JOIN o.orderDetails od " +
-            "GROUP BY o.fullname, o.phone " +
-            "ORDER BY SUM(od.price) DESC")
+            "GROUP BY o.fullname " +
+            "ORDER BY SUM(od.price * od.quantity) DESC")
     List<CustomerStatistics> findTopCustomersByOrderValue();
 
-    @Query("SELECT new com.poly.quanlybanhang.report.CustomerStatistics(" +
-            "o.fullname, " +
-            "COUNT(o), " +
-            "SUM(od.quantity), " +
-            "SUM(od.price), " +
-            "(SELECT p.name FROM OrderDetails od2 JOIN od2.product p WHERE od2.order.phone = o.phone GROUP BY p.name ORDER BY SUM(od2.quantity) DESC LIMIT 1), " +
-            "MAX(o.createAt)) " +
-            "FROM Orders o JOIN o.orderDetails od " +
-            "GROUP BY o.fullname, o.phone " +
-            "ORDER BY COUNT(o) DESC")
-    List<CustomerStatistics> findTopCustomersByOrderCount();
+
+//    @Query("SELECT new com.poly.quanlybanhang.report.CustomerStatistics(" +
+//            "o.fullname, " +
+//            "COUNT(o), " +
+//            "SUM(od.quantity), " +
+//            "SUM(od.price), " +
+//            "(SELECT p.name FROM OrderDetails od2 JOIN od2.product p WHERE od2.order.phone = o.phone GROUP BY p.name ORDER BY SUM(od2.quantity) DESC LIMIT 1), " +
+//            "MAX(o.createAt)) " +
+//            "FROM Orders o JOIN o.orderDetails od " +
+//            "GROUP BY o.fullname, o.phone " +
+//            "ORDER BY COUNT(o) DESC")
+//    List<CustomerStatistics> findTopCustomersByOrderCount();
 
 
     @Query("SELECT new com.poly.quanlybanhang.report.EmployeePerformance(" +

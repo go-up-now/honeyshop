@@ -12,7 +12,7 @@ import java.util.List;
 public interface OrderService {
     OrderResponse create(OrderRequest request);
     OrderResponse update(OrderRequest request, String id);
-    void delete(String id);
+    void delete(Integer id);
     List<OrderResponse> getAll();
     Orders getOne(String id);
     OrderResponse getOrder(String id);

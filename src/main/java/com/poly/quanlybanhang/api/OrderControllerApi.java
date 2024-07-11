@@ -36,7 +36,7 @@ public class OrderControllerApi {
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<?> delete(@PathVariable String id){
+    public ApiResponse<?> delete(@PathVariable Integer id){
         orderService.delete(id);
 
         return ApiResponse.<String>builder()
