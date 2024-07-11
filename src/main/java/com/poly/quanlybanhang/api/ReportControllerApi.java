@@ -35,10 +35,10 @@ public class ReportControllerApi {
         return reportService.getTopCustomersByOrderValue();
     }
 
-    @GetMapping("/top-by-count")
-    public List<CustomerStatistics> getTopCustomersByOrderCount() {
-        return reportService.getTopCustomersByOrderCount();
-    }
+//    @GetMapping("/top-by-count")
+//    public List<CustomerStatistics> getTopCustomersByOrderCount() {
+//        return reportService.getTopCustomersByOrderCount();
+//    }
 
     @GetMapping("/employee-performance")
     public List<EmployeePerformance> getEmployeePerformanceSummary() {

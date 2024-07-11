@@ -86,8 +86,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(String id) {
-        orderDetailRepository.deleteById(id);
+    public void delete(Integer id) {
+        List<OrderDetails> orderDetailsList = orderDetailRepository.findOrderDetailsByOrderId(id);
+        for (OrderDetails orderDetails : orderDetailsList) {
+            orderDetailRepository.deleteById(String.valueOf(orderDetails.getId()));
+        }
+        orderRepository.deleteById(String.valueOf(id));
     }
 
     @Override
@@ -100,6 +104,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Orders getOne(String id) {
+
         return null;
     }
 

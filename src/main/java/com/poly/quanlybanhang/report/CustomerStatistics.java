@@ -17,6 +17,6 @@ public class CustomerStatistics {
       Long orderCount;
       Long totalQuantity;
       Double totalOrderValue;
-      String mostPurchasedProduct;
+//      String mostPurchasedProduct;
       LocalDateTime lastOrderDate;
 }

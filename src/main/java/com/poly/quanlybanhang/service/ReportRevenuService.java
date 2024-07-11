@@ -12,7 +12,7 @@ import java.util.List;
 public interface ReportRevenuService {
     public List<SellHistory> getAllRevenueReport();
     public List<CustomerStatistics> getTopCustomersByOrderValue();
-    public List<CustomerStatistics> getTopCustomersByOrderCount();
+//    public List<CustomerStatistics> getTopCustomersByOrderCount();
     public List<EmployeePerformance> getEmployeePerformanceSummary();
 
     public List<ProductRevenueStatistics> getProductRevenueByAllDates();

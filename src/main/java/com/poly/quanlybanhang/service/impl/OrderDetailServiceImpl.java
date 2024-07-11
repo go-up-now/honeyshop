@@ -59,7 +59,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public void delete(String id) {
-
+        orderDetailRepository.deleteById(id);
     }
 
     @Override
