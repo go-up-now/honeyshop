@@ -26,4 +26,8 @@ public class StatisticalController {
     public String getGenderOfProductConsumption(){
         return "/admin/statistical/genderOfProductConsumption";
     }
+    @GetMapping("/khung-gio-ban")
+    public String getTimeSell(){
+        return "/admin/statistical/salesTimeFrame";
+    }
 }

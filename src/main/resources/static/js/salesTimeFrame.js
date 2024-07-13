@@ -7,13 +7,13 @@ $(document).ready(function() {
     // Khởi tạo DataTable
     const table = $('#dataTable').DataTable({
         ajax: {
-            url: '/honeyshop/api/statistical/gender-of-product-consumption',
+            url: '/honeyshop/api/statistical/sales-time-frame',
             dataSrc: function (json) {
-                console.log("json: " + json)
 
                 // Kiểm tra nếu json không phải là mảng và chuyển đến thuộc tính data
                 if (json.data && Array.isArray(json.data)) {
                     json = json.data;
+
                 } else {
                     console.error('Dữ liệu trả về không chứa thuộc tính data mong đợi hoặc không phải là mảng.');
                     return [];
@@ -22,7 +22,7 @@ $(document).ready(function() {
                 let totalRevenue = 0;
                 // json.forEach(item => totalRevenue += parseFloat(item.totalRevenue) || 0);
                 // $('#totalRevenue').text(formatCurrencyVND(totalRevenue));
-
+                console.log("json: " + json)
                 return json.map((item) => [
                     item.date || 'N/A',
                     item.timeFrame || 'N/A',
@@ -30,7 +30,7 @@ $(document).ready(function() {
                     item.categoryName || 'N/A',
                     item.numberOfSales || 0,
                     item.totalRevenue ? formatCurrencyVND(item.totalRevenue) : 'N/A',
-                    item.percentageOfTotalSales ? (item.percentageOfTotalSales.toFixed(2)) + '%' : 'N/A'
+                    item.percentageOfTotalSalesPerDay ? (item.percentageOfTotalSalesPerDay.toFixed(2)) + '%' : 'N/A'
                 ]);
             },
             error: function (xhr, status, error) {
