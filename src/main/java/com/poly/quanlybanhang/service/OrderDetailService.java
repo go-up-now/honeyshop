@@ -21,4 +21,5 @@ public interface OrderDetailService {
     public Long getTotalProfit();
 
     public List<OrderDetails> getOrderDetailsByOrderId(Integer orderId);
+
 }

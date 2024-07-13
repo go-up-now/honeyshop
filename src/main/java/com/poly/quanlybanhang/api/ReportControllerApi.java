@@ -1,10 +1,8 @@
 package com.poly.quanlybanhang.api;
 
-import com.poly.quanlybanhang.report.CustomerStatistics;
-import com.poly.quanlybanhang.report.EmployeePerformance;
-import com.poly.quanlybanhang.report.ProductRevenueStatistics;
+import com.poly.quanlybanhang.dto.response.ApiResponse;
+import com.poly.quanlybanhang.report.*;
 
-import com.poly.quanlybanhang.report.SellHistory;
 import com.poly.quanlybanhang.service.ReportRevenuService;
 
 import lombok.AccessLevel;
@@ -47,5 +45,8 @@ public class ReportControllerApi {
 
     @GetMapping("/product-revenue")
     public List<ProductRevenueStatistics> getRevenueByAllDates() {
+
         return reportService.getProductRevenueByAllDates();
-    }}
+    }
+
+}
