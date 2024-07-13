@@ -38,7 +38,8 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
             "SUM(CAST(od.price * od.quantity AS double)), " +
             "o.createAt) " +
             "FROM Orders o JOIN o.orderDetails od " +
-            "GROUP BY o.fullname " +
+            "GROUP BY o.fullname, " +
+            "o.createAt " +
             "ORDER BY SUM(od.price * od.quantity) DESC")
     List<CustomerStatistics> findTopCustomersByOrderValue();
 

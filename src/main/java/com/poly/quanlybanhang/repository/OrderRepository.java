@@ -144,7 +144,7 @@ public interface OrderRepository extends JpaRepository<Orders, String> {
             "JOIN od.product p " +
             "JOIN p.categories c " +
             "GROUP BY DATE(o.createAt), " +
-            "o.createAt, " +
+//            "o.createAt, " +
             "         CASE " +
             "             WHEN HOUR(o.createAt) BETWEEN 6 AND 10 THEN 'Buổi sáng' " +
             "             WHEN HOUR(o.createAt) BETWEEN 11 AND 13 THEN 'Buổi trưa' " +
@@ -154,6 +154,7 @@ public interface OrderRepository extends JpaRepository<Orders, String> {
             "         p.name, " +
             "         c.name")
     List<SalesTimeFrame> getSalesTimeFrame();
+
 
 
 

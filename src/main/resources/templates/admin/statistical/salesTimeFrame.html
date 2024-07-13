@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/admin/layout/layout::layout(~{::title}, ~{::#main}, ~{::#jquery})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thống kê khung thời gian bán hàng</title>
+</head>
+
+<body>
+<div id="main">
+    <!-- DataTables Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex">
+            <div class="col-md-12">
+                <h3 class="m-0 font-weight-bold text-primary">Thống kê khung thời gian bán hàng</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Khung giờ</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Loại sản phẩm</th>
+                        <th>Số lượng bán</th>
+                        <th>Tổng doanh thu</th>
+                        <th>Phần trăm trên tổng số bán</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Data will be populated here by DataTables -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+<!--        <div class="card-footer">-->
+<!--            <div class="total-revenue" style="text-align: left;">-->
+<!--                <p><strong>Tổng doanh thu: <span id="totalRevenue">0 đ</span></strong></p>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</div>
+
+<div id="jquery">
+    <script th:src="@{/js/salesTimeFrame.js}"></script>
+</div>
+</body>
+
+</html>
+
