@@ -6,8 +6,10 @@ import com.poly.quanlybanhang.report.CustomerStatistics;
 import com.poly.quanlybanhang.report.EmployeePerformance;
 import com.poly.quanlybanhang.report.ProductRevenueStatistics;
 import com.poly.quanlybanhang.report.SellHistory;
+import org.springframework.boot.autoconfigure.mail.MailProperties;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReportRevenuService {
     public List<SellHistory> getAllRevenueReport();
@@ -17,6 +19,6 @@ public interface ReportRevenuService {
 
     public List<ProductRevenueStatistics> getProductRevenueByAllDates();
 
-
+    Map<String,Object> getRevenueDataChart(String range);
 
 }

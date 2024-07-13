@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -95,4 +96,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 
     @Query("SELECT od FROM OrderDetails od WHERE od.order.id = :orderId")
     List<OrderDetails> findOrderDetailsByOrderId(@Param("orderId") Integer orderId);
+
+    @Query("SELECT od FROM OrderDetails od WHERE od.createAt BETWEEN :startDate AND :endDate")
+    List<OrderDetails> findByCreateAtBetween(LocalDateTime startDate, LocalDateTime endDate);
 }
