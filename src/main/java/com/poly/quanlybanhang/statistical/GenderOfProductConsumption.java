@@ -10,8 +10,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GenderOfProductConsumption {
      String gender;
-     String productName;
-     String categoryName;
+//     String productName;
+//     String categoryName;
      Long numberOfSales;
      Double totalRevenue;
      Double percentageOfTotalSales;

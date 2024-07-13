@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AgeOfProductConsumption {
      String ageRange;
-     String productName;
-     String categoryName;
+//     String productName;
+//     String categoryName;
      Long numberOfSales;
      Double totalRevenue;
      Double percentageOfTotalSales;

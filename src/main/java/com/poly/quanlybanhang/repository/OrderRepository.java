@@ -23,20 +23,21 @@ public interface OrderRepository extends JpaRepository<Orders, String> {
             "WHEN o.age BETWEEN 18 AND 24 THEN '18-24' " +
             "WHEN o.age BETWEEN 25 AND 34 THEN '25-34' " +
             "ELSE '35+' END, " +
-            "p.name, " +
-            "c.name, " +
             "SUM(od.quantity), " +
             "SUM(od.price * od.quantity), " +
             "(SUM(od.price * od.quantity) / ((SELECT SUM(odt.price * odt.quantity) FROM OrderDetails odt)) * 100.0))" +  // Assuming you want percentage of total sales
             "FROM Orders o JOIN o.orderDetails od JOIN od.product p JOIN p.categories c " +
+            "WHERE (:ageStart IS NULL OR o.age BETWEEN :ageStart AND :ageEnd)" +
+            "AND (:productNameFilter IS NULL OR p.name LIKE %:productNameFilter%) " +
             "GROUP BY " +
             "CASE " +
             "WHEN o.age BETWEEN 18 AND 24 THEN '18-24' " +
             "WHEN o.age BETWEEN 25 AND 34 THEN '25-34' " +
-            "ELSE '35+' END, " +
-            "p.name, " +
-            "c.name")
-    List<AgeOfProductConsumption> getAgeOfProductConsumption();
+            "ELSE '35+' END"
+            )
+    List<AgeOfProductConsumption> getAgeOfProductConsumption(@Param("ageStart") Integer ageStart,
+                                                             @Param("ageEnd") Integer ageEnd,
+                                                             @Param("productNameFilter") String productNameFilter);
 
     @Query("SELECT " +
             "new com.poly.quanlybanhang.statistical.GenderOfProductConsumption(" +
@@ -44,121 +45,47 @@ public interface OrderRepository extends JpaRepository<Orders, String> {
             "WHEN o.gender = true THEN 'Nam' " +
             "WHEN o.gender = false THEN 'Nữ' " +
             "ELSE 'Khác' END, " +
-            "p.name, " +
-            "c.name, " +
             "SUM(od.quantity), " +
             "SUM(od.price * od.quantity), " +
             "(SUM(od.price * od.quantity) / ((SELECT SUM(odt.price * odt.quantity) FROM OrderDetails odt)) * 100.0))" +  // Assuming you want percentage of total sales
             "FROM Orders o JOIN o.orderDetails od JOIN od.product p JOIN p.categories c " +
+            "WHERE (:genderFilter IS NULL OR o.gender = :genderFilter) " +
+            "AND (:productNameFilter IS NULL OR p.name LIKE %:productNameFilter%) " +
             "GROUP BY " +
             "CASE " +
             "WHEN o.gender = true THEN 'Nam' " +
             "WHEN o.gender = false THEN 'Nữ' " +
-            "ELSE 'Khác' END, " +
-            "p.name, " +
-            "c.name")
-    List<GenderOfProductConsumption> getGenderOfProductConsumption();
-
-//    @Query("SELECT " +
-//            "new com.poly.quanlybanhang.statistical.SalesTimeFrame(" +
-//            "DATE(o.createAt), " +
-//            "CASE " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 6 AND 10 THEN 'Buổi sáng' " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 11 AND 13 THEN 'Buổi trưa' " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 14 AND 18 THEN 'Buổi chiều' " +
-//            "        ELSE 'Buổi tối' END, " +
-//            "p.name, " +
-//            "c.name, " +
-//            "SUM(od.quantity), " +
-//            "SUM(od.price * od.quantity), " +
-//            "(SUM(od.price * od.quantity) / ((SELECT SUM(odt.price * odt.quantity) FROM OrderDetails odt WHERE DATE(odt.order.createAt) = DATE(o.createAt)))) * 100.0)" +  // Assuming you want percentage of total sales
-//            "FROM Orders o JOIN o.orderDetails od JOIN od.product p JOIN p.categories c " +
-//            "GROUP BY DATE(o.createAt)," +
-//            "CASE " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 6 AND 10 THEN 'Buổi sáng' " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 11 AND 13 THEN 'Buổi trưa' " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 14 AND 18 THEN 'Buổi chiều' " +
-//            "        ELSE 'Buổi tối' END, " +
-//            "p.name, " +
-//            "c.name")
-//    List<SalesTimeFrame> getSalesTimeFrame();
-
-
-//    @Query("SELECT NEW com.poly.quanlybanhang.statistical.SalesTimeFrame(" +
-//            "    DATE(o.createAt), " +
-//            "    CASE " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 6 AND 10 THEN 'Buổi sáng' " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 11 AND 13 THEN 'Buổi trưa' " +
-//            "        WHEN HOUR(o.createAt) BETWEEN 14 AND 18 THEN 'Buổi chiều' " +
-//            "        ELSE 'Buổi tối' " +
-//            "    END, " +
-//            "    p.name, " +
-//            "    c.name, " +
-//            "    SUM(od.quantity), " +
-//            "    SUM(od.price * od.quantity), " +
-//            "   (SUM(od.price * od.quantity) / ((SELECT SUM(odt.price * odt.quantity) FROM OrderDetails odt WHERE DATE(odt.order.createAt) = DATE(o.createAt)))) * 100.0)" +
-////            "    (SUM(od.price * od.quantity) / " +
-////            "     (SELECT SUM(odt.price * odt.quantity) " +
-////            "      FROM OrderDetails odt " +
-////            "      WHERE DATE(odt.order.createAt) = DATE(o.createAt)" +
-////            "     )" +
-////            "    )))* 100.0" +
-////            ") " +
-//            "FROM Orders o JOIN o.orderDetails od JOIN od.product p JOIN p.categories c " +
-//            "GROUP BY " +
-//            "DATE(o.createAt), " +
-//            "HOUR(o.createAt), " +
-//            "DATE(od.order.createAt), " +
-////            "o.createAt, " +
-//            "         CASE " +
-//            "             WHEN HOUR(o.createAt) BETWEEN 6 AND 10 THEN 'Buổi sáng' " +
-//            "             WHEN HOUR(o.createAt) BETWEEN 11 AND 13 THEN 'Buổi trưa' " +
-//            "             WHEN HOUR(o.createAt) BETWEEN 14 AND 18 THEN 'Buổi chiều' " +
-//            "             ELSE 'Buổi tối' " +
-//            "         END, " +
-//            "         p.name, " +
-//            "         c.name")
-//    List<SalesTimeFrame> getSalesTimeFrame();
-
+            "ELSE 'Khác' END "
+            )
+    List<GenderOfProductConsumption> getGenderOfProductConsumption(@Param("genderFilter") Boolean genderFilter,
+                                                                   @Param("productNameFilter") String productNameFilter);
 
     @Query("SELECT NEW com.poly.quanlybanhang.statistical.SalesTimeFrame(" +
-            "    DATE(o.createAt), " +
             "    CASE " +
             "        WHEN HOUR(o.createAt) BETWEEN 6 AND 10 THEN 'Buổi sáng' " +
             "        WHEN HOUR(o.createAt) BETWEEN 11 AND 13 THEN 'Buổi trưa' " +
             "        WHEN HOUR(o.createAt) BETWEEN 14 AND 18 THEN 'Buổi chiều' " +
             "        ELSE 'Buổi tối' " +
             "    END, " +
-            "    p.name, " +
-            "    c.name, " +
             "    SUM(od.quantity), " +
             "    SUM(od.price * od.quantity), " +
-            "    (SUM(od.price * od.quantity) / " +
-            "     (SELECT SUM(odt.price * odt.quantity) " +
-            "      FROM OrderDetails odt " +
-            "      JOIN odt.order o2 " +
-            "      WHERE DATE(o2.createAt) = DATE(o.createAt)) * 100.0) " +
-            ") " +
+            "(SUM(od.price * od.quantity) / ((SELECT SUM(odt.price * odt.quantity) FROM OrderDetails odt)) * 100.0))" +
             "FROM Orders o " +
             "JOIN o.orderDetails od " +
             "JOIN od.product p " +
             "JOIN p.categories c " +
-            "GROUP BY DATE(o.createAt), " +
-//            "o.createAt, " +
-            "         CASE " +
+            "WHERE (:dateStart IS NULL OR DATE(o.createAt) BETWEEN :dateStart AND :dateEnd) " +
+            "AND (:productNameFilter IS NULL OR p.name LIKE %:productNameFilter%) " +
+            "AND (:hourStart IS NULL OR HOUR(o.createAt) BETWEEN :hourStart AND :hourEnd) " +
+            "GROUP BY CASE " +
             "             WHEN HOUR(o.createAt) BETWEEN 6 AND 10 THEN 'Buổi sáng' " +
             "             WHEN HOUR(o.createAt) BETWEEN 11 AND 13 THEN 'Buổi trưa' " +
             "             WHEN HOUR(o.createAt) BETWEEN 14 AND 18 THEN 'Buổi chiều' " +
             "             ELSE 'Buổi tối' " +
-            "         END, " +
-            "         p.name, " +
-            "         c.name")
-    List<SalesTimeFrame> getSalesTimeFrame();
-
-
-
-
-
-
-
+            "         END")
+    List<SalesTimeFrame> getSalesTimeFrame(@Param("dateStart") Date dateStart,
+                                           @Param("dateEnd") Date dateEnd,
+                                           @Param("hourStart") Integer hourStart,
+                                           @Param("hourEnd") Integer hourEnd,
+                                           @Param("productNameFilter") String productNameFilter);
 }

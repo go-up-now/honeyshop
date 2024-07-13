@@ -1,4 +1,17 @@
 $(document).ready(function() {
+    let index = true;
+    $('#filter_gender').click(function (e) {
+        e.preventDefault();
+        index = false;
+        loadDataTable();
+    })
+
+    if(index)
+        loadDataTable();
+
+});
+
+function loadDataTable() {
     // Nếu DataTable đã được khởi tạo, hãy hủy khởi tạo trước khi tiếp tục
     if ($.fn.DataTable.isDataTable('#dataTable')) {
         $('#dataTable').DataTable().clear().destroy();
@@ -6,8 +19,20 @@ $(document).ready(function() {
 
     // Khởi tạo DataTable
     const table = $('#dataTable').DataTable({
+
         ajax: {
+            // url: '/honeyshop/api/statistical/gender-of-product-consumption/' + gender + '/' + productName,
             url: '/honeyshop/api/statistical/gender-of-product-consumption',
+            method: "POST",
+            data: function(d) {
+                return JSON.stringify({
+                    gender: $("#gender").val(),
+                    productName: $("#productName").val(),
+                    // ...d  // Thêm các tham số phân trang, tìm kiếm, sắp xếp từ DataTable
+                });
+            },
+            dataType: 'json',
+            contentType: 'application/json',
             dataSrc: function (json) {
                 console.log("json: " + json)
 
@@ -20,13 +45,18 @@ $(document).ready(function() {
                 }
 
                 let totalRevenue = 0;
-                // json.forEach(item => totalRevenue += parseFloat(item.totalRevenue) || 0);
-                // $('#totalRevenue').text(formatCurrencyVND(totalRevenue));
+                let totalProduct = 0;
+                json.forEach(item => {
+                    totalRevenue += parseFloat(item.totalRevenue) || 0
+                    totalProduct += parseFloat(item.numberOfSales) || 0
+                });
+                $('#totalRevenue').text(formatCurrencyVND(totalRevenue));
+                $('#totalProduct').text(totalProduct);
 
                 return json.map((item) => [
                     item.gender || 'N/A',
-                    item.productName || 'N/A',
-                    item.categoryName || 'N/A',
+                    // item.productName || 'N/A',
+                    // item.categoryName || 'N/A',
                     item.numberOfSales || 0,
                     item.totalRevenue ? formatCurrencyVND(item.totalRevenue) : 'N/A',
                     item.percentageOfTotalSales ? (item.percentageOfTotalSales.toFixed(2)) + '%' : 'N/A'
@@ -37,12 +67,12 @@ $(document).ready(function() {
             }
         },
         columns: [
-            { title: 'Giới tính', width: '10%' }, // Thiết lập chiều rộng cho từng cột
-            { title: 'Tên sản phẩm', width: '20%' },
-            { title: 'Loại sản phẩm', width: '20%' },
-            { title: 'Số lượng bán', width: '10%' },
-            { title: 'Tổng doanh thu', width: '15%' },
-            { title: 'Phần trăm trên tổng số bán', width: '15%' }
+            { title: 'Giới tính', width: '20%' }, // Thiết lập chiều rộng cho từng cột
+            // { title: 'Tên sản phẩm', width: '20%' },
+            // { title: 'Loại sản phẩm', width: '20%' },
+            { title: 'Số lượng bán', width: '20%' },
+            { title: 'Tổng doanh thu', width: '25%' },
+            { title: 'Phần trăm trên tổng số bán', width: '25%' }
         ],
         processing: true,
         serverSide: false,
@@ -51,5 +81,4 @@ $(document).ready(function() {
         ordering: true,
         info: true
     });
-
-});
+}

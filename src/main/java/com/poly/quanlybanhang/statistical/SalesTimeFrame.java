@@ -11,10 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SalesTimeFrame {
-     Date date;
+//     Date date;
      String timeFrame;
-     String productName;
-     String categoryName;
+//     String productName;
+//     String categoryName;
      Long numberOfSales;
      Double totalRevenue;
      Double percentageOfTotalSalesPerDay;

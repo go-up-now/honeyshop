@@ -1,7 +1,6 @@
 package com.poly.quanlybanhang.service.impl;
 
-import com.poly.quanlybanhang.dto.request.OrderDetailRequest;
-import com.poly.quanlybanhang.dto.request.OrderRequest;
+import com.poly.quanlybanhang.dto.request.*;
 import com.poly.quanlybanhang.dto.response.OrderResponse;
 import com.poly.quanlybanhang.entity.OrderDetails;
 import com.poly.quanlybanhang.entity.Orders;
@@ -121,17 +120,57 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<AgeOfProductConsumption> getAgeOfProductConsumption() {
-        return orderRepository.getAgeOfProductConsumption();
+    public List<AgeOfProductConsumption> getAgeOfProductConsumption(AgeOfProductConsumptionRequest request) {
+        var ageRange = request.getAgeRange();
+        Integer ageStart = null, ageEnd = null;
+
+        if(ageRange != null){
+            String age[]  = ageRange.split(",");
+
+            ageStart = Integer.parseInt(age[0]);
+            ageEnd = Integer.parseInt(age[1]);
+
+            if(ageStart == 0)
+                ageStart = null;
+        }
+
+        var productName = request.getProductName();
+        return orderRepository.getAgeOfProductConsumption(ageStart, ageEnd, productName);
     }
 
     @Override
-    public List<GenderOfProductConsumption> getGenderOfProductConsumption() {
-        return orderRepository.getGenderOfProductConsumption();
+    public List<GenderOfProductConsumption> getGenderOfProductConsumption(
+            GenderOfProductConsumptionRequest request) {
+        var genders = request.getGender();
+        var productName = request.getProductName();
+        return orderRepository.getGenderOfProductConsumption(genders, productName);
     }
 
+//    @Override
+//    public List<SalesTimeFrame> getSalesTimeFrame() {
+//        return orderRepository.getSalesTimeFrame();
+//    }
+
     @Override
-    public List<SalesTimeFrame> getSalesTimeFrame() {
-        return orderRepository.getSalesTimeFrame();
+    public List<SalesTimeFrame> getSalesTimeFrame(SalesTimeFrameRequest request) {
+        var dateStart = request.getDateStart();
+        var dateEnd = request.getDateEnd();
+
+        var timeFrame = request.getTimeFrame();
+        Integer hourStart = null, hourEnd = null;
+
+        if(timeFrame != null){
+            String hours[]  = timeFrame.split(",");
+
+            hourStart = Integer.parseInt(hours[0]);
+            hourEnd = Integer.parseInt(hours[1]);
+
+            if(hourStart == 0)
+                hourStart = null;
+        }
+
+        var productName = request.getProductName();
+
+        return orderRepository.getSalesTimeFrame(dateStart, dateEnd, hourStart, hourEnd, productName);
     }
 }

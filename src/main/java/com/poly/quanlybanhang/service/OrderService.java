@@ -1,7 +1,6 @@
 package com.poly.quanlybanhang.service;
 
-import com.poly.quanlybanhang.dto.request.OrderRequest;
-import com.poly.quanlybanhang.dto.request.ProductRequest;
+import com.poly.quanlybanhang.dto.request.*;
 import com.poly.quanlybanhang.dto.response.OrderResponse;
 import com.poly.quanlybanhang.dto.response.ProductResponse;
 import com.poly.quanlybanhang.entity.Orders;
@@ -21,7 +20,8 @@ public interface OrderService {
     Orders getOne(String id);
     OrderResponse getOrder(String id);
     Orders getOrderByPhone(String phone);
-    List<AgeOfProductConsumption> getAgeOfProductConsumption();
-    List<GenderOfProductConsumption> getGenderOfProductConsumption();
-    List<SalesTimeFrame> getSalesTimeFrame();
+    List<AgeOfProductConsumption> getAgeOfProductConsumption(AgeOfProductConsumptionRequest request);
+    List<GenderOfProductConsumption> getGenderOfProductConsumption(GenderOfProductConsumptionRequest request);
+//    List<SalesTimeFrame> getSalesTimeFrame();
+List<SalesTimeFrame> getSalesTimeFrame(SalesTimeFrameRequest request);
 }
