@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -74,12 +75,14 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
             "p.name, " +
             "SUM(od.quantity), " +
             "p.price, " +
-            "SUM(od.quantity * od.price), " +
-            "CAST(od.createAt AS LocalDate)) " +
+            "SUM(od.quantity * od.price)) " +
             "FROM OrderDetails od JOIN od.product p " +
-            "GROUP BY p.name, p.price, CAST(od.createAt AS LocalDate) " +
-            "ORDER BY CAST(od.createAt AS LocalDate) DESC")
-    List<ProductRevenueStatistics> findProductRevenueByAllDates();
+            "WHERE (:dateStart IS NULL OR DATE(od.createAt) BETWEEN :dateStart AND :dateEnd) " +
+            "AND (:productNameFilter IS NULL OR p.name LIKE %:productNameFilter%) " +
+            "GROUP BY p.name, p.price ")
+    List<ProductRevenueStatistics> findProductRevenueByAllDates(@Param("dateStart") Date dateStart,
+                                                                @Param("dateEnd") Date dateEnd,
+                                                                @Param("productNameFilter") String productNameFilter);
 
     @Query("SELECT SUM(od.quantity * od.price) FROM OrderDetails od")
     Double findTotalRevenue();

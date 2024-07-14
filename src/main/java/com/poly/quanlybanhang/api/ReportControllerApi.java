@@ -1,5 +1,6 @@
 package com.poly.quanlybanhang.api;
 
+import com.poly.quanlybanhang.dto.request.ProductRevenueRequest;
 import com.poly.quanlybanhang.dto.response.ApiResponse;
 import com.poly.quanlybanhang.report.*;
 
@@ -43,10 +44,13 @@ public class ReportControllerApi {
         return reportService.getEmployeePerformanceSummary();
     }
 
-    @GetMapping("/product-revenue")
-    public List<ProductRevenueStatistics> getRevenueByAllDates() {
+    @PostMapping("/product-revenue")
+    public ApiResponse<List<ProductRevenueStatistics>> getRevenueByAllDates(@RequestBody ProductRevenueRequest request) {
 
-        return reportService.getProductRevenueByAllDates();
+        return ApiResponse.<List<ProductRevenueStatistics>>builder()
+                .code(1000)
+                .data(reportService.getProductRevenueByAllDates(request))
+                .build();
     }
 
 }

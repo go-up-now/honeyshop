@@ -1,5 +1,6 @@
 package com.poly.quanlybanhang.service.impl;
 
+import com.poly.quanlybanhang.dto.request.ProductRevenueRequest;
 import com.poly.quanlybanhang.dto.response.OrderDetailResponse;
 import com.poly.quanlybanhang.entity.OrderDetails;
 import com.poly.quanlybanhang.report.CustomerStatistics;
@@ -51,8 +52,12 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
     }
 
     @Override
-    public List<ProductRevenueStatistics> getProductRevenueByAllDates() {
-        return orderDetailRepository.findProductRevenueByAllDates();
+    public List<ProductRevenueStatistics> getProductRevenueByAllDates(ProductRevenueRequest request) {
+        var dateStart = request.getDateStart();
+        var dateEnd = request.getDateEnd();
+        var productName = request.getProductName();
+
+        return orderDetailRepository.findProductRevenueByAllDates(dateStart, dateEnd, productName);
     }
 
     @Override

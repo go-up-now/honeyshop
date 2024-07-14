@@ -18,6 +18,4 @@ public class ProductRevenueStatistics  {
      Long quantity;
      Double price;
      Double revenue;
-     LocalDate date;
-
 }

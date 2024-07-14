@@ -1,5 +1,6 @@
 package com.poly.quanlybanhang.service;
 
+import com.poly.quanlybanhang.dto.request.ProductRevenueRequest;
 import com.poly.quanlybanhang.dto.response.OrderDetailResponse;
 import com.poly.quanlybanhang.entity.OrderDetails;
 import com.poly.quanlybanhang.report.CustomerStatistics;
@@ -17,7 +18,7 @@ public interface ReportRevenuService {
 //    public List<CustomerStatistics> getTopCustomersByOrderCount();
     public List<EmployeePerformance> getEmployeePerformanceSummary();
 
-    public List<ProductRevenueStatistics> getProductRevenueByAllDates();
+    public List<ProductRevenueStatistics> getProductRevenueByAllDates(ProductRevenueRequest request);
 
     Map<String,Object> getRevenueDataChart(String range);
 
