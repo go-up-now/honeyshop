@@ -39,4 +39,12 @@ public class DashboardApi {
                 .data(reportService.getRevenueDataChart(range))
                 .build();
     }
+
+    @GetMapping("/revenue_gender")
+    public ApiResponse<?> getRevenueGenderData() {
+        return ApiResponse.builder()
+                .code(1000)
+                .data(reportService.RevenueByGenderAllDay())
+                .build();
+    }
 }

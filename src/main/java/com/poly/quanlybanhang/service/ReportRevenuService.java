@@ -2,10 +2,8 @@ package com.poly.quanlybanhang.service;
 
 import com.poly.quanlybanhang.dto.response.OrderDetailResponse;
 import com.poly.quanlybanhang.entity.OrderDetails;
-import com.poly.quanlybanhang.report.CustomerStatistics;
-import com.poly.quanlybanhang.report.EmployeePerformance;
-import com.poly.quanlybanhang.report.ProductRevenueStatistics;
-import com.poly.quanlybanhang.report.SellHistory;
+import com.poly.quanlybanhang.entity.Orders;
+import com.poly.quanlybanhang.report.*;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 
 import java.util.List;
@@ -20,5 +18,7 @@ public interface ReportRevenuService {
     public List<ProductRevenueStatistics> getProductRevenueByAllDates();
 
     Map<String,Object> getRevenueDataChart(String range);
+
+    public List<RevenueByGenderAllDay> RevenueByGenderAllDay();
 
 }

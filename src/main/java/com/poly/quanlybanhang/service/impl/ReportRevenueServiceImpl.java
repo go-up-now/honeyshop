@@ -2,12 +2,12 @@ package com.poly.quanlybanhang.service.impl;
 
 import com.poly.quanlybanhang.dto.response.OrderDetailResponse;
 import com.poly.quanlybanhang.entity.OrderDetails;
-import com.poly.quanlybanhang.report.CustomerStatistics;
-import com.poly.quanlybanhang.report.EmployeePerformance;
-import com.poly.quanlybanhang.report.ProductRevenueStatistics;
+import com.poly.quanlybanhang.entity.Orders;
+import com.poly.quanlybanhang.report.*;
 
-import com.poly.quanlybanhang.report.SellHistory;
 import com.poly.quanlybanhang.repository.OrderDetailRepository;
+import com.poly.quanlybanhang.repository.OrderRepository;
+import com.poly.quanlybanhang.service.OrderDetailService;
 import com.poly.quanlybanhang.service.ReportRevenuService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class ReportRevenueServiceImpl implements ReportRevenuService {
 
     OrderDetailRepository orderDetailRepository;
-
+    OrderRepository orderRepository;
     @Override
     public List<SellHistory> getAllRevenueReport() {
         return orderDetailRepository.findRevenueReport();
@@ -73,6 +73,11 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
         }
         List<OrderDetails> orderDetailsList = orderDetailRepository.findByCreateAtBetween(startDate, endDate);
         return generateRevenueData(orderDetailsList, range);
+    }
+
+    @Override
+    public List<RevenueByGenderAllDay> RevenueByGenderAllDay() {
+        return orderRepository.findRevenueByGenderAllDay();
     }
 
     private Map<String, Object> generateRevenueData(List<OrderDetails> orderDetailsList, String range) {

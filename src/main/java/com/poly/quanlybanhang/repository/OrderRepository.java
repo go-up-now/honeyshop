@@ -1,6 +1,7 @@
 package com.poly.quanlybanhang.repository;
 
 import com.poly.quanlybanhang.entity.Orders;
+import com.poly.quanlybanhang.report.RevenueByGenderAllDay;
 import com.poly.quanlybanhang.statistical.AgeOfProductConsumption;
 import com.poly.quanlybanhang.statistical.GenderOfProductConsumption;
 import com.poly.quanlybanhang.statistical.SalesTimeFrame;
@@ -155,10 +156,12 @@ public interface OrderRepository extends JpaRepository<Orders, String> {
             "         c.name")
     List<SalesTimeFrame> getSalesTimeFrame();
 
-
-
-
-
+    @Query("SELECT new com.poly.quanlybanhang.report.RevenueByGenderAllDay(" +
+            "o.gender, " +
+            "SUM(o.totalAmount)) " +
+            "FROM Orders o " +
+            "GROUP BY o.gender")
+    List<RevenueByGenderAllDay> findRevenueByGenderAllDay();
 
 
 }
