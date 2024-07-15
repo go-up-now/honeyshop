@@ -22,4 +22,8 @@ public interface ReportRevenuService {
 
     public List<RevenueByGenderAllDay> RevenueByGenderAllDay();
 
+    List<RevenueProfitCosts> getRevenueProfitCosts();
+
+    List<QuantityByProduct> getQuantityByProduct();
+
 }

@@ -2,10 +2,7 @@ package com.poly.quanlybanhang.repository;
 
 import com.poly.quanlybanhang.dto.response.OrderDetailResponse;
 import com.poly.quanlybanhang.entity.OrderDetails;
-import com.poly.quanlybanhang.report.CustomerStatistics;
-import com.poly.quanlybanhang.report.EmployeePerformance;
-import com.poly.quanlybanhang.report.ProductRevenueStatistics;
-import com.poly.quanlybanhang.report.SellHistory;
+import com.poly.quanlybanhang.report.*;
 import com.poly.quanlybanhang.statistical.AgeOfProductConsumption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -104,9 +101,28 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
     @Query("SELECT od FROM OrderDetails od WHERE od.createAt BETWEEN :startDate AND :endDate")
     List<OrderDetails> findByCreateAtBetween(LocalDateTime startDate, LocalDateTime endDate);
 
+
     @Query("SELECT SUM(od.quantity) " +
             "FROM OrderDetails od ")
     Long findTotalProductSold();
+
+
+    @Query("SELECT new com.poly.quanlybanhang.report.RevenueProfitCosts(" +
+            "SUM(od.price * od.quantity), " +
+            "SUM((od.price - p.costs) * od.quantity), " +
+            "SUM(p.costs * od.quantity), " +
+            "DATE(od.createAt)) " +
+            "FROM OrderDetails od " +
+            "JOIN od.product p " +
+            "GROUP BY DATE(od.createAt)")
+    List<RevenueProfitCosts> getRevenueProfitCosts();
+
+    @Query("SELECT new com.poly.quanlybanhang.report.QuantityByProduct(" +
+            "p.name, " +
+            "SUM(od.quantity)) " +
+            "FROM OrderDetails od JOIN od.product p " +
+            "GROUP BY p.name")
+    List<QuantityByProduct> getProductQuantities();
 
 
 }
