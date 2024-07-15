@@ -13,7 +13,7 @@
     <div class="card shadow mb-4">
         <div class="card-header d-flex">
             <div class="col-md-12">
-                <h3 class="m-0 font-weight-bold text-primary">Danh sách Số lượng sản phẩm bán theo khách hàng</h3>
+                <h3 class="m-0 font-weight-bold text-primary">Số lượng sản phẩm bán theo khách hàng</h3>
             </div>
         </div>
         <div class="card-body">
@@ -59,7 +59,7 @@
                     dataSrc: function (json) {
                         let totalPrice = 0;
                         json.forEach(item => totalPrice += item.totalOrderValue || 0);
-                        $('#totalPrice').text(totalPrice.toFixed(2) + ' đ');
+                        $('#totalPrice').text(formatCurrencyVND(totalPrice.toFixed(2)));
                         return json.map((item, index) => [
                             index + 1,
                             item.customerName || 'N/A',
@@ -86,8 +86,12 @@
                 ordering: true,
                 info: true
             });
-
+            table.on('search.dt', function () {
+                var info = table.page.info();
+                $('#totalUser').text(info.recordsDisplay);
+            });
         });
+
 
         // Định dạng tiền tệ
         function formatCurrencyVND(amount) {

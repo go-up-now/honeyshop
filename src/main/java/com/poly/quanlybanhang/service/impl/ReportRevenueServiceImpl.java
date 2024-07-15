@@ -85,6 +85,16 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
         return orderRepository.findRevenueByGenderAllDay();
     }
 
+    @Override
+    public List<RevenueProfitCosts> getRevenueProfitCosts() {
+        return orderDetailRepository.getRevenueProfitCosts();
+    }
+
+    @Override
+    public List<QuantityByProduct> getQuantityByProduct() {
+        return orderDetailRepository.getProductQuantities();
+    }
+
     private Map<String, Object> generateRevenueData(List<OrderDetails> orderDetailsList, String range) {
         Map<String, Object> response = new HashMap<>();
         List<String> labels = new ArrayList<>();

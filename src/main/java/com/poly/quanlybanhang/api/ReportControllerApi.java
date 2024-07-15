@@ -44,6 +44,16 @@ public class ReportControllerApi {
         return reportService.getEmployeePerformanceSummary();
     }
 
+    @GetMapping("/revenue-profit-costs")
+    public List<RevenueProfitCosts> getRevenueProfitCosts() {
+        return reportService.getRevenueProfitCosts();
+    }
+
+    @GetMapping("/quantity-by-product")
+    public List<QuantityByProduct> QuantityByProduct() {
+        return reportService.getQuantityByProduct();
+    }
+
     @PostMapping("/product-revenue")
     public ApiResponse<List<ProductRevenueStatistics>> getRevenueByAllDates(@RequestBody ProductRevenueRequest request) {
 

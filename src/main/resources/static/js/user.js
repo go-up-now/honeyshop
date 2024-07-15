@@ -84,7 +84,7 @@ function loadUser() {
         $('#dataTable').DataTable().destroy();
         $('#userTableBody').empty();
     }
-    $('#dataTable').DataTable({
+    var table =$('#dataTable').DataTable({
         "ajax": {
             "url": ApigetUser,
             "type": "GET",
@@ -100,9 +100,11 @@ function loadUser() {
                 }
 
                 let users = json.data;
-
+                let totalUser = users.length;
+                $('#totalUser').text(totalUser);
                 // Xử lý dữ liệu cho DataTable
                 return users.map(function(user, index) {
+                    totalUser +=totalUser;
                     var roleName = Array.isArray(user.roles) && user.roles.length > 0 ? user.roles[0].name : "N/A";
                     // if (roleName === "STAFF") {
                     //     roleName = "Nhân viên";
@@ -120,6 +122,7 @@ function loadUser() {
                                  <button type="button" class="btn btn-danger" data-toggle="modal" onclick="removeUser('${user.id}')"><i class="fa fa-trash"></button>` // Actions
                     ];
                 });
+
             },
             error: function(xhr, status, error) {
                 console.error("Có lỗi xảy ra khi gọi API:", status, error);
@@ -139,6 +142,10 @@ function loadUser() {
         searching: true,
         ordering: true,
         info: true
+    });
+    table.on('search.dt', function () {
+        var info = table.page.info();
+        $('#totalUser').text(info.recordsDisplay);
     });
 }
 

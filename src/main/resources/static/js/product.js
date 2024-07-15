@@ -109,7 +109,8 @@ function loadData() {
                         return [];
                     }
                 }
-
+                let totalProduct = json.length;
+                $('#totalProduct').text(totalProduct);
                 const data = json.map((item, index) => {
                     return [
                         index + 1, // STT
@@ -138,6 +139,10 @@ function loadData() {
         searching: true,
         ordering: true,
         info: true
+    });
+    table.on('search.dt', function () {
+        var info = table.page.info();
+        $('#totalProduct').text(info.recordsDisplay);
     });
 }
 

@@ -112,9 +112,9 @@
                     <h6 class="m-0 font-weight-bold text-primary">Biểu đồ tổng doanh thu</h6>
                     <div class="d-flex ml-auto align-items-center">
                         <div>
-                            <button id="btn-1d" class="btn btn-sm btn-primary">1d</button>
-                            <button id="btn-7d" class="btn btn-sm btn-primary">7d</button>
-                            <button id="btn-1m" class="btn btn-sm btn-primary">1m</button>
+<!--                            <button id="btn-1d" class="btn btn-sm btn-primary">1d</button>-->
+<!--                            <button id="btn-7d" class="btn btn-sm btn-primary">7d</button>-->
+<!--                            <button id="btn-1m" class="btn btn-sm btn-primary">1m</button>-->
                         </div>
                         <div class="dropdown no-arrow ml-3">
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -143,9 +143,9 @@
         <div class="col-xl-4 col-lg-5">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="height:60px ">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="height:65px ">
                     <h6 class="m-0 font-weight-bold text-primary">Doanh thu theo giới tính</h6>
-                    <div class="dropdown no-arrow">
+                    <div class="dropdown no-arrow" >
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -161,17 +161,17 @@
                     </div>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body"style="height: 355px">
                     <div class="chart-pie pt-4 pb-2">
                         <canvas id="myPieChart"></canvas>
                     </div>
                     <div class="mt-4 text-center small">
-                       <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> Nam
-                        </span>
-                                <span class="mr-2">
-                            <i class="fas fa-circle text-warning"></i> Nữ
-                        </span>
+<!--                       <span class="mr-2">-->
+<!--                            <i class="fas fa-circle text-primary"></i> Nam-->
+<!--                        </span>-->
+<!--                                <span class="mr-2">-->
+<!--                            <i class="fas fa-circle text-warning"></i> Nữ-->
+<!--                        </span>-->
                     </div>
                 </div>
             </div>
@@ -185,11 +185,45 @@
             <!-- Bar Chart -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Doanh thu, Lợi nhuận, và Chi phí theo ngày</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-bar">
-                        <canvas id="myBarChart"></canvas>
+                        <canvas id="chartRevenueProfitCosts"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Pie Chart -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="height:55px ">
+                    <h6 class="m-0 font-weight-bold text-primary">Tổng sản phẩm đã bán</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink2"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink1">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body"style="height:355px ">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="chartQuantityByProduct"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+
                     </div>
                 </div>
             </div>
@@ -204,7 +238,7 @@
 <!--    <script th:src="@{/js/demo/chart-bar-demo.js}"></script>-->
 </div>
 <div id="jquery">
-    <script th:src="@{/js/demo/chart-dashboard.js}"></script>-->
+    <script th:src="@{/js/demo/chart-dashboard.js}"></script>
 </div>
 </body>
 </html>
