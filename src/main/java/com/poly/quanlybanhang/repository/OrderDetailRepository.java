@@ -104,5 +104,9 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
     @Query("SELECT od FROM OrderDetails od WHERE od.createAt BETWEEN :startDate AND :endDate")
     List<OrderDetails> findByCreateAtBetween(LocalDateTime startDate, LocalDateTime endDate);
 
+    @Query("SELECT SUM(od.quantity) " +
+            "FROM OrderDetails od ")
+    Long findTotalProductSold();
+
 
 }

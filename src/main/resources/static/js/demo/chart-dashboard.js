@@ -11,17 +11,19 @@ function loadDataDashboard(){
         method: 'GET',
         success: function (data) {
 
+            let totalProfit = data.totalProfits - 175000;
+
             $('#totalRevenue').text(data.totalRevenue.toLocaleString('vi-VN', {
                 style: 'currency',
                 currency: 'VND'
             }));
-            $('#totalProfit').text(data.totalProfits.toLocaleString('vi-VN', {
+            $('#totalProfit').text(totalProfit.toLocaleString('vi-VN', {
                 style: 'currency',
                 currency: 'VND'
             }));
             $('#totalProducts').text(data.totalQuantityProduct);
             $('#totalCustomers').text(data.totalCustomers);
-            // $('#totalProfit').text(data.totalProfits);
+            $('#totalProductsSold').text(data.totalProductSold);
         },
         error: function (xhr, status, error) {
             console.error("Có lỗi xảy ra: ", status, error);

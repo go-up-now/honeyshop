@@ -29,7 +29,8 @@ public class DashboardApi {
         Long totalQuantity = orderDetailServiceService.getTotalQuantityProduct();
         Long totalCustomers = orderDetailServiceService.getTotalCustomers();
         Long totalProfits = orderDetailServiceService.getTotalProfit();
-        return new DashboardStatistics(totalRevenue, totalQuantity, totalCustomers,totalProfits);
+        Long totalProductSold = orderDetailServiceService.getTotalProductSold();
+        return new DashboardStatistics(totalRevenue, totalQuantity, totalCustomers,totalProfits, totalProductSold);
     }
 
     @GetMapping("/revenue_chart")
