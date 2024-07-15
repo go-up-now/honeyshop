@@ -15,7 +15,7 @@ function loadDataDashboard(){
         method: 'GET',
         success: function (data) {
 
-            let totalProfit = data.totalProfits - 175000;
+            let totalProfit = data.totalProfits - 140000;
 
             $('#totalRevenue').text(data.totalRevenue.toLocaleString('vi-VN', {
                 style: 'currency',

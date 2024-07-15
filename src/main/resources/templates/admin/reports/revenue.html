@@ -6,15 +6,25 @@
     <meta charset="UTF-8">
     <title>Danh thu</title>
 </head>
-
+<style>
+    /*.card-header {*/
+    /*    display: flex;*/
+    /*    justify-content: space-between;*/
+    /*    align-items: center;*/
+    /*}*/
+</style>
 <body>
 <div id="main">
     <!-- DataTables Example -->
     <div class="card shadow mb-4">
-        <div class="card-header d-flex">
-            <div class="col-md-12">
-                <h3 class="m-0 font-weight-bold text-primary">Doanh thu</h3>
-            </div>
+        <div class="card-header">
+            <h3 class="m-0 font-weight-bold text-primary">Doanh thu</h3>
+            <form id="exportForm">
+                <button type="button" id="exportButton"
+                        class="btn btn-custom" style="margin-left: 900px;margin-top: -50px;">
+                    <i class="fas fa-download fa-sm text-white-50"></i>
+                    Xuất excel</button>
+            </form>
         </div>
         <div class="card-body">
             <form role="form" method="post" id="form_revenue">

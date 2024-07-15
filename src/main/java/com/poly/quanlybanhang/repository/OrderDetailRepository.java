@@ -124,5 +124,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
             "GROUP BY p.name")
     List<QuantityByProduct> getProductQuantities();
 
+    @Query("SELECT MIN(od.createAt) FROM OrderDetails od")
+    LocalDateTime findFirstRevenueDate();
 
 }

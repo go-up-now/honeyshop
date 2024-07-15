@@ -9,6 +9,59 @@ $(document).ready(function() {
 
     if(index)
         loadDataTable();
+
+    //Xuâ excel
+    $('#exportButton').click(function() {
+        // Lấy các giá trị từ input
+        var dateStart = $('#dateStart').val();
+        var dateEnd = $('#dateEnd').val();
+
+        // Nếu dateEnd rỗng, gán giá trị ngày hiện tại
+        if (dateEnd === "") {
+            dateEnd = formatDate(new Date());
+        }
+
+        var productNameFilter = $('#productName').val(); // Lấy tên sản phẩm từ input
+
+        // Nếu dateStart rỗng, gọi API để lấy ngày bắt đầu
+        if (dateStart === "") {
+            $.ajax({
+                url: `/honeyshop/api/report/revenue/start-date`,
+                type: 'GET',
+                success: function(response) {
+                    if (response.code === 1000) {
+                        dateStart = formatDate(response.data);
+                        // Gọi API để xuất dữ liệu Excel
+                        window.location.href = `/honeyshop/api/report/export?dateStart=${dateStart}&dateEnd=${dateEnd}&productNameFilter=${productNameFilter}`;
+                    } else {
+                        alert(response.message); // Hiển thị thông báo lỗi từ API
+                    }
+                },
+                error: function() {
+                    alert('Không thể lấy ngày bắt đầu dữ liệu doanh thu.');
+                }
+            });
+        } else {
+            // Gọi API để xuất dữ liệu Excel
+            window.location.href = `/honeyshop/api/report/export?dateStart=${dateStart}&dateEnd=${dateEnd}&productNameFilter=${productNameFilter}`;
+        }
+    });
+
+// Hàm formatDate để chuyển đổi ngày thành định dạng yyyy-MM-dd
+    function formatDate(date) {
+        if (!(date instanceof Date)) {
+            date = new Date(date);  // Chuyển đổi date thành Date nếu chưa phải là Date
+        }
+
+        // Định dạng ngày theo yyyy-MM-dd
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');  // Lưu ý: tháng bắt đầu từ 0
+        var year = date.getFullYear();
+
+        return `${year}-${month}-${day}`;
+    }
+
+
 });
 
 function loadDataTable(){

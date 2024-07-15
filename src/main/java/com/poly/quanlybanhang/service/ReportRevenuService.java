@@ -5,8 +5,12 @@ import com.poly.quanlybanhang.dto.response.OrderDetailResponse;
 import com.poly.quanlybanhang.entity.OrderDetails;
 import com.poly.quanlybanhang.entity.Orders;
 import com.poly.quanlybanhang.report.*;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,5 +29,8 @@ public interface ReportRevenuService {
     List<RevenueProfitCosts> getRevenueProfitCosts();
 
     List<QuantityByProduct> getQuantityByProduct();
+    LocalDateTime getRevenueStartDate() ;
+
+    void exportRevenueProductToExcel(ProductRevenueRequest request, HttpServletResponse response);
 
 }

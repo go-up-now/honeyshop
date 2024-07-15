@@ -6,13 +6,24 @@ import com.poly.quanlybanhang.report.*;
 
 import com.poly.quanlybanhang.service.ReportRevenuService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -63,4 +74,31 @@ public class ReportControllerApi {
                 .build();
     }
 
+    @GetMapping("/export")
+    public void exportToExcel(
+            @RequestParam(required = false) String dateStart,
+            @RequestParam(required = false) String dateEnd,
+            @RequestParam(required = false) String productNameFilter,
+            HttpServletResponse response) throws IOException, ParseException {
+
+        // Chuyển đổi chuỗi ngày thành đối tượng Date
+        Date startDate = dateStart != null ? new SimpleDateFormat("yyyy-MM-dd").parse(dateStart) : null;
+        Date endDate = dateEnd != null ? new SimpleDateFormat("yyyy-MM-dd").parse(dateEnd) : null;
+
+        // Tạo đối tượng request để truyền vào service
+        ProductRevenueRequest request = new ProductRevenueRequest(productNameFilter,startDate,endDate);
+
+        // Gọi phương thức trong service để xuất dữ liệu
+        reportService.exportRevenueProductToExcel(request, response);
+
+    }
+
+    @GetMapping("/revenue/start-date")
+    public ApiResponse<LocalDateTime> getRevenueStartDate() {
+        LocalDateTime startDate = reportService.getRevenueStartDate();
+        return ApiResponse.<LocalDateTime>builder()
+                .code(1000)
+                .data(startDate)
+                .build();
+    }
 }
