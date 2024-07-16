@@ -38,7 +38,11 @@
         </div>
         <div class="card-footer">
             <div class="total-price" style="text-align: left;">
-                <p><strong>Tổng doanh thu: <span id="totalPrice">0 đ</span></strong></p>
+                <p>
+                    <strong>Tổng doanh thu: <span id="totalPrice">0 đ</span></strong>
+                    <br>
+                    <strong>Tổng số lượng sản phẩm bán được: <span id="totalProduct">0</span></strong>
+                </p>
             </div>
         </div>
     </div>
@@ -58,8 +62,15 @@
                     url: '/honeyshop/api/report/top-by-value',
                     dataSrc: function (json) {
                         let totalPrice = 0;
-                        json.forEach(item => totalPrice += item.totalOrderValue || 0);
-                        $('#totalPrice').text(formatCurrencyVND(totalPrice.toFixed(2)));
+                        let totalProduct = 0;
+                        json.forEach(item => {
+                            totalPrice += item.totalOrderValue || 0;
+                            totalProduct += parseFloat(item.totalQuantity) || 0;
+                        });
+
+                        $('#totalPrice').text(formatCurrencyVND(totalPrice));
+                        $('#totalProduct').text(totalProduct);
+
                         return json.map((item, index) => [
                             index + 1,
                             item.customerName || 'N/A',

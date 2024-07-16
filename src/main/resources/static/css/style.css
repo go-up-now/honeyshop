@@ -63,3 +63,7 @@
 .ms-5{
     margin-left: 190px;
 }
+
+div p strong {
+    font-size: x-large;
+}
