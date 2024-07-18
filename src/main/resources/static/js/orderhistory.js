@@ -49,7 +49,7 @@ $(document).ready(function() {
         },
         "columns": [
             { "title": "STT" },
-            { "title": "Khách hàng" },
+            { "title": "Khách hàng", "width":"200px"},
             { "title": "Số điện thoại" },
             // { "title": "Doanh thu" },
             { "title": "Trạng thái" },
@@ -126,12 +126,10 @@ $(document).ready(function() {
                         <td><img src="/honeyshop/images/${detail.thumbnail}" alt="${detail.name}" width="50"></td>
                         <td>${formatCurrencyVND(detail.price)}</td>
                          <td>
-                            <input type="number" class="quantity-input" value="${detail.quantity}" min="1" data-product-id="${detail.id}" />
+                               ${detail.quantity}
                         </td>
                         <td>${formatCurrencyVND(detail.price*detail.quantity)}</td>
-                        <td>
-                            <button type="button" class="btn btn-danger" onclick="removeProductFromCartOrLocal(${currentOrderId})"><i class="fa fa-trash"></i></button>
-                        </td>
+                      
                     </tr>
                 `);
                         totalPrice += productTotal; // Cộng dồn giá trị của các sản phẩm
@@ -246,7 +244,7 @@ function loadData() {
                     { "title": "Hình ảnh", "orderable": false },
                     { "title": "Đơn giá" },
                     { "title": "Loại sản phẩm" },
-                    { "title": "Thao tác", "orderable": false }
+                    // { "title": "Thao tác", "orderable": false }
                 ],
                 processing: true,
                 serverSide: false,
@@ -443,9 +441,7 @@ function loadCartFromLocalStorage() {
                     <input type="number" class="quantity-input" value="${detail.quantity}" min="1" step="1" data-product-id="${detail.id}" />
                 </td>
                 <td>${formatCurrencyVND(productTotal)}</td>
-                <td>    
-                    <button type="button" class="btn btn-danger" onclick="removeProductFromCartOrLocal(${currentOrderId})"><i class="fa fa-trash"></i></button>
-                </td>
+            
             </tr>
         `);
         totalPrice += productTotal;
