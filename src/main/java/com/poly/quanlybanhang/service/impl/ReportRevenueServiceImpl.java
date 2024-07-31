@@ -100,6 +100,11 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
     }
 
     @Override
+    public List<totalQuantityByProduct> getTotalQuantityByProduct() {
+        return orderDetailRepository.getTotalProductQuantities();
+    }
+
+    @Override
     public LocalDateTime getRevenueStartDate() {
         return orderDetailRepository.findFirstRevenueDate();
     }

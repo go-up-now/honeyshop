@@ -29,6 +29,8 @@ public interface ReportRevenuService {
     List<RevenueProfitCosts> getRevenueProfitCosts();
 
     List<QuantityByProduct> getQuantityByProduct();
+
+    List<totalQuantityByProduct> getTotalQuantityByProduct();
     LocalDateTime getRevenueStartDate() ;
 
     void exportRevenueProductToExcel(ProductRevenueRequest request, HttpServletResponse response);

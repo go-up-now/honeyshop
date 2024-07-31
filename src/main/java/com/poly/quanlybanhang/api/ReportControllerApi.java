@@ -65,6 +65,11 @@ public class ReportControllerApi {
         return reportService.getQuantityByProduct();
     }
 
+    @GetMapping("/total-quantity-by-product")
+    public List<totalQuantityByProduct> totalQuantityByProduct() {
+        return reportService.getTotalQuantityByProduct();
+    }
+
     @PostMapping("/product-revenue")
     public ApiResponse<List<ProductRevenueStatistics>> getRevenueByAllDates(@RequestBody ProductRevenueRequest request) {
 

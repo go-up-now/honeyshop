@@ -125,6 +125,13 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
             "GROUP BY p.name, DATE(od.createAt)")
     List<QuantityByProduct> getProductQuantities();
 
+    @Query("SELECT new com.poly.quanlybanhang.report.totalQuantityByProduct(" +
+            "p.name, " +
+            "SUM(od.quantity))"+
+            "FROM OrderDetails od JOIN od.product p " +
+            "GROUP BY p.name")
+    List<totalQuantityByProduct> getTotalProductQuantities();
+
     @Query("SELECT MIN(od.createAt) FROM OrderDetails od")
     LocalDateTime findFirstRevenueDate();
 
