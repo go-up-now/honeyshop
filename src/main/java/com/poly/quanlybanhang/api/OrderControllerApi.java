@@ -8,6 +8,7 @@ import com.poly.quanlybanhang.service.OrderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -66,6 +67,15 @@ public class OrderControllerApi {
         return ApiResponse.<Orders>builder()
                 .code(1000)
                 .data(orderService.getOrderByPhone(phone))
+                .build();
+    }
+
+    @GetMapping("/page")
+    public ApiResponse<Page<Orders>> getUsers(@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "10") int size) {
+        return ApiResponse.<Page<Orders>>builder()
+                .code(1000)
+                .data(orderService.getOrders(page, size))
                 .build();
     }
 }

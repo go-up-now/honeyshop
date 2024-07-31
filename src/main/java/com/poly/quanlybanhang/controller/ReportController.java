@@ -26,4 +26,9 @@ public class ReportController {
     public String getRevenue(){
         return "/admin/reports/revenue";
     }
+
+    @GetMapping("/quyen-gop")
+    public String getDonations(){
+        return "/admin/reports/donations";
+    }
 }

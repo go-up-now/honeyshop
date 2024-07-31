@@ -8,6 +8,7 @@ import com.poly.quanlybanhang.entity.Products;
 import com.poly.quanlybanhang.statistical.AgeOfProductConsumption;
 import com.poly.quanlybanhang.statistical.GenderOfProductConsumption;
 import com.poly.quanlybanhang.statistical.SalesTimeFrame;
+import org.springframework.data.domain.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -24,4 +25,5 @@ public interface OrderService {
     List<GenderOfProductConsumption> getGenderOfProductConsumption(GenderOfProductConsumptionRequest request);
 //    List<SalesTimeFrame> getSalesTimeFrame();
 List<SalesTimeFrame> getSalesTimeFrame(SalesTimeFrameRequest request);
+    public Page<Orders> getOrders(int page, int size);
 }
