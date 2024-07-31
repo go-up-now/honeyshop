@@ -75,7 +75,7 @@ public class ReportRevenueServiceImpl implements ReportRevenuService {
                 startDate = endDate.minusDays(7);
                 break;
             case "1m":
-                startDate = endDate.minusDays(30);
+                startDate = endDate.minusDays(100);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + range);

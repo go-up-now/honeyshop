@@ -2,12 +2,14 @@ var myLineChart;
 var myPieChart;
 var chartRevenueProfitCosts;
 var chartQuantityByProduct;
+var myProductQuantityLineChart;
 $(document).ready(function() {
     loadDataDashboard();
     configChartTotalRevenue();
     configRevenueByGenderChart();
     configRevenueProfitCostsChart();
-    configQuantityByProductChart();
+    // configQuantityByProductChart();
+    configProductQuantityChart();
 });
 function loadDataDashboard(){
     $.ajax({
@@ -34,13 +36,14 @@ function loadDataDashboard(){
         }
     });
 }
-function  configChartTotalRevenue(){
+function configChartTotalRevenue() {
     // Thiết lập mặc định cho biểu đồ, sử dụng font chữ Nunito và các font dự phòng khác
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796'; // Màu chữ mặc định được đặt thành #858796.
+
     // Khởi tạo biểu đồ
     var ctx = document.getElementById("myAreaChart");
-    myLineChart  = new Chart(ctx, {
+    myLineChart = new Chart(ctx, {
         type: 'line', // Loại biểu đồ là biểu đồ đường
         data: {
             labels: [], // Nhãn trục x (ban đầu là rỗng)
@@ -101,12 +104,11 @@ function  configChartTotalRevenue(){
                 display: false // Không hiển thị chú giải (legend)
             },
             tooltips: { // Cấu hình phần hiển thị tooltip khi di chuột qua các điểm dữ liệu
-                backgroundColor: "rgb(255,255,255)", // Màu nền của tooltip
-                bodyFontColor: "#858796", // Màu chữ của tooltip
-                titleMarginBottom: 10, // Khoảng cách dưới của tiêu đề tooltip
-                titleFontColor: '#6e707e', // Màu chữ của tiêu đề tooltip
+                backgroundColor: "rgb(255, 255, 255)", // Màu nền của tooltip (trắng)
+                bodyFontColor: "#000000", // Màu chữ của nội dung tooltip (đen)
+                titleFontColor: "#000000", // Màu chữ của tiêu đề tooltip (đen)
                 titleFontSize: 14, // Kích thước font của tiêu đề tooltip
-                borderColor: '#dddfeb', // Màu viền của tooltip
+                borderColor: '#000000', // Màu viền của tooltip (đen)
                 borderWidth: 1, // Độ dày của viền tooltip
                 xPadding: 15, // Padding ngang của tooltip
                 yPadding: 15, // Padding dọc của tooltip
@@ -123,6 +125,7 @@ function  configChartTotalRevenue(){
             }
         }
     });
+
     updateChartTotalRevenue('1m');
 
     $('#btn-1d').on('click', function() {
@@ -135,6 +138,8 @@ function  configChartTotalRevenue(){
         updateChartTotalRevenue('1m');
     });
 }
+
+
 // Hàm cập nhật dữ liệu biểu đồ từ API
 function updateChartTotalRevenue(timeRange) {
     $.ajax({
@@ -170,14 +175,15 @@ function configRevenueByGenderChart() {
         options: {
             maintainAspectRatio: false,
             tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
+                backgroundColor: "rgb(255,255,255)", // Màu nền của tooltip (trắng)
+                bodyFontColor: "#000000", // Màu chữ của nội dung tooltip (đen)
+                titleFontColor: "#000000", // Màu chữ của tiêu đề tooltip (đen)
+                borderColor: '#000000', // Màu viền của tooltip (đen)
+                borderWidth: 1, // Độ dày của viền tooltip
+                xPadding: 15, // Padding ngang của tooltip
+                yPadding: 15, // Padding dọc của tooltip
+                displayColors: false, // Ẩn các màu sắc biểu đồ trong tooltip
+                caretPadding: 10, // Khoảng cách giữa caret và biên của tooltip
                 callbacks: {
                     label: function(tooltipItem, chart) {
                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
@@ -199,8 +205,10 @@ function configRevenueByGenderChart() {
             cutoutPercentage: 80,  // Kích thước lỗ giữa biểu đồ
         },
     });
+
     updatePieChart();
 }
+
 
 
 function updatePieChart() {
@@ -296,9 +304,10 @@ function configRevenueProfitCostsChart() {
         options: {
             maintainAspectRatio: false,
             tooltips: {
-                backgroundColor: "rgba(255,255,255,0.9)",  // Màu nền của tooltip
-                bodyFontColor: "#858796",  // Màu chữ của nội dung tooltip
-                borderColor: '#858796',  // Màu viền của tooltip
+                backgroundColor: "#ffffff",  // Màu nền của tooltip (trắng)
+                titleFontColor: "#000000",  // Màu chữ của tiêu đề tooltip (đen)
+                bodyFontColor: "#000000",  // Màu chữ của nội dung tooltip (đen)
+                borderColor: '#000000',  // Màu viền của tooltip (đen)
                 borderWidth: 1,  // Độ dày của viền tooltip
                 xPadding: 15,  // Padding theo chiều ngang của tooltip
                 yPadding: 15,  // Padding theo chiều dọc của tooltip
@@ -313,11 +322,10 @@ function configRevenueProfitCostsChart() {
                         return tooltipItems[0].xLabel;  // Hiển thị ngày tháng trong tooltip
                     }
                 },
-                titleFontSize: 16,  // Kích thước chữ của tiêu đề tooltip
+                titleFontSize: 14,  // Kích thước chữ của tiêu đề tooltip
                 titleFontStyle: 'bold',  // Phong cách chữ của tiêu đề tooltip (đậm)
                 titleAlign: 'center',  // Căn giữa tiêu đề tooltip
-                titleFontColor: '#6e707e',  // Màu chữ của tiêu đề tooltip (ngày tháng) - Đổi sang màu đen
-                bodyFontSize: 14,  // Kích thước chữ của nội dung tooltip
+                bodyFontSize: 12,  // Kích thước chữ của nội dung tooltip
                 bodyFontStyle: 'normal',  // Phong cách chữ của nội dung tooltip (thường)
                 bodySpacing: 5,  // Khoảng cách giữa các dòng nội dung trong tooltip
                 footerFontStyle: 'bold',  // Phong cách chữ của footer tooltip (đậm)
@@ -367,6 +375,8 @@ function configRevenueProfitCostsChart() {
     updateChartRevenueProfitCosts();
 }
 
+
+
 function updateChartRevenueProfitCosts() {
     $.ajax({
         url: `/honeyshop/api/report/revenue-profit-costs`,
@@ -405,97 +415,231 @@ function updateChartRevenueProfitCosts() {
     });
 }
 
-function configQuantityByProductChart() {
-    var ctx = document.getElementById("chartQuantityByProduct");
-    // Xóa biểu đồ cũ nếu đã tồn tại
-    if (chartQuantityByProduct) {
-        chartQuantityByProduct.destroy();
-    }
-    chartQuantityByProduct = new Chart(ctx, {
-        type: 'doughnut',
+// function configQuantityByProductChart() {
+//     var ctx = document.getElementById("chartQuantityByProduct");
+//     // Xóa biểu đồ cũ nếu đã tồn tại
+//     if (chartQuantityByProduct) {
+//         chartQuantityByProduct.destroy();
+//     }
+//     chartQuantityByProduct = new Chart(ctx, {
+//         type: 'doughnut',
+//         data: {
+//             labels: [],  // Sẽ được cập nhật từ API
+//             datasets: [{
+//                 data: [],  // Sẽ được cập nhật từ API
+//                 label: "Số lượng",
+//                 backgroundColor: [], // Màu nền sẽ được cập nhật động
+//                 hoverBackgroundColor: [], // Màu nền khi hover
+//                 hoverBorderColor: "rgba(234, 236, 244, 1)",
+//             }],
+//         },
+//         options: {
+//             maintainAspectRatio: false,
+//             tooltips: {
+//                 backgroundColor: "rgb(255,255,255)",
+//                 bodyFontColor: "#858796",
+//                 borderColor: '#dddfeb',
+//                 borderWidth: 1,
+//                 xPadding: 15,
+//                 yPadding: 15,
+//                 displayColors: false,
+//                 caretPadding: 10,
+//                 callbacks: {
+//                     label: function(tooltipItem, chart) {
+//                         var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+//                         var totalQuantity = chartQuantityByProduct.data.datasets[0].data[tooltipItem.index];
+//                         var total = chartQuantityByProduct.data.datasets[0].data.reduce((a, b) => a + b, 0);
+//                         var percentage = ((totalQuantity / total) * 100).toFixed(2) + '%'; // Tính phần trăm
+//                         return datasetLabel + ': ' + number_format(totalQuantity) + '(' + percentage + ')'; // Hiển thị số lượng và phần trăm
+//                     }
+//                 }
+//             },
+//             legend: {
+//                 display: true,  // Hiển thị legend
+//                 position: 'bottom',
+//                 labels: {
+//                     boxWidth: 15, // Kích thước của chấm màu trên legend
+//                     padding: 10   // Khoảng cách giữa các mục trong legend
+//                 }
+//             },
+//             cutoutPercentage: 70,  // Kích thước lỗ giữa biểu đồ
+//         },
+//     });
+//     updateQuantityByProductChart();
+// }
+//
+//
+// function updateQuantityByProductChart() {
+//     $.ajax({
+//         url: `/honeyshop/api/report/quantity-by-product`,
+//         method: 'GET',
+//         success: function(response) {
+//             var data = response;
+//             if (Array.isArray(data)) {
+//                 var labels = [];
+//                 var quantities = [];
+//                 var backgroundColors = [];
+//                 var hoverBackgroundColors = [];
+//                 var colors = ['#4e73df', '#f6c23e', '#1cc88a', '#36b9cc', '#e74a3b']; // Màu sắc cho 5 sản phẩm
+//
+//                 // Sắp xếp dữ liệu theo tổng số lượng và lấy 5 sản phẩm hàng đầu
+//                 data.sort((a, b) => b.totalQuantity - a.totalQuantity);
+//                 data.slice(0, 5).forEach(function(item, index) {
+//                     labels.push(item.productName);
+//                     quantities.push(item.totalQuantity);
+//                     // Tạo màu sắc cho mỗi sản phẩm từ danh sách màu
+//                     backgroundColors.push(colors[index % colors.length]);  // Đảm bảo không vượt quá số màu có sẵn
+//                     hoverBackgroundColors.push(Chart.helpers.color(colors[index % colors.length]).alpha(0.7).rgbString());
+//                 });
+//
+//                 // Cập nhật dữ liệu cho biểu đồ
+//                 chartQuantityByProduct.data.labels = labels;
+//                 chartQuantityByProduct.data.datasets[0].data = quantities;
+//                 chartQuantityByProduct.data.datasets[0].backgroundColor = backgroundColors;
+//                 chartQuantityByProduct.data.datasets[0].hoverBackgroundColor = hoverBackgroundColors;
+//                 chartQuantityByProduct.update();
+//
+//             } else {
+//                 console.error('API error: Data is not in the expected format');  // Hiển thị thông báo lỗi chi tiết
+//             }
+//         },
+//         error: function(xhr, status, error) {
+//             console.error('AJAX error:', status, error);  // Hiển thị thông báo lỗi chi tiết
+//         }
+//     });
+// }
+
+function configProductQuantityChart() {
+    var ctx = document.getElementById("productQuantityLineChart").getContext('2d');
+    var myProductQuantityLineChart = new Chart(ctx, {
+        type: 'line',
         data: {
-            labels: [],  // Sẽ được cập nhật từ API
-            datasets: [{
-                data: [],  // Sẽ được cập nhật từ API
-                label: "Số lượng",
-                backgroundColor: [], // Màu nền sẽ được cập nhật động
-                hoverBackgroundColor: [], // Màu nền khi hover
-                hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
+            labels: [], // Ngày sẽ được cập nhật từ phản hồi API
+            datasets: [] // Dữ liệu cho tất cả các sản phẩm
         },
         options: {
             maintainAspectRatio: false,
-            tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
-                callbacks: {
-                    label: function(tooltipItem, chart) {
-                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                        var totalQuantity = chartQuantityByProduct.data.datasets[0].data[tooltipItem.index];
-                        var total = chartQuantityByProduct.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                        var percentage = ((totalQuantity / total) * 100).toFixed(2) + '%'; // Tính phần trăm
-                        return datasetLabel + ': ' + number_format(totalQuantity) + '(' + percentage + ')'; // Hiển thị số lượng và phần trăm
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    },
+                    grid: {
+                        display: false // Ẩn các đường lưới của trục x
+                    },
+                    ticks: {
+                        maxTicksLimit: 7
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false, // Ẩn các đường lưới của trục y
+                        drawBorder: false, // Ẩn đường viền của trục y
+                        borderDash: [], // Loại bỏ các đường lưới dạng dash
+                        zeroLineBorderDash: [] // Loại bỏ các đường lưới dạng dash tại giá trị 0
+                    },
+                    ticks: {
+                        maxTicksLimit: 5,
+                        padding: 10
                     }
                 }
             },
-            legend: {
-                display: true,  // Hiển thị legend
-                position: 'bottom',
-                labels: {
-                    boxWidth: 15, // Kích thước của chấm màu trên legend
-                    padding: 10   // Khoảng cách giữa các mục trong legend
+            plugins: {
+                legend: {
+                    display: true
+                },
+                tooltip: {
+                    backgroundColor: "#ffffff",  // Màu nền của tooltip (trắng)
+                    titleFontColor: "#000000",  // Màu chữ của tiêu đề tooltip (đen)
+                    bodyFontColor: "#000000",  // Màu chữ của nội dung tooltip (đen)
+                    borderColor: '#000000',  // Màu viền của tooltip (đen)
+                    borderWidth: 1,  // Độ dày của viền tooltip
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.raw; // Hiển thị dữ liệu
+                        }
+                    },
+                    titleFontSize: 16,  // Kích thước chữ của tiêu đề tooltip
+                    titleFontStyle: 'bold',  // Phong cách chữ của tiêu đề tooltip (đậm)
+                    titleAlign: 'center',  // Căn giữa tiêu đề tooltip
+                    bodyFontSize: 14,  // Kích thước chữ của nội dung tooltip
+                    bodyFontStyle: 'normal',  // Phong cách chữ của nội dung tooltip (thường)
+                    bodySpacing: 5,  // Khoảng cách giữa các dòng nội dung trong tooltip
+                    footerFontStyle: 'bold',  // Phong cách chữ của footer tooltip (đậm)
+                    footerSpacing: 10,  // Khoảng cách giữa các dòng footer và nội dung tooltip
+                    footerMarginTop: 10  // Khoảng cách giữa các footer và cạnh trên của tooltip
                 }
-            },
-            cutoutPercentage: 70,  // Kích thước lỗ giữa biểu đồ
-        },
+            }
+        }
     });
-    updateQuantityByProductChart();
+
+    updateProductQuantityChart(myProductQuantityLineChart);
 }
 
 
-function updateQuantityByProductChart() {
+
+function updateProductQuantityChart(chart) {
     $.ajax({
-        url: `/honeyshop/api/report/quantity-by-product`,
+        url: '/honeyshop/api/report/quantity-by-product',
         method: 'GET',
         success: function(response) {
-            var data = response;
-            if (Array.isArray(data)) {
-                var labels = [];
-                var quantities = [];
-                var backgroundColors = [];
-                var hoverBackgroundColors = [];
-                var colors = ['#4e73df', '#f6c23e', '#1cc88a', '#36b9cc', '#e74a3b']; // Màu sắc cho 5 sản phẩm
+            var data = response; // Your API response
+            var productData = {};
+            var labels = [];
 
-                // Sắp xếp dữ liệu theo tổng số lượng và lấy 5 sản phẩm hàng đầu
-                data.sort((a, b) => b.totalQuantity - a.totalQuantity);
-                data.slice(0, 5).forEach(function(item, index) {
-                    labels.push(item.productName);
-                    quantities.push(item.totalQuantity);
-                    // Tạo màu sắc cho mỗi sản phẩm từ danh sách màu
-                    backgroundColors.push(colors[index % colors.length]);  // Đảm bảo không vượt quá số màu có sẵn
-                    hoverBackgroundColors.push(Chart.helpers.color(colors[index % colors.length]).alpha(0.7).rgbString());
+            // Collect data for each product
+            data.forEach(item => {
+                if (!productData[item.productName]) {
+                    productData[item.productName] = [];
+                }
+                productData[item.productName].push({
+                    x: item.day,
+                    y: item.totalQuantity
                 });
+                if (!labels.includes(item.day)) {
+                    labels.push(item.day);
+                }
+            });
 
-                // Cập nhật dữ liệu cho biểu đồ
-                chartQuantityByProduct.data.labels = labels;
-                chartQuantityByProduct.data.datasets[0].data = quantities;
-                chartQuantityByProduct.data.datasets[0].backgroundColor = backgroundColors;
-                chartQuantityByProduct.data.datasets[0].hoverBackgroundColor = hoverBackgroundColors;
-                chartQuantityByProduct.update();
+            // Sort labels
+            labels.sort((a, b) => new Date(a) - new Date(b));
 
-            } else {
-                console.error('API error: Data is not in the expected format');  // Hiển thị thông báo lỗi chi tiết
-            }
+            // Create datasets for all products
+            var datasets = Object.keys(productData).map(product => ({
+                label: product,
+                data: productData[product],
+                borderColor: getColorForProduct(product),
+                backgroundColor: 'transparent', // Set background color to transparent
+                borderWidth: 2, // Set border width to 2 (or 0 if you want no border at all)
+                fill: false
+            }));
+
+            // Update chart data
+            chart.data.labels = labels;
+            chart.data.datasets = datasets;
+            chart.update();
         },
         error: function(xhr, status, error) {
-            console.error('AJAX error:', status, error);  // Hiển thị thông báo lỗi chi tiết
+            console.error("Có lỗi xảy ra: ", status, error);
         }
     });
 }
+
+function getColorForProduct(product, alpha = '1') {
+    // Define specific colors for products here
+    const colors = {
+        "Sữa đậu nành": 'rgba(255, 99, 132, ' + alpha + ')',
+        "Trà bí đao": 'rgba(54, 162, 235, ' + alpha + ')',
+        "Bánh tráng chấm": 'rgba(255, 206, 86, ' + alpha + ')',
+        "Snack": 'rgba(75, 192, 192, ' + alpha + ')',
+        "Xoài": 'rgba(153, 102, 255, ' + alpha + ')'
+    };
+    return colors[product] || getRandomColor(alpha);
+}
+
+function getRandomColor(alpha = '1') {
+    return `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${alpha})`;
+}
+
 

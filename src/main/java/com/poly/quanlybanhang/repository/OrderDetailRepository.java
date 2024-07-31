@@ -119,9 +119,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetails, Strin
 
     @Query("SELECT new com.poly.quanlybanhang.report.QuantityByProduct(" +
             "p.name, " +
-            "SUM(od.quantity)) " +
+            "SUM(od.quantity), " +
+            "DATE(od.createAt)) " +
             "FROM OrderDetails od JOIN od.product p " +
-            "GROUP BY p.name")
+            "GROUP BY p.name, DATE(od.createAt)")
     List<QuantityByProduct> getProductQuantities();
 
     @Query("SELECT MIN(od.createAt) FROM OrderDetails od")
