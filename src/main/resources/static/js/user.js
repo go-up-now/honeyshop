@@ -170,9 +170,10 @@ function removeUser(id) {
                     // },
                     success: function () {
                         $("#userrow_" + id).remove();
-                        swal("Xóa người dùng thành công!", {
-                            icon: "success",
-                        });
+                        // swal("Xóa người dùng thành công!", {
+                        //     icon: "success",
+                        // });
+                        showToast("Xóa người dùng thành công!");
                         loadUser();
                     },
                     error: function () {
@@ -264,12 +265,15 @@ function saveUser() {
                 processData: false, // Prevent jQuery from automatically transforming the data into a query string
                 contentType: false,  // Chuyển đổi dữ liệu người dùng thành JSON
                 success: function (response) {
-                    swal("Cập nhật người dùng thành công", "", "success");
+                    // swal("Cập nhật người dùng thành công", "", "success");
+                    showToast("Cập nhật người dùng thành công!");
                     loadUser();
+                    $('#addUserPanel').hide();
                 },
                 error: function (e) {
                     console.error("Lỗi khi cập nhật người dùng: ", e);
                     swal("Cập nhật người dùng thất bại", "", "error");
+                    // showToast("Cập nhật người dùng thất bại!");
                 }
             });
         }
@@ -284,9 +288,11 @@ function saveUser() {
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    swal("Thêm người dùng thành công", "", "success");
+                    // swal("Thêm người dùng thành công", "", "success");
+                    showToast("Thêm người dùng thành công!");
                     $("#form_create_user")[0].reset();
                     loadUser();
+                    $('#addUserPanel').hide();
                 },
                 error: function (xhr, status, error) {
                     console.error("Lỗi khi thêm người dùng: ", {

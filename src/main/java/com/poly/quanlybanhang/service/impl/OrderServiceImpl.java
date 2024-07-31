@@ -21,6 +21,9 @@ import com.poly.quanlybanhang.statistical.SalesTimeFrame;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -172,5 +175,11 @@ public class OrderServiceImpl implements OrderService {
         var productName = request.getProductName();
 
         return orderRepository.getSalesTimeFrame(dateStart, dateEnd, hourStart, hourEnd, productName);
+    }
+
+    @Override
+    public Page<Orders> getOrders(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return orderRepository.findAll(pageable);
     }
 }
