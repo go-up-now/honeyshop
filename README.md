@@ -25,9 +25,6 @@
 #### REVENUE
 ![](https://github.com/go-up-now/honeyshop/blob/main/images/revenue.png)
 
-#### REVENUE
-![](https://github.com/go-up-now/honeyshop/blob/main/images/revenue.png)
-
 #### PURCHASE HISTORY
 ![](https://github.com/go-up-now/honeyshop/blob/main/images/purchase_history.png)
 
